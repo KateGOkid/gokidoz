@@ -1,0 +1,9 @@
+{
+  "name": "gokidoz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GOkidOZ — Boston & Florida kids activities directory",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
