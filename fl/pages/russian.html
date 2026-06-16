@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Russian for Kids · GOkidOZ Florida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<meta name="description" content="Russian language classes, weekend heritage schools, immersion preschools and online tutors for Florida kids — Miami, Orlando, Tampa Bay and beyond, with map.">
+<meta name="theme-color" content="#13A98C">
+<link rel="canonical" href="https://gokidoz.com/fl/pages/russian.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GOkidOZ Florida">
+<meta property="og:title" content="Russian for Kids · GOkidOZ Florida">
+<meta property="og:description" content="Russian language classes, weekend schools, immersion preschools and tutors for Florida kids.">
+<meta property="og:image" content="https://gokidoz.com/assets/gokidoz-fl-hero.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  .cm-wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+  .cm-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px;}
+  .cm-tab{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:1.5px solid var(--border-mid);color:var(--g1);font-family:var(--sans);font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:24px;cursor:pointer;transition:all .15s;}
+  .cm-tab:hover{background:var(--g7);}
+  .cm-tab.active{background:var(--g2);color:var(--white);border-color:var(--g2);}
+  .cm-search-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 18px;}
+  .cm-search{flex:1;min-width:240px;}
+  .cm-search input{width:100%;padding:11px 14px;border-radius:11px;border:1.5px solid var(--border-mid);font-family:var(--sans);font-size:14px;outline:none;}
+  .cm-count{font-size:13px;color:var(--text-muted);font-weight:700;}
+  .cm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:28px;}
+  .cm-sec-h{font-family:var(--serif);font-size:22px;color:var(--g1);font-weight:600;letter-spacing:-.2px;margin:28px 0 6px;}
+  .cm-sec-sub{font-size:14px;color:var(--text-muted);line-height:1.6;margin:0 0 16px;max-width:760px;}
+</style>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../../assets/favicon-180.png">
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="../index.html">
+      <div class="logo-mark"><span class="logo-mark-text">OZ</span></div>
+      <div class="logo-text">
+        <div class="logo-name">GOkid<span>OZ</span></div>
+        <div class="logo-slogan">Florida kids <em>discover</em> all year long</div>
+      </div>
+    </a>
+  </div>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav" onclick="var o=this.parentNode.querySelector('.nav-right').classList.toggle('open');this.setAttribute('aria-expanded',o)"><span class="bars"><span></span><span></span><span></span></span></button>
+  <div class="nav-right">
+    <a class="nav-link nav-link-active" href="programs.html">Programs</a>
+    <a class="nav-link" href="tutors.html">Tutors</a>
+    <a class="nav-link" href="fun-events.html">Fun Events</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="../index.html">🦞 Boston</a>
+    <a class="btn-enroll" href="contact.html">Suggest a listing</a>
+  </div>
+</nav>
+
+<div class="subj-hero">
+  <div class="subj-hero-inner">
+    <div class="subj-hero-icon sh-red">🇷🇺</div>
+    <div>
+      <div class="breadcrumb">
+        <a href="../index.html">Florida Home</a><span class="breadcrumb-sep">›</span>
+        <a href="programs.html">Programs</a><span class="breadcrumb-sep">›</span>
+        <span>Russian</span>
+      </div>
+      <div class="page-eyebrow" style="margin-bottom:10px;">Academics · Languages</div>
+      <h1>Russian for <em>Florida kids</em></h1>
+      <p>Weekend heritage schools, immersion preschools and online tutors across Florida — Miami, Orlando, Tampa Bay, Sarasota and the Palm Beaches — for native speakers keeping the language alive and English-first kids starting from scratch.</p>
+    </div>
+  </div>
+</div>
+
+<section class="sec bg-cream" style="padding-top:32px;">
+  <div class="cm-wrap">
+
+    <div class="cm-tabs" id="cm-tabs">
+      <button class="cm-tab active" data-sub="all" type="button">🏷️ All</button>
+      <button class="cm-tab" data-sub="weekend" type="button">🏫 Weekend &amp; after-school</button>
+      <button class="cm-tab" data-sub="immersion" type="button">👶 Immersion preschool</button>
+      <button class="cm-tab" data-sub="online" type="button">🌐 Online tutors</button>
+    </div>
+    <div class="cm-search-row">
+      <div class="cm-search"><input type="text" id="cm-search" placeholder="Search a school or city…" autocomplete="off"></div>
+      <span class="cm-count" id="cm-count"></span>
+    </div>
+
+    <div id="gz-map-here"></div>
+
+    <h3 class="cm-sec-h">🏫 Weekend &amp; after-school schools</h3>
+    <p class="cm-sec-sub">Saturday/after-school Russian schools — reading, conversation, culture and performance for school-age kids.</p>
+    <div class="cm-grid"></div>
+
+    <h3 class="cm-sec-h">👶 Immersion preschools &amp; daycares</h3>
+    <p class="cm-sec-sub">Russian-immersion daycare and preschool — toddlers absorb the language through play.</p>
+    <div class="cm-grid"></div>
+
+    <h3 class="cm-sec-h">🌐 Online &amp; private tutors</h3>
+    <p class="cm-sec-sub">Live-online Russian courses and 1-on-1 tutors — kid specialists, book by the hour.</p>
+    <div class="cm-grid"></div>
+
+    <div id="cm-empty" style="display:none;padding:24px;background:var(--g7);border-radius:14px;text-align:center;color:var(--text-muted);">
+      <div style="font-size:36px;margin-bottom:8px;">🔍</div>
+      <div style="color:var(--g1);font-weight:700;font-family:var(--serif);font-size:18px;">No programs match</div>
+    </div>
+
+    <div style="max-width:760px;margin:24px auto 0;padding:18px 22px;background:linear-gradient(135deg,var(--straw-l) 0%,#F5E6C8 100%);border:1px solid rgba(184,116,42,0.25);border-radius:14px;text-align:center;">
+      <div style="font-family:var(--serif);font-size:18px;color:var(--g1);font-weight:600;margin-bottom:4px;">Don't see your program? Get listed — it's free 🎉</div>
+      <div style="font-size:14px;color:var(--text);line-height:1.6;">Run a Russian program for kids in Florida? Email <a href="mailto:kate@gokidoz.com" style="color:var(--g2);font-weight:700;">kate@gokidoz.com</a> and we'll add you.</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>Not sure which Russian program fits?</h2>
+  <p>Tell us your child's age and where you are — we'll point you to the right class.</p>
+  <div class="cta-row"><a class="btn-primary" href="contact.html">Ask us →</a></div>
+</div>
+
+<footer>
+  <div class="foot-logo"><div class="foot-logo-img"><span class="foot-logo-text">OZ</span></div><div class="foot-name">GOkid<span>OZ</span> <span style="font-size:13px;font-weight:600;opacity:.7;">Florida</span></div></div>
+  <div class="foot-links"><a href="programs.html">Programs</a><a href="tutors.html">Tutors</a><a href="fun-events.html">Fun Events</a><a href="family-activities.html">Activities</a><a href="birthday.html">Birthday</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="../../pages/privacy.html">Privacy</a><a href="../../pages/terms.html">Terms</a></div>
+  <div class="foot-copy">© 2026 GOkidOZ Florida. All rights reserved. · Boston guide at <a href="../index.html" style="color:inherit;">gokidoz.com</a></div>
+</footer>
+
+<script>
+(function(){
+  var DATA={
+    weekend:[
+      {n:"Russian School of Tampa Bay – Clearwater",t:"clearwater tampa",b:"🏫 Weekend school",s:"Weekend Russian school for kids · reading, writing &amp; culture",w:"https://russianschooltampabay.wordpress.com/",p:"",where:"Clearwater (Tampa Bay)"},
+      {n:"Zabava Performing Arts",t:"boca-raton",b:"🎭 Sunday school",s:"Sunday Russian school · reading/writing in Russian + gymnastics &amp; art, all taught in Russian",w:"https://www.zabavaschool.com/",p:"",where:"Boca Raton"},
+      {n:"Newtosha Studio",t:"sarasota",b:"Ages 2–5",s:"Russian classes for young kids (ages 2–5)",w:"http://newtosha.com/",p:"",where:"Sarasota"},
+      {n:"Sunville Academy · Afterschool",t:"delray-beach",b:"After-school",s:"Russian-community afterschool &amp; enrichment",w:"",p:"+1 561-825-6968",where:"Deerfield Beach"}
+    ],
+    immersion:[
+      {n:"Pushkin Academy Preschool",t:"miami",b:"Preschool + camp",s:"Russian-English preschool &amp; summer camp",w:"http://pushkin-academy.miami/",p:"",where:"Hallandale Beach / Sunny Isles (Miami)"},
+      {n:"Sunny Isles Kids' Club",t:"miami",b:"Preschool",s:"Preschool in the Russian-speaking community",w:"http://sunnyislesdaycare.com/",p:"",where:"Sunny Isles (Miami)"},
+      {n:"Alenka Your Learning Kids Academy",t:"orlando",b:"Preschool",s:"Russian-English preschool",w:"https://alenkakidsacademy.com/",p:"",where:"Orlando"},
+      {n:"Artec Academy Child Care Center",t:"hollywood",b:"Trilingual",s:"Trilingual English / Russian / Spanish preschool",w:"http://www.artecacademy.com/",p:"",where:"Hallandale Beach"},
+      {n:"Cipollino Kids Club",t:"miami",b:"Art &amp; enrichment",s:"Russian/English art &amp; enrichment for kids",w:"",p:"+1 786-833-4333",where:"Miami area"}
+    ],
+    online:[
+      {n:"KidsKey · Russian for Kids",t:"online",b:"Live online",s:"Structured level-based live-online Russian courses built for kids · native teachers",w:"https://kidskey.org/courses/russian1",p:"",where:"Online · nationwide"},
+      {n:"Uroki.live",t:"online",b:"Live online · 🇷🇺",s:"Russian-language live online lessons across school subjects &amp; languages · for kids in Russian-speaking families",w:"https://uroki.live/",p:"",where:"Online · worldwide"},
+      {n:"Buneeva Online School",t:"online",b:"🇷🇺 In Russian",s:"Online Russian-language school on the Buneev (Школа 2100) curriculum · reading, writing &amp; literature",w:"https://buneeva.vsepravilno.com",p:"",where:"Online · worldwide"},
+      {n:"Preply",t:"online",b:"⭐ Best 1-on-1",s:"Hundreds of Russian tutors · native speakers &amp; kid specialists · from ~$16/lesson",w:"https://preply.com/en/russian-tutors",p:"",where:"Online · filter for 'teaches children'"},
+      {n:"italki",t:"online",b:"1-on-1",s:"Deep pool of Russian tutors · flexible scheduling · ~$8–$25/hour",w:"https://www.italki.com/en/teachers/russian",p:"",where:"Online · worldwide"}
+    ]
+  };
+  var grids=document.querySelectorAll('.cm-grid');
+  function card(o){
+    var d=document.createElement('div');
+    d.className='center-card'; d.dataset.town=o.t; d.dataset.name=o.n.toLowerCase();
+    var site=o.w?o.w.replace(/^https?:\/\/(www\.)?/,'').replace(/\/.*$/,''):'';
+    d.innerHTML='<div class="center-head"><div class="center-name">'+(o.w?'<a href="'+o.w+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">'+o.n+'</a>':o.n)+'</div><div class="center-price" style="background:var(--teal-l);color:var(--teal);">'+o.b+'</div></div>'
+      +'<div class="center-specialty">'+o.s+'</div>'
+      +'<div class="center-meta"><div class="center-meta-label">📍 Where</div><div class="center-meta-value">'+o.where+'</div>'
+      +(o.p?'<div class="center-meta-label">📞 Call</div><div class="center-meta-value"><a class="center-phone" href="tel:'+o.p.replace(/[^0-9]/g,'')+'">'+o.p+'</a></div>':'')
+      +(o.w?'<div class="center-meta-label">🌐 Site</div><div class="center-meta-value"><a class="website-link" target="_blank" rel="noopener" href="'+o.w+'">'+site+'</a></div>':'')+'</div>'
+      +(o.w?'<a class="center-book" target="_blank" rel="noopener" href="'+o.w+'">🌐 Visit website ↗</a>':'<a class="center-book" href="tel:'+(o.p||'').replace(/[^0-9]/g,'')+'">📞 Call →</a>');
+    return d;
+  }
+  var keys=['weekend','immersion','online'];
+  keys.forEach(function(k,i){ DATA[k].forEach(function(o){ grids[i].appendChild(card(o)); }); });
+  var tabs=document.querySelectorAll('.cm-tab'), search=document.getElementById('cm-search'), count=document.getElementById('cm-count'), empty=document.getElementById('cm-empty');
+  var cur='all', q='';
+  function apply(){
+    var shown=0, qq=q.trim().toLowerCase();
+    grids.forEach(function(g,i){
+      var secOk=cur==='all'||cur===keys[i], anyV=0;
+      g.querySelectorAll('.center-card').forEach(function(c){
+        var ok=secOk&&(!qq||(c.textContent||'').toLowerCase().indexOf(qq)>-1);
+        c.style.display=ok?'':'none'; if(ok){anyV++;shown++;}
+      });
+      g.style.display=anyV?'':'none';
+      var sub=g.previousElementSibling; if(sub&&sub.classList.contains('cm-sec-sub')){ sub.style.display=anyV?'':'none'; var hh=sub.previousElementSibling; if(hh&&hh.classList.contains('cm-sec-h')) hh.style.display=anyV?'':'none'; }
+    });
+    count.textContent=shown+(shown===1?' program':' programs');
+    empty.style.display=shown===0?'block':'none';
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(x){x.classList.toggle('active',x===t);});cur=t.dataset.sub;apply();});});
+  search.addEventListener('input',function(e){q=e.target.value;apply();});
+  apply();
+})();
+</script>
+<script src="../../assets/back-to-top.js"></script>
+<script src="../../assets/directory-map.js"></script>
+<script src="../../assets/newsletter.js"></script>
+<script src="../../assets/share-state.js"></script>
+<script src="../../assets/listing-detail.js"></script>
+<script src="../../assets/newsletter-popup.js"></script>
+</body>
+</html>

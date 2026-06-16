@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Public Libraries · GOkidOZ Boston</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .lib-wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+  .lib-search-row{display:flex;gap:10px;align-items:center;margin:0 0 22px;flex-wrap:wrap;}
+  .lib-search-row input{flex:1;min-width:240px;padding:12px 14px 12px 38px;border-radius:11px;border:1.5px solid var(--border-mid);background:var(--white);font-family:var(--sans);font-size:14px;outline:none;position:relative;}
+  .lib-search-wrap{flex:1;min-width:240px;position:relative;}
+  .lib-search-wrap::before{content:'🔍';position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+  .lib-count{font-size:12.5px;color:var(--text-muted);font-weight:700;}
+  .lib-region{background:var(--white);border:1px solid var(--border-mid);border-radius:18px;padding:22px;margin-bottom:18px;}
+  .lib-region-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .lib-region-name{font-family:var(--serif);font-size:22px;color:var(--g1);font-weight:600;letter-spacing:-.2px;}
+  .lib-region-tag{font-size:11px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:var(--g2);background:var(--g7);padding:4px 12px;border-radius:14px;border:1px solid var(--border-mid);}
+  .lib-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;}
+  .lib-card{background:var(--g7);border:1px solid var(--border-mid);border-radius:10px;padding:11px 14px;display:flex;flex-direction:column;gap:2px;text-decoration:none;color:inherit;transition:background .15s,transform .15s,border-color .15s;}
+  .lib-card:hover{background:var(--g6);transform:translateY(-1px);border-color:var(--g4);}
+  .lib-card-name{font-size:13.5px;font-weight:700;color:var(--g1);line-height:1.3;}
+  .lib-card-town{font-size:11.5px;color:var(--text-muted);font-weight:600;}
+  .lib-card-link{font-size:11px;color:var(--g2);font-weight:700;margin-top:2px;}
+  .lib-hidden{display:none;}
+</style>
+<meta name="description" content="Greater Boston public libraries with kids' programs — story hours, STEM workshops, maker spaces and museum passes, organized by region.">
+<meta name="theme-color" content="#1A73E8">
+<link rel="canonical" href="https://gokidoz.com/pages/libraries.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GOkidOZ Boston">
+<meta property="og:title" content="Public Libraries · GOkidOZ Boston">
+<meta property="og:description" content="Greater Boston public libraries with kids' programs — story hours, STEM workshops, maker spaces and museum passes, organized by region.">
+<meta property="og:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<meta property="og:url" content="https://gokidoz.com/pages/libraries.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Public Libraries · GOkidOZ Boston">
+<meta name="twitter:description" content="Greater Boston public libraries with kids' programs — story hours, STEM workshops, maker spaces and museum passes, organized by region.">
+<meta name="twitter:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Public Libraries · GOkidOZ Boston","description":"Free library programs, story times and kids resources across Massachusetts towns.","url":"https://gokidoz.com/pages/libraries.html","isPartOf":{"@type":"WebSite","name":"GOkidOZ Boston","url":"https://gokidoz.com/"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://gokidoz.com/"},{"@type":"ListItem","position":2,"name":"Public Libraries","item":"https://gokidoz.com/pages/libraries.html"}]}}
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="../index.html">
+      <div class="logo-mark"><span class="logo-mark-text">OZ</span></div>
+      <div class="logo-text">
+        <div class="logo-name">GOkid<span>OZ</span></div>
+        <div class="logo-slogan">Boston kids <em>discover</em> all year long</div>
+      </div>
+    </a>
+  </div>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav" onclick="var o=this.parentNode.querySelector('.nav-right').classList.toggle('open');this.setAttribute('aria-expanded',o)"><span class="bars"><span></span><span></span><span></span></span></button>
+  <div class="nav-right">
+    <a class="nav-link nav-link-active" href="programs.html">Programs</a>
+    <a class="nav-link" href="tutors.html">Tutors</a>
+    <a class="nav-link" href="fun-events.html">Fun Events</a>
+    <a class="nav-link" href="calendar.html">📅 Calendar</a>
+    <a class="nav-link" href="community.html">💬 Community</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="btn-enroll" href="enroll.html">Sign In</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="family-activities.html">In-Town Activities</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Public Libraries</span>
+    </div>
+    <div class="page-eyebrow">📚 In-Town Activities</div>
+    <h1 class="page-title">MA Public <em>Libraries</em> · Kids Events</h1>
+    <p class="page-lede">Direct links to kids' events calendars for 90+ Massachusetts public libraries — story times, craft hours, STEAM Saturdays, summer reading. Most are 🆓 free. Filter by region or search a town.</p>
+  </div>
+</div>
+
+<section class="sec bg-cream">
+  <div class="lib-wrap">
+
+    <div class="lib-search-row">
+      <div class="lib-search-wrap">
+        <input type="text" id="lib-search" placeholder="Search a town or library — e.g. Wellesley, BPL, Concord">
+      </div>
+      <span class="lib-count" id="lib-count">90 libraries</span>
+    </div>
+
+    <div class="lib-region">
+      <div class="lib-region-head">
+        <div class="lib-region-name">🏛️ Statewide</div>
+        <div class="lib-region-tag">All MA</div>
+      </div>
+      <div class="lib-grid">
+        <a class="lib-card" target="_blank" rel="noopener" href="https://libraries.state.ma.us/">
+          <span class="lib-card-name">MBLC Statewide Calendar</span>
+          <span class="lib-card-town">All Massachusetts libraries</span>
+          <span class="lib-card-link">libraries.state.ma.us ↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="lib-region">
+      <div class="lib-region-head">
+        <div class="lib-region-name">🌳 MetroWest</div>
+        <div class="lib-region-tag">Your area</div>
+      </div>
+      <div class="lib-grid" data-region="metrowest">
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.wellesleyfreelibrary.org/events/"><span class="lib-card-name">Wellesley Free Library</span><span class="lib-card-town">Wellesley</span><span class="lib-card-link">wellesleyfreelibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://needhamma.gov/3008/Library"><span class="lib-card-name">Needham Public Library</span><span class="lib-card-town">Needham</span><span class="lib-card-link">needhamma.gov ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://newtonfreelibrary.net/events/"><span class="lib-card-name">Newton Free Library</span><span class="lib-card-town">Newton</span><span class="lib-card-link">newtonfreelibrary.net ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://morseinstitute.org/events/"><span class="lib-card-name">Morse Institute Library</span><span class="lib-card-town">Natick</span><span class="lib-card-link">morseinstitute.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://baconfreelibrary.org/events/"><span class="lib-card-name">Bacon Free Library</span><span class="lib-card-town">Natick</span><span class="lib-card-link">baconfreelibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.westonlibrary.org/events"><span class="lib-card-name">Weston Public Library</span><span class="lib-card-town">Weston</span><span class="lib-card-link">westonlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://waylandlibrary.org/events/"><span class="lib-card-name">Wayland Free Library</span><span class="lib-card-town">Wayland</span><span class="lib-card-link">waylandlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.dovertownlibrary.org/events"><span class="lib-card-name">Dover Town Library</span><span class="lib-card-town">Dover</span><span class="lib-card-link">dovertownlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://sherbornlibrary.org/events/"><span class="lib-card-name">Sherborn Library</span><span class="lib-card-town">Sherborn</span><span class="lib-card-link">sherbornlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://framinghamlibrary.org/events"><span class="lib-card-name">Framingham Public Library</span><span class="lib-card-town">Framingham</span><span class="lib-card-link">framinghamlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.goodnowlibrary.org/events"><span class="lib-card-name">Goodnow Library</span><span class="lib-card-town">Sudbury</span><span class="lib-card-link">goodnowlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.hopkintonlibrary.org/events"><span class="lib-card-name">Hopkinton Public Library</span><span class="lib-card-town">Hopkinton</span><span class="lib-card-link">hopkintonlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://hollistonlibrary.org/events/"><span class="lib-card-name">Holliston Public Library</span><span class="lib-card-town">Holliston</span><span class="lib-card-link">hollistonlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.medfieldlibrary.org/events"><span class="lib-card-name">Medfield Public Library</span><span class="lib-card-town">Medfield</span><span class="lib-card-link">medfieldlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.westwoodlibrary.org/events"><span class="lib-card-name">Westwood Public Library</span><span class="lib-card-town">Westwood</span><span class="lib-card-link">westwoodlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.walpolelibrary.org/events"><span class="lib-card-name">Walpole Public Library</span><span class="lib-card-town">Walpole</span><span class="lib-card-link">walpolelibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.norwoodlibrary.org/events"><span class="lib-card-name">Morrill Memorial Library</span><span class="lib-card-town">Norwood</span><span class="lib-card-link">norwoodlibrary.org ↗</span></a>
+      </div>
+    </div>
+
+    <div class="lib-region">
+      <div class="lib-region-head">
+        <div class="lib-region-name">🏙️ Boston &amp; Inner Core</div>
+        <div class="lib-region-tag">9 libraries</div>
+      </div>
+      <div class="lib-grid">
+        <a class="lib-card" target="_blank" rel="noopener" href="https://bpl.bibliocommons.com/v2/events?audiences=58c0c93f4c3fe71d009db9b6"><span class="lib-card-name">Boston Public Library (all branches)</span><span class="lib-card-town">Boston</span><span class="lib-card-link">bpl.bibliocommons.com ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://cambridgema.libnet.info/events"><span class="lib-card-name">Cambridge Public Library</span><span class="lib-card-town">Cambridge</span><span class="lib-card-link">cambridgema.libnet.info ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.somervillepubliclibrary.org/events"><span class="lib-card-name">Somerville Public Library</span><span class="lib-card-town">Somerville</span><span class="lib-card-link">somervillepubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.brooklinelibrary.org/events/"><span class="lib-card-name">Brookline Public Library</span><span class="lib-card-town">Brookline</span><span class="lib-card-link">brooklinelibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.watertownlib.org/events"><span class="lib-card-name">Watertown Free Public Library</span><span class="lib-card-town">Watertown</span><span class="lib-card-link">watertownlib.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.robbinslibrary.org/events"><span class="lib-card-name">Robbins Library</span><span class="lib-card-town">Arlington</span><span class="lib-card-link">robbinslibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.belmontpubliclibrary.net/events"><span class="lib-card-name">Belmont Public Library</span><span class="lib-card-town">Belmont</span><span class="lib-card-link">belmontpubliclibrary.net ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://medfordlibrary.org/events/"><span class="lib-card-name">Medford Public Library</span><span class="lib-card-town">Medford</span><span class="lib-card-link">medfordlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://maldenpubliclibrary.org/events/"><span class="lib-card-name">Malden Public Library</span><span class="lib-card-town">Malden</span><span class="lib-card-link">maldenpubliclibrary.org ↗</span></a>
+      </div>
+    </div>
+
+    <div class="lib-region">
+      <div class="lib-region-head">
+        <div class="lib-region-name">🧭 North &amp; Northwest</div>
+        <div class="lib-region-tag">Minuteman + MVLC</div>
+      </div>
+      <div class="lib-grid">
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.carylibrary.org/events"><span class="lib-card-name">Cary Memorial Library</span><span class="lib-card-town">Lexington</span><span class="lib-card-link">carylibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://concordlibrary.org/kids/events-calendar"><span class="lib-card-name">Concord Free Library</span><span class="lib-card-town">Concord</span><span class="lib-card-link">concordlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://lincolnpl.org/events"><span class="lib-card-name">Lincoln Public Library</span><span class="lib-card-town">Lincoln</span><span class="lib-card-link">lincolnpl.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://actonmemoriallibrary.org/events"><span class="lib-card-name">Acton Memorial Library</span><span class="lib-card-town">Acton</span><span class="lib-card-link">actonmemoriallibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.maynardpubliclibrary.org/events"><span class="lib-card-name">Maynard Public Library</span><span class="lib-card-town">Maynard</span><span class="lib-card-link">maynardpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.bedfordlibrary.net/events"><span class="lib-card-name">Bedford Free Public Library</span><span class="lib-card-town">Bedford</span><span class="lib-card-link">bedfordlibrary.net ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.burlingtonpubliclibrary.org/events"><span class="lib-card-name">Burlington Public Library</span><span class="lib-card-town">Burlington</span><span class="lib-card-link">burlingtonpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://woburnpubliclibrary.org/events"><span class="lib-card-name">Woburn Public Library</span><span class="lib-card-town">Woburn</span><span class="lib-card-link">woburnpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://winpublib.org/events"><span class="lib-card-name">Winchester Public Library</span><span class="lib-card-town">Winchester</span><span class="lib-card-link">winpublib.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.readingpl.org/events/"><span class="lib-card-name">Reading Public Library</span><span class="lib-card-town">Reading</span><span class="lib-card-link">readingpl.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://stonehamlibrary.org/events"><span class="lib-card-name">Stoneham Public Library</span><span class="lib-card-town">Stoneham</span><span class="lib-card-link">stonehamlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://wakefieldlibrary.org/events"><span class="lib-card-name">Lucius Beebe Memorial Library</span><span class="lib-card-town">Wakefield</span><span class="lib-card-link">wakefieldlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.mhl.org/events"><span class="lib-card-name">Memorial Hall Library</span><span class="lib-card-town">Andover</span><span class="lib-card-link">mhl.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.stevensmemlib.org/events"><span class="lib-card-name">Stevens Memorial Library</span><span class="lib-card-town">North Andover</span><span class="lib-card-link">stevensmemlib.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://chelmsfordlibrary.org/events"><span class="lib-card-name">Chelmsford Public Library</span><span class="lib-card-town">Chelmsford</span><span class="lib-card-link">chelmsfordlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://westfordlibrary.org/events"><span class="lib-card-name">J.V. Fletcher Library</span><span class="lib-card-town">Westford</span><span class="lib-card-link">westfordlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://billericalibrary.org/events"><span class="lib-card-name">Billerica Public Library</span><span class="lib-card-town">Billerica</span><span class="lib-card-link">billericalibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.tewksburypl.org/events"><span class="lib-card-name">Tewksbury Public Library</span><span class="lib-card-town">Tewksbury</span><span class="lib-card-link">tewksburypl.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.pollardml.org/events"><span class="lib-card-name">Pollard Memorial Library</span><span class="lib-card-town">Lowell</span><span class="lib-card-link">pollardml.org ↗</span></a>
+      </div>
+    </div>
+
+    <div class="lib-region">
+      <div class="lib-region-head">
+        <div class="lib-region-name">🌊 North Shore</div>
+        <div class="lib-region-tag">NOBLE network</div>
+      </div>
+      <div class="lib-grid">
+        <a class="lib-card" target="_blank" rel="noopener" href="https://winthroppubliclibrary.org"><span class="lib-card-name">Winthrop Public Library &amp; Museum</span><span class="lib-card-town">Winthrop · story hours · STEM · maker space</span><span class="lib-card-link">winthroppubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.noblenet.org/salem/events/"><span class="lib-card-name">Salem Public Library</span><span class="lib-card-town">Salem</span><span class="lib-card-link">noblenet.org/salem ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.beverlypubliclibrary.org/events"><span class="lib-card-name">Beverly Public Library</span><span class="lib-card-town">Beverly</span><span class="lib-card-link">beverlypubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://abbotlibrary.org/events"><span class="lib-card-name">Abbot Public Library</span><span class="lib-card-town">Marblehead</span><span class="lib-card-link">abbotlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.swampscottlibrary.org/events"><span class="lib-card-name">Swampscott Public Library</span><span class="lib-card-town">Swampscott</span><span class="lib-card-link">swampscottlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.noblenet.org/lynn/events/"><span class="lib-card-name">Lynn Public Library</span><span class="lib-card-town">Lynn</span><span class="lib-card-link">noblenet.org/lynn ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://sauguspubliclibrary.org/events"><span class="lib-card-name">Saugus Public Library</span><span class="lib-card-town">Saugus</span><span class="lib-card-link">sauguspubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://peabodylibrary.org/events"><span class="lib-card-name">Peabody Institute Library</span><span class="lib-card-town">Peabody</span><span class="lib-card-link">peabodylibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.danverslibrary.org/events"><span class="lib-card-name">Peabody Institute Library</span><span class="lib-card-town">Danvers</span><span class="lib-card-link">danverslibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://sawyerfreelibrary.org/events"><span class="lib-card-name">Sawyer Free Library</span><span class="lib-card-town">Gloucester</span><span class="lib-card-link">sawyerfreelibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.rockportlibrary.org/events"><span class="lib-card-name">Rockport Public Library</span><span class="lib-card-town">Rockport</span><span class="lib-card-link">rockportlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.ipswichlibrary.org/events"><span class="lib-card-name">Ipswich Public Library</span><span class="lib-card-town">Ipswich</span><span class="lib-card-link">ipswichlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.newburyportpl.org/events"><span class="lib-card-name">Newburyport Public Library</span><span class="lib-card-town">Newburyport</span><span class="lib-card-link">newburyportpl.org ↗</span></a>
+      </div>
+    </div>
+
+    <div class="lib-region">
+      <div class="lib-region-head">
+        <div class="lib-region-name">⛵ South Shore &amp; Southeast</div>
+        <div class="lib-region-tag">OCLN + SAILS</div>
+      </div>
+      <div class="lib-grid">
+        <a class="lib-card" target="_blank" rel="noopener" href="https://thomascranelibrary.org/events"><span class="lib-card-name">Thomas Crane Public Library</span><span class="lib-card-town">Quincy</span><span class="lib-card-link">thomascranelibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.miltonlibrary.org/events"><span class="lib-card-name">Milton Public Library</span><span class="lib-card-town">Milton</span><span class="lib-card-link">miltonlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.thayerpubliclibrary.org/events"><span class="lib-card-name">Thayer Public Library</span><span class="lib-card-town">Braintree</span><span class="lib-card-link">thayerpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://hinghamlibrary.org/events"><span class="lib-card-name">Hingham Public Library</span><span class="lib-card-town">Hingham</span><span class="lib-card-link">hinghamlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.paulprattlibrary.org/events"><span class="lib-card-name">Paul Pratt Memorial Library</span><span class="lib-card-town">Cohasset</span><span class="lib-card-link">paulprattlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.scituatetownlibrary.org/events"><span class="lib-card-name">Scituate Town Library</span><span class="lib-card-town">Scituate</span><span class="lib-card-link">scituatetownlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.norwellpubliclibrary.org/events"><span class="lib-card-name">Norwell Public Library</span><span class="lib-card-town">Norwell</span><span class="lib-card-link">norwellpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.duxburyfreelibrary.org/events"><span class="lib-card-name">Duxbury Free Library</span><span class="lib-card-town">Duxbury</span><span class="lib-card-link">duxburyfreelibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.ventresslibrary.org/events"><span class="lib-card-name">Ventress Memorial Library</span><span class="lib-card-town">Marshfield</span><span class="lib-card-link">ventresslibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.plymouthpubliclibrary.org/events"><span class="lib-card-name">Plymouth Public Library</span><span class="lib-card-town">Plymouth</span><span class="lib-card-link">plymouthpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://brocktonpubliclibrary.org/events"><span class="lib-card-name">Brockton Public Library</span><span class="lib-card-town">Brockton</span><span class="lib-card-link">brocktonpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.bridgewaterpubliclibrary.org/events"><span class="lib-card-name">Bridgewater Public Library</span><span class="lib-card-town">Bridgewater</span><span class="lib-card-link">bridgewaterpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.newbedford-ma.gov/library/events/"><span class="lib-card-name">New Bedford Free Library</span><span class="lib-card-town">New Bedford</span><span class="lib-card-link">newbedford-ma.gov ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.fallriverlibrary.org/events"><span class="lib-card-name">Fall River Public Library</span><span class="lib-card-town">Fall River</span><span class="lib-card-link">fallriverlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.tauntonlibrary.org/events"><span class="lib-card-name">Taunton Public Library</span><span class="lib-card-town">Taunton</span><span class="lib-card-link">tauntonlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.attleboropl.org/events"><span class="lib-card-name">Attleboro Public Library</span><span class="lib-card-town">Attleboro</span><span class="lib-card-link">attleboropl.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.mansfieldpubliclibrary.org/events"><span class="lib-card-name">Mansfield Public Library</span><span class="lib-card-town">Mansfield</span><span class="lib-card-link">mansfieldpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://amesfreelibrary.org/events"><span class="lib-card-name">Ames Free Library</span><span class="lib-card-town">Easton</span><span class="lib-card-link">amesfreelibrary.org ↗</span></a>
+      </div>
+    </div>
+
+    <div class="lib-region">
+      <div class="lib-region-head">
+        <div class="lib-region-name">🏝️ Cape &amp; Islands</div>
+        <div class="lib-region-tag">CLAMS network</div>
+      </div>
+      <div class="lib-grid">
+        <a class="lib-card" target="_blank" rel="noopener" href="https://falmouthpubliclibrary.org/events"><span class="lib-card-name">Falmouth Public Library</span><span class="lib-card-town">Falmouth</span><span class="lib-card-link">falmouthpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.hyannislibrary.org/events"><span class="lib-card-name">Cape Cod Hyannis Library</span><span class="lib-card-town">Hyannis</span><span class="lib-card-link">hyannislibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://brewsterladieslibrary.org/events"><span class="lib-card-name">Brewster Ladies' Library</span><span class="lib-card-town">Brewster</span><span class="lib-card-link">brewsterladieslibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.sandwichpubliclibrary.org/events"><span class="lib-card-name">Sandwich Public Library</span><span class="lib-card-town">Sandwich</span><span class="lib-card-link">sandwichpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.eldredgelibrary.org/events"><span class="lib-card-name">Eldredge Public Library</span><span class="lib-card-town">Chatham</span><span class="lib-card-link">eldredgelibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.provincetownlibrary.org/events"><span class="lib-card-name">Provincetown Public Library</span><span class="lib-card-town">Provincetown</span><span class="lib-card-link">provincetownlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.nantucketatheneum.org/events"><span class="lib-card-name">Nantucket Atheneum</span><span class="lib-card-town">Nantucket</span><span class="lib-card-link">nantucketatheneum.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.vhlibrary.org/events"><span class="lib-card-name">Vineyard Haven Public Library</span><span class="lib-card-town">Vineyard Haven</span><span class="lib-card-link">vhlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://edgartownlibrary.org/events"><span class="lib-card-name">Edgartown Free Library</span><span class="lib-card-town">Edgartown</span><span class="lib-card-link">edgartownlibrary.org ↗</span></a>
+      </div>
+    </div>
+
+    <div class="lib-region">
+      <div class="lib-region-head">
+        <div class="lib-region-name">🌲 Central MA</div>
+        <div class="lib-region-tag">C/W MARS</div>
+      </div>
+      <div class="lib-grid">
+        <a class="lib-card" target="_blank" rel="noopener" href="https://mywpl.org/events"><span class="lib-card-name">Worcester Public Library</span><span class="lib-card-town">Worcester</span><span class="lib-card-link">mywpl.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://shrewsburyma.gov/247/Public-Library"><span class="lib-card-name">Shrewsbury Public Library</span><span class="lib-card-town">Shrewsbury</span><span class="lib-card-link">shrewsburyma.gov ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://westboroughlib.org/events"><span class="lib-card-name">Westborough Public Library</span><span class="lib-card-town">Westborough</span><span class="lib-card-link">westboroughlib.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.northboroughlibrary.org/events"><span class="lib-card-name">Northborough Free Library</span><span class="lib-card-town">Northborough</span><span class="lib-card-link">northboroughlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.marlborough-ma.gov/library"><span class="lib-card-name">Marlborough Public Library</span><span class="lib-card-town">Marlborough</span><span class="lib-card-link">marlborough-ma.gov ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.hudsonpubliclibrary.com/events"><span class="lib-card-name">Hudson Public Library</span><span class="lib-card-town">Hudson</span><span class="lib-card-link">hudsonpubliclibrary.com ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://graftonlibrary.org/events"><span class="lib-card-name">Grafton Public Library</span><span class="lib-card-town">Grafton</span><span class="lib-card-link">graftonlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.auburnpubliclibrary.org/events"><span class="lib-card-name">Auburn Public Library</span><span class="lib-card-town">Auburn</span><span class="lib-card-link">auburnpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://leominsterlibrary.org/events"><span class="lib-card-name">Leominster Public Library</span><span class="lib-card-town">Leominster</span><span class="lib-card-link">leominsterlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.fitchburglibrary.org/events"><span class="lib-card-name">Fitchburg Public Library</span><span class="lib-card-town">Fitchburg</span><span class="lib-card-link">fitchburglibrary.org ↗</span></a>
+      </div>
+    </div>
+
+    <div class="lib-region">
+      <div class="lib-region-head">
+        <div class="lib-region-name">⛰️ Western MA</div>
+        <div class="lib-region-tag">Valley + Berkshires</div>
+      </div>
+      <div class="lib-grid">
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.springfieldlibrary.org/events"><span class="lib-card-name">Springfield City Library</span><span class="lib-card-town">Springfield</span><span class="lib-card-link">springfieldlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.holyokelibrary.org/events"><span class="lib-card-name">Holyoke Public Library</span><span class="lib-card-town">Holyoke</span><span class="lib-card-link">holyokelibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://forbeslibrary.org/events"><span class="lib-card-name">Forbes Library</span><span class="lib-card-town">Northampton</span><span class="lib-card-link">forbeslibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.joneslibrary.org/events"><span class="lib-card-name">Jones Library</span><span class="lib-card-town">Amherst</span><span class="lib-card-link">joneslibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://greenfieldpubliclibrary.org/events"><span class="lib-card-name">Greenfield Public Library</span><span class="lib-card-town">Greenfield</span><span class="lib-card-link">greenfieldpubliclibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.pittsfieldlibrary.org/events"><span class="lib-card-name">Berkshire Athenaeum</span><span class="lib-card-town">Pittsfield</span><span class="lib-card-link">pittsfieldlibrary.org ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.masonlibrary.info/events"><span class="lib-card-name">Mason Library</span><span class="lib-card-town">Great Barrington</span><span class="lib-card-link">masonlibrary.info ↗</span></a>
+        <a class="lib-card" target="_blank" rel="noopener" href="https://www.lenoxlib.org/events"><span class="lib-card-name">Lenox Library Association</span><span class="lib-card-town">Lenox</span><span class="lib-card-link">lenoxlib.org ↗</span></a>
+      </div>
+    </div>
+
+    <div style="padding:14px 18px;background:var(--g7);border:1px solid var(--border-mid);border-radius:10px;margin-top:24px;font-size:13px;color:var(--text-muted);line-height:1.6;">
+      💡 <strong>Tip:</strong> Most library URLs go straight to the events calendar. Once there, look for a "Children" or "Kids" filter, or browse by age range. Library sites occasionally change — if a link is dead, search "[town] public library events" and it's usually the first result.
+    </div>
+
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>Looking for more in-town fun?</h2>
+  <p>Trampoline parks, ice rinks, escape rooms, climbing gyms, water parks — 22 vetted Greater Boston spots.</p>
+  <div class="cta-row">
+    <a class="btn-primary" href="family-activities.html">Browse activities →</a>
+    <a class="btn-secondary" href="calendar.html" style="color:var(--g1);background:var(--white);border-color:var(--border-mid);">Open the calendar</a>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-news" style="width:100%;max-width:560px;margin:0 auto 26px;text-align:center;">
+    <div style="font-family:var(--serif,Georgia,serif);font-size:18px;font-weight:600;color:#fff;margin-bottom:6px;">Get the weekly Boston-kids email 💌</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-bottom:12px;">New classes, camps &amp; fun events — free, unsubscribe anytime.</div>
+    <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" onsubmit="var f=this;event.preventDefault();var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';}).catch(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';});">
+      <input type="hidden" name="form-name" value="newsletter">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <span class="fn-row" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;">
+        <input type="email" name="email" required placeholder="Your email address" aria-label="Your email address" style="flex:1;min-width:200px;max-width:320px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border-mid,#d5dbe2);font-family:inherit;font-size:14px;">
+        <button type="submit" style="background:var(--g2,#1A73E8);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;">Subscribe →</button>
+      </span>
+      <div class="fn-ok" style="display:none;width:100%;padding:11px;background:var(--teal-l,#d8f3ec);color:var(--teal,#0a7d63);border-radius:10px;font-weight:700;font-size:14px;">🎉 You're on the list!</div>
+    </form>
+  </div>
+  <div class="foot-logo">
+    <div class="foot-logo-img"><span class="foot-logo-text">OZ</span></div>
+    <div class="foot-name">GOkid<span>OZ</span></div>
+  </div>
+  <div class="foot-links">
+    <a href="programs.html">Programs</a><a href="tutors.html">Tutors</a><a href="fun-events.html">Fun Events</a><a href="calendar.html">Calendar</a><a href="community.html">Community</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+  <a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+  <a class="foot-social" href="https://www.facebook.com/groups/1365198462166449/" target="_blank" rel="noopener" aria-label="GOkidOZ on Facebook"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
+  <a class="foot-social" href="https://www.instagram.com/gokidoz_boston/" target="_blank" rel="noopener" aria-label="GOkidOZ on Instagram" style="margin-left:8px;"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.52.01-4.76.07-.99.05-1.53.21-1.89.35-.48.18-.81.4-1.17.76-.36.36-.58.69-.76 1.17-.14.36-.3.9-.35 1.89-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05.99.21 1.53.35 1.89.18.48.4.81.76 1.17.36.36.69.58 1.17.76.36.14.9.3 1.89.35 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.99-.05 1.53-.21 1.89-.35.48-.18.81-.4 1.17-.76.36-.36.58-.69.76-1.17.14-.36.3-.9.35-1.89.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-.99-.21-1.53-.35-1.89-.18-.48-.4-.81-.76-1.17-.36-.36-.69-.58-1.17-.76-.36-.14-.9-.3-1.89-.35-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.46 5.46 0 110 10.92 5.46 5.46 0 010-10.92zm0 9a3.54 3.54 0 100-7.08 3.54 3.54 0 000 7.08zm6.95-9.22a1.28 1.28 0 11-2.56 0 1.28 1.28 0 012.56 0z"/></svg></a>
+  <div class="foot-copy">© 2026 GOkidOZ Boston. All rights reserved.</div>
+</footer>
+
+<script>
+  // Live search across library cards
+  const search = document.getElementById('lib-search');
+  const count = document.getElementById('lib-count');
+  const cards = document.querySelectorAll('.lib-card');
+  const total = cards.length;
+  count.textContent = total + ' libraries';
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    let shown = 0;
+    cards.forEach(c => {
+      const txt = c.textContent.toLowerCase();
+      const match = !q || txt.includes(q);
+      c.classList.toggle('lib-hidden', !match);
+      if (match) shown++;
+    });
+    // Hide empty regions
+    document.querySelectorAll('.lib-region').forEach(r => {
+      const visible = r.querySelectorAll('.lib-card:not(.lib-hidden)').length;
+      r.style.display = visible ? '' : 'none';
+    });
+    count.textContent = shown + ' of ' + total + ' libraries';
+  });
+</script>
+
+<script src="../assets/back-to-top.js"></script>
+<script src="../assets/newsletter.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/site-search.js"></script>
+<script src="../assets/newsletter-popup.js"></script>
+</body>
+</html>

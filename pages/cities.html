@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose your city · GOkidOZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<meta name="description" content="GOkidOZ is expanding beyond Boston. Find vetted kids' classes, camps, tutors, birthday vendors and family events in your city.">
+<meta name="theme-color" content="#1A73E8">
+<style>
+  .cities-wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+  .city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:8px 0 36px;}
+  .city-card{position:relative;display:block;background:var(--white);border:1.5px solid var(--border-mid);border-radius:16px;padding:22px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s,border-color .15s;overflow:hidden;}
+  .city-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(11,61,145,0.10);border-color:var(--g4);}
+  .city-card.live{border-color:var(--g2);}
+  .city-emoji{font-size:30px;display:block;margin-bottom:10px;}
+  .city-name{font-family:var(--serif);font-size:20px;color:var(--g1);font-weight:600;letter-spacing:-.2px;}
+  .city-state{font-size:12.5px;color:var(--text-muted);font-weight:600;margin-top:2px;letter-spacing:.04em;text-transform:uppercase;}
+  .city-badge{position:absolute;top:14px;right:14px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:12px;}
+  .b-live{background:var(--teal-l);color:var(--teal);}
+  .b-soon{background:var(--g7);color:var(--text-muted);}
+  .city-sec-h{font-family:var(--serif);font-size:22px;color:var(--g1);font-weight:600;margin:32px 0 14px;}
+</style>
+<link rel="canonical" href="https://gokidoz.com/pages/cities.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GOkidOZ">
+<meta property="og:title" content="Choose your city · GOkidOZ">
+<meta property="og:description" content="Find vetted kids classes, camps, tutors, birthday vendors and family events in your city.">
+<meta property="og:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="../index.html">
+      <div class="logo-mark"><span class="logo-mark-text">OZ</span></div>
+      <div class="logo-text">
+        <div class="logo-name">GOkid<span>OZ</span></div>
+        <div class="logo-slogan">Kids <em>discover</em> all year long</div>
+      </div>
+    </a>
+  </div>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav" onclick="var o=this.parentNode.querySelector('.nav-right').classList.toggle('open');this.setAttribute('aria-expanded',o)"><span class="bars"><span></span><span></span><span></span></span></button>
+  <div class="nav-right">
+    <a class="nav-link" href="programs.html">Programs</a>
+    <a class="nav-link" href="tutors.html">Tutors</a>
+    <a class="nav-link" href="fun-events.html">Fun Events</a>
+    <a class="nav-link" href="calendar.html">📅 Calendar</a>
+    <a class="nav-link" href="community.html">💬 Community</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="btn-enroll" href="enroll.html">Sign In</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a> <span class="breadcrumb-sep">›</span> <span>Cities</span></div>
+    <div class="page-eyebrow">🇺🇸 GOkidOZ Cities</div>
+    <h1 class="page-title">Find kids' activities in <em>your city</em></h1>
+    <p class="page-lede">We started in Boston and we're growing. Every GOkidOZ city has the same vetted, link-direct directory of classes, camps, tutors, birthday vendors and family events — sorted by town and age.</p>
+  </div>
+</div>
+
+<section class="sec bg-cream">
+  <div class="cities-wrap">
+
+    <h2 class="city-sec-h">🟢 Live now</h2>
+    <div class="city-grid">
+      <a class="city-card live" href="../index.html">
+        <span class="city-badge b-live">Live</span>
+        <span class="city-emoji">🦞</span>
+        <div class="city-name">Greater Boston</div>
+        <div class="city-state">Massachusetts</div>
+      </a>
+      <a class="city-card live" href="providence.html">
+        <span class="city-badge b-live">Live</span>
+        <span class="city-emoji">⚓</span>
+        <div class="city-name">Providence</div>
+        <div class="city-state">Rhode Island</div>
+      </a>
+      <a class="city-card live" href="austin.html">
+        <span class="city-badge b-live">Live</span>
+        <span class="city-emoji">🎸</span>
+        <div class="city-name">Austin</div>
+        <div class="city-state">Texas</div>
+      </a>
+      <a class="city-card live" href="new-haven.html"><span class="city-badge b-live">Live</span><span class="city-emoji">🎓</span><div class="city-name">New Haven</div><div class="city-state">Connecticut</div></a>
+      <a class="city-card live" href="hartford.html"><span class="city-badge b-live">Live</span><span class="city-emoji">🏛️</span><div class="city-name">Hartford</div><div class="city-state">Connecticut</div></a>
+      <a class="city-card live" href="bridgeport.html"><span class="city-badge b-live">Live</span><span class="city-emoji">🦓</span><div class="city-name">Bridgeport</div><div class="city-state">Connecticut</div></a>
+      <a class="city-card live" href="stamford.html"><span class="city-badge b-live">Live</span><span class="city-emoji">🏙️</span><div class="city-name">Stamford</div><div class="city-state">Connecticut</div></a>
+      <a class="city-card live" href="waterbury.html"><span class="city-badge b-live">Live</span><span class="city-emoji">🏭</span><div class="city-name">Waterbury</div><div class="city-state">Connecticut</div></a>
+      <a class="city-card live" href="londonderry.html"><span class="city-badge b-live">Live</span><span class="city-emoji">🍁</span><div class="city-name">Southern NH</div><div class="city-state">New Hampshire</div></a>
+    </div>
+
+    <h2 class="city-sec-h">🔜 Coming soon</h2>
+    <p style="font-size:14px;color:var(--text-muted);margin:-6px 0 14px;max-width:680px;">We build each city with real, verified providers — never auto-generated filler. Want yours next? <a href="contact.html" style="color:var(--g2);font-weight:700;">Tell us where you are →</a></p>
+    <div class="city-grid" id="soon-grid"></div>
+
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>Want GOkidOZ in your city?</h2>
+  <p>We're rolling out city by city. Tell us where you'd love to see GOkidOZ next.</p>
+  <div class="cta-row"><a class="btn-primary" href="contact.html">Request your city →</a></div>
+</div>
+
+<footer>
+  <div class="foot-news" style="width:100%;max-width:560px;margin:0 auto 26px;text-align:center;">
+    <div style="font-family:var(--serif,Georgia,serif);font-size:18px;font-weight:600;color:#fff;margin-bottom:6px;">Get the weekly Boston-kids email 💌</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-bottom:12px;">New classes, camps &amp; fun events — free, unsubscribe anytime.</div>
+    <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" onsubmit="var f=this;event.preventDefault();var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';}).catch(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';});">
+      <input type="hidden" name="form-name" value="newsletter">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <span class="fn-row" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;">
+        <input type="email" name="email" required placeholder="Your email address" aria-label="Your email address" style="flex:1;min-width:200px;max-width:320px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border-mid,#d5dbe2);font-family:inherit;font-size:14px;">
+        <button type="submit" style="background:var(--g2,#1A73E8);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;">Subscribe →</button>
+      </span>
+      <div class="fn-ok" style="display:none;width:100%;padding:11px;background:var(--teal-l,#d8f3ec);color:var(--teal,#0a7d63);border-radius:10px;font-weight:700;font-size:14px;">🎉 You're on the list!</div>
+    </form>
+  </div>
+  <div class="foot-logo"><div class="foot-logo-img"><span class="foot-logo-text">OZ</span></div><div class="foot-name">GOkid<span>OZ</span></div></div>
+  <div class="foot-links"><a href="programs.html">Programs</a><a href="fun-events.html">Fun Events</a><a href="tutors.html">Tutors</a><a href="calendar.html">Calendar</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+  <div class="foot-copy">© 2026 GOkidOZ. All rights reserved.</div>
+</footer>
+
+<script>
+(function(){
+  var soon=[
+    ["Austin","Texas","🎸"],["Dallas","Texas","🤠"],["Houston","Texas","🚀"],["San Antonio","Texas","🌵"],
+    ["Denver","Colorado","🏔️"],["Boulder","Colorado","🪨"],["Colorado Springs","Colorado","⛰️"],["Fort Collins","Colorado","🌲"],
+    ["Phoenix","Arizona","🌞"],["Tucson","Arizona","🌵"],["Albuquerque","New Mexico","🎈"],["Santa Fe","New Mexico","🌶️"],
+    ["Salt Lake City","Utah","🏔️"],["Cincinnati","Ohio","⚾"],["Pittsburgh","Pennsylvania","🌉"],["New Orleans","Louisiana","🎷"],
+    ["Wichita","Kansas","🌾"],["Cheyenne","Wyoming","🐎"],["Chicago","Illinois","🌆"],["Seattle","Washington","🌧️"],
+    ["Portland","Oregon","🌹"],["Nashville","Tennessee","🎵"],["Atlanta","Georgia","🍑"],["Minneapolis","Minnesota","❄️"]
+  ];
+  var g=document.getElementById('soon-grid');
+  soon.forEach(function(c){
+    var d=document.createElement('div');
+    d.className='city-card';
+    d.style.cursor='default';
+    d.innerHTML='<span class="city-badge b-soon">Soon</span><span class="city-emoji">'+c[2]+'</span><div class="city-name">'+c[0]+'</div><div class="city-state">'+c[1]+'</div>';
+    g.appendChild(d);
+  });
+})();
+</script>
+<script src="../assets/back-to-top.js"></script>
+<script src="../assets/newsletter.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/site-search.js"></script>
+<script src="../assets/newsletter-popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>After-School & School Year · GOkidOZ Boston</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* Category nav at top */
+  .cat-nav-wrap{position:sticky;top:0;z-index:10;background:var(--cream);padding:14px 0 18px;border-bottom:1px solid var(--border-mid);margin-bottom:24px;}
+  .cat-nav{display:flex;gap:8px;flex-wrap:wrap;max-width:1200px;margin:0 auto;padding:0 20px;}
+  .cat-pill{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:1.5px solid var(--border-mid);color:var(--g1);font-family:var(--sans);font-weight:700;font-size:13.5px;padding:9px 16px;border-radius:24px;cursor:pointer;text-decoration:none;transition:background .15s,border-color .15s,color .15s,transform .15s;}
+  .cat-pill:hover{background:var(--g7);border-color:var(--g4);transform:translateY(-1px);}
+  .cat-pill.active{background:var(--g2);color:var(--white);border-color:var(--g2);}
+  .cat-pill .ct{font-size:11px;font-weight:800;background:var(--g7);color:var(--g2);padding:2px 8px;border-radius:10px;}
+  .cat-pill.active .ct{background:rgba(255,255,255,0.20);color:var(--white);}
+
+  /* Filter row */
+  .as-filter-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;max-width:1200px;margin:0 auto 18px;padding:0 20px;}
+  .as-search{flex:1;min-width:240px;position:relative;}
+  .as-search::before{content:'🔍';position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+  .as-search input{width:100%;padding:11px 14px 11px 38px;border-radius:11px;border:1.5px solid var(--border-mid);background:var(--white);font-family:var(--sans);font-size:14px;outline:none;}
+  .as-sort{padding:11px 14px;border-radius:11px;border:1.5px solid var(--border-mid);background:var(--white);font-family:var(--sans);font-size:14px;color:var(--g1);font-weight:600;cursor:pointer;}
+  .as-count{font-size:12.5px;color:var(--text-muted);font-weight:700;}
+
+  /* Section group highlighted on filter */
+  .subj-section.hidden{display:none;}
+  .subj-section h5.hidden{display:none;}
+  .subj-card.hidden{display:none;}
+  /* Active scroll target — quick glow */
+  :target .subj-eyebrow{background:linear-gradient(90deg,var(--straw-l),transparent);border-radius:8px;padding:6px 10px;transition:background .8s;}
+
+  /* Special-needs filter chips */
+  .sn-filter{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px;}
+  .sn-chip{background:var(--white);border:1.5px solid var(--border-mid);color:var(--g1);font-family:var(--sans);font-weight:700;font-size:12.5px;padding:6px 12px;border-radius:20px;cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
+  .sn-chip:hover{background:var(--g7);border-color:var(--g4);}
+  .sn-chip.active{background:var(--g2);color:var(--white);border-color:var(--g2);}
+  .subj-card.sn-hidden{display:none;}
+
+  /* Kind badge — tells "browse a directory" apart from "go to one business" */
+  .subj-card{position:relative;}
+  .subj-card .subj-arrow{display:none;}              /* replaced by persistent kind badge */
+  .subj-kind{position:absolute;top:10px;right:10px;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border-radius:7px;line-height:1;white-space:nowrap;}
+  .subj-card[data-kind="hub"] .subj-kind{background:var(--g7);color:var(--g2);}
+  .subj-card[data-kind="ext"] .subj-kind{background:var(--cream);color:var(--text-muted);border:1px solid var(--border-mid);}
+  .subj-card[data-kind="hub"]{padding-top:30px;}
+  .subj-card[data-kind="ext"]{padding-top:30px;}
+
+  /* Popular search chips */
+  .as-popular{display:flex;gap:7px;flex-wrap:wrap;align-items:center;max-width:1200px;margin:0 auto 18px;padding:0 20px;}
+  .as-popular .pl{font-size:12px;color:var(--text-muted);font-weight:700;margin-right:2px;}
+  .as-pop-chip{background:var(--white);border:1.5px solid var(--border-mid);color:var(--g1);font-family:var(--sans);font-weight:700;font-size:12.5px;padding:6px 13px;border-radius:18px;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;}
+  .as-pop-chip:hover{background:var(--g7);border-color:var(--g4);transform:translateY(-1px);}
+
+  /* === REDESIGN: search hero === */
+  .as-hero{background:linear-gradient(180deg,var(--cream),var(--white));border-bottom:1px solid var(--border-mid);padding:26px 0 24px;margin-bottom:26px;}
+  .as-hero-inner{max-width:1100px;margin:0 auto;padding:0 20px;}
+  .as-hero-search{position:relative;max-width:640px;margin:0 auto 14px;}
+  .as-hero-search::before{content:'🔍';position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:17px;pointer-events:none;opacity:.7;}
+  .as-hero-search input{width:100%;padding:16px 20px 16px 52px;border-radius:16px;border:2px solid var(--border-mid);background:var(--white);font-family:var(--sans);font-size:16.5px;outline:none;box-shadow:0 6px 20px rgba(11,61,145,0.06);transition:border-color .15s,box-shadow .15s;}
+  .as-hero-search input:focus{border-color:var(--g2);box-shadow:0 6px 24px rgba(26,115,232,0.16);}
+  .as-hero .as-popular{justify-content:center;margin:0 auto 22px;}
+
+  /* === REDESIGN: bold category tiles === */
+  .cat-tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:1100px;margin:0 auto;}
+  .cat-tile{display:flex;flex-direction:column;align-items:flex-start;gap:11px;text-align:left;background:var(--white);border:1.5px solid var(--border-mid);border-radius:18px;padding:18px 16px;cursor:pointer;position:relative;font-family:var(--sans);transition:transform .15s,box-shadow .15s,border-color .15s,background .15s;}
+  .cat-tile:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(11,61,145,0.10);border-color:var(--g4);}
+  .cat-tile.active{border-color:var(--g2);box-shadow:0 10px 26px rgba(26,115,232,0.15);background:linear-gradient(180deg,var(--g7),var(--white));}
+  .cat-tile .ct-ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:23px;}
+  .cat-tile .ct-tx{display:flex;flex-direction:column;gap:3px;}
+  .cat-tile .ct-nm{font-family:var(--serif);font-size:16.5px;font-weight:700;color:var(--g1);line-height:1.1;}
+  .cat-tile .ct-ds{font-size:11.5px;color:var(--text-muted);line-height:1.35;}
+  .cat-tile .ct-ct{position:absolute;top:14px;right:14px;font-size:11px;font-weight:800;color:var(--g2);background:var(--g7);padding:3px 9px;border-radius:11px;}
+  .cat-tile.active .ct-ct{background:var(--g2);color:#fff;}
+
+  /* === REDESIGN: accordion sections === */
+  .subj-section{margin-bottom:10px;}
+  .subj-section .subj-eyebrow{cursor:pointer;font-size:16px!important;font-weight:800!important;text-transform:none!important;letter-spacing:0!important;color:var(--g1)!important;background:var(--white);border:1.5px solid var(--border-mid);border-radius:14px;padding:15px 18px;margin-bottom:16px;gap:12px;transition:border-color .15s,background .15s;}
+  .subj-section .subj-eyebrow:hover{border-color:var(--g4);background:var(--g7);}
+  .subj-section .subj-eyebrow::after{display:none!important;}
+  .acc-meta{margin-left:auto;display:flex;align-items:center;gap:12px;}
+  .acc-count{font-size:12px;font-weight:800;color:var(--g2);background:var(--g7);padding:3px 11px;border-radius:11px;}
+  .acc-chev{font-size:13px;color:var(--text-muted);transition:transform .2s;line-height:1;}
+  .subj-section:not(.acc-collapsed) .acc-chev{transform:rotate(180deg);}
+  .subj-section.acc-collapsed .subj-eyebrow{margin-bottom:0;}
+  .subj-section.acc-collapsed > *:not(.subj-eyebrow){display:none!important;}
+  .subj-card.trunc-hidden{display:none;}
+  .gz-more-btn{display:inline-flex;align-items:center;gap:6px;margin:4px 0 8px;background:var(--white);border:1.5px solid var(--border-mid);color:var(--g2);font-family:var(--sans);font-weight:700;font-size:13px;padding:9px 16px;border-radius:11px;cursor:pointer;transition:background .15s,border-color .15s;}
+  .gz-more-btn:hover{background:var(--g7);border-color:var(--g4);}
+</style>
+<meta name="description" content="After-school and school-year programs for Boston-area kids — academics, special-needs support, STEM, arts, music and sports, filter by town and activity.">
+<meta name="theme-color" content="#1A73E8">
+<link rel="canonical" href="https://gokidoz.com/pages/after-school.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GOkidOZ Boston">
+<meta property="og:title" content="After-School & School Year · GOkidOZ Boston">
+<meta property="og:description" content="After-school and school-year programs for Boston-area kids — academics, special-needs support, STEM, arts, music and sports, filter by town and activity.">
+<meta property="og:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<meta property="og:url" content="https://gokidoz.com/pages/after-school.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="After-School & School Year · GOkidOZ Boston">
+<meta name="twitter:description" content="After-school and school-year programs for Boston-area kids — academics, special-needs support, STEM, arts, music and sports, filter by town and activity.">
+<meta name="twitter:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<script src="../assets/town-radius.js"></script>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"After-School & Classes · GOkidOZ Boston","description":"Weekly after-school classes for kids across Greater Boston — academics, STEM, arts, music, sports, languages and special-needs support.","url":"https://gokidoz.com/pages/after-school.html","isPartOf":{"@type":"WebSite","name":"GOkidOZ Boston","url":"https://gokidoz.com/"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://gokidoz.com/"},{"@type":"ListItem","position":2,"name":"After-School & Classes","item":"https://gokidoz.com/pages/after-school.html"}]}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ItemList","name":"After-School & School Year","numberOfItems":44,"itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"LocalBusiness","name":"Children's School of Science","url":"https://childrensschoolofscience.org/"}},{"@type":"ListItem","position":2,"item":{"@type":"LocalBusiness","name":"LEGO Robotics · TKA","url":"https://www.tkaprogram.org/enrichment-classes-1"}},{"@type":"ListItem","position":3,"item":{"@type":"LocalBusiness","name":"Chess · TKA","url":"https://www.tkaprogram.org/enrichment-classes-1"}},{"@type":"ListItem","position":4,"item":{"@type":"LocalBusiness","name":"Young Author Lab","url":"https://www.youngauthorlab.com/"}},{"@type":"ListItem","position":5,"item":{"@type":"LocalBusiness","name":"Hipstitch · Newton","url":"https://www.hipstitchers.com/products/after-school-sewing-classes"}},{"@type":"ListItem","position":6,"item":{"@type":"LocalBusiness","name":"Hipstitch · Wellesley","url":"https://www.hipstitchers.com/products/after-school-in-studio-sewing-classes-wellesley"}},{"@type":"ListItem","position":7,"item":{"@type":"LocalBusiness","name":"Hipstitch · Brookline","url":"https://www.hipstitchers.com/products/after-school-clothing-class-brookline"}},{"@type":"ListItem","position":8,"item":{"@type":"LocalBusiness","name":"Hipstitch · Arlington","url":"https://www.hipstitchers.com/products/after-school-classes-arlington"}},{"@type":"ListItem","position":9,"item":{"@type":"LocalBusiness","name":"Junior Fashion Design","url":"https://www.hipstitchers.com/products/junior-fashion-design-newton"}},{"@type":"ListItem","position":10,"item":{"@type":"LocalBusiness","name":"Parent + Child Sewing","url":"https://www.hipstitchers.com/products/parent-and-child-class-newton"}},{"@type":"ListItem","position":11,"item":{"@type":"LocalBusiness","name":"Winthrop School of Performing Arts","url":"https://wspadancer.com"}},{"@type":"ListItem","position":12,"item":{"@type":"LocalBusiness","name":"Strength & Conditioning","url":"https://flightperformanceandfitness.com/sports-performance-training-in-waltham/"}},{"@type":"ListItem","position":13,"item":{"@type":"LocalBusiness","name":"Dyslexia & Reading","url":"https://www.commlearn.com/"}},{"@type":"ListItem","position":14,"item":{"@type":"LocalBusiness","name":"CDC · Free O-G Tutoring","url":"https://childrensdyslexiacenters.org/centers/massachusetts-greater-boston/"}},{"@type":"ListItem","position":15,"item":{"@type":"LocalBusiness","name":"Carroll School Outreach","url":"https://www.carrollschool.org/"}},{"@type":"ListItem","position":16,"item":{"@type":"LocalBusiness","name":"Boston Dyslexia","url":"https://bostondyslexia.com/"}},{"@type":"ListItem","position":17,"item":{"@type":"LocalBusiness","name":"Axiom Learning","url":"https://www.axiomlearning.com/"}},{"@type":"ListItem","position":18,"item":{"@type":"LocalBusiness","name":"Lindamood-Bell · Newton","url":"https://lindamoodbell.com/"}},{"@type":"ListItem","position":19,"item":{"@type":"LocalBusiness","name":"Landmark School Outreach","url":"https://www.landmarkschool.org/outreach"}},{"@type":"ListItem","position":20,"item":{"@type":"LocalBusiness","name":"Learning Prep School","url":"https://thelearningprep.org/"}},{"@type":"ListItem","position":21,"item":{"@type":"LocalBusiness","name":"IDA Provider Directory","url":"https://www.dyslexiaida.org/find-a-provider/"}},{"@type":"ListItem","position":22,"item":{"@type":"LocalBusiness","name":"The Learning Club","url":"https://www.thelearningclubinc.org/"}},{"@type":"ListItem","position":23,"item":{"@type":"LocalBusiness","name":"ADHD · Exec Function","url":"https://engagingmindsonline.com/"}},{"@type":"ListItem","position":24,"item":{"@type":"LocalBusiness","name":"Exec Function Coaching","url":"https://www.preppedandpolished.com/"}},{"@type":"ListItem","position":25,"item":{"@type":"LocalBusiness","name":"Brain Balance · Norwell + Westborough","url":"https://www.brainbalancecenters.com/"}},{"@type":"ListItem","position":26,"item":{"@type":"LocalBusiness","name":"Fusion Academy · Boston/Newton","url":"https://www.fusionacademy.com/campuses/boston/"}},{"@type":"ListItem","position":27,"item":{"@type":"LocalBusiness","name":"Child Mind Institute","url":"https://childmind.org/our-care/"}},{"@type":"ListItem","position":28,"item":{"@type":"LocalBusiness","name":"AANE · Autism / Asperger","url":"https://www.aane.org/"}},{"@type":"ListItem","position":29,"item":{"@type":"LocalBusiness","name":"Successfully Social","url":"https://www.besuccessfullysocial.com/"}},{"@type":"ListItem","position":30,"item":{"@type":"LocalBusiness","name":"ABA Therapy","url":"https://www.beaconaba.com/"}},{"@type":"ListItem","position":31,"item":{"@type":"LocalBusiness","name":"MGH ASPIRE","url":"https://www.massgeneral.org/children/aspire"}},{"@type":"ListItem","position":32,"item":{"@type":"LocalBusiness","name":"InstaSwim · Adaptive Lessons","url":"https://instaswimusa.com/swim-lesson-programs/"}},{"@type":"ListItem","position":33,"item":{"@type":"LocalBusiness","name":"ABL Fitness · Adaptive Group Classes","url":"https://ablfitness.org/adaptive-group-classes/"}},{"@type":"ListItem","position":34,"item":{"@type":"LocalBusiness","name":"Playful Speech Explorers","url":"https://www.playfulspeechexplorers.com/"}},{"@type":"ListItem","position":35,"item":{"@type":"LocalBusiness","name":"Newton OT Associates","url":"https://newtonotma.com/"}},{"@type":"ListItem","position":36,"item":{"@type":"LocalBusiness","name":"NESCA · Neuropsych Eval","url":"https://nesca-newton.com/"}},{"@type":"ListItem","position":37,"item":{"@type":"LocalBusiness","name":"IEP & 504 Advocacy","url":"https://www.massadvocates.org/"}},{"@type":"ListItem","position":38,"item":{"@type":"LocalBusiness","name":"Federation for Children w/ Special Needs","url":"https://www.fcsn.org/"}},{"@type":"ListItem","position":39,"item":{"@type":"LocalBusiness","name":"Disability Rights MA","url":"https://disabilityrightsma.org/"}},{"@type":"ListItem","position":40,"item":{"@type":"LocalBusiness","name":"FCSN Workshops","url":"https://www.fcsn.org/parent-training-information/"}},{"@type":"ListItem","position":41,"item":{"@type":"LocalBusiness","name":"Adaptive Sports","url":"https://www.bostonmiraclesport.org/"}},{"@type":"ListItem","position":42,"item":{"@type":"LocalBusiness","name":"Special Olympics MA","url":"https://www.specialolympicsma.org/"}},{"@type":"ListItem","position":43,"item":{"@type":"LocalBusiness","name":"Perkins School Outreach","url":"https://www.perkins.org/programs/outreach/"}},{"@type":"ListItem","position":44,"item":{"@type":"LocalBusiness","name":"Understood.org","url":"https://www.understood.org/"}}]}
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="../index.html">
+      <div class="logo-mark"><span class="logo-mark-text">OZ</span></div>
+      <div class="logo-text">
+        <div class="logo-name">GOkid<span>OZ</span></div>
+        <div class="logo-slogan">Boston kids <em>discover</em> all year long</div>
+      </div>
+    </a>
+  </div>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav" onclick="var o=this.parentNode.querySelector('.nav-right').classList.toggle('open');this.setAttribute('aria-expanded',o)"><span class="bars"><span></span><span></span><span></span></span></button>
+  <div class="nav-right">
+    <a class="nav-link nav-link-active" href="programs.html">Programs</a>
+    <a class="nav-link" href="tutors.html">Tutors</a>
+    <a class="nav-link" href="fun-events.html">Fun Events</a>
+    <a class="nav-link" href="calendar.html">📅 Calendar</a>
+    <a class="nav-link" href="community.html">💬 Community</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="btn-enroll" href="enroll.html">Sign In</a>
+  </div>
+</nav>
+
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="programs.html">Programs</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>After-School & School Year</span>
+    </div>
+    <div class="page-eyebrow">📚 School year · Sept – June</div>
+    <h1 class="page-title">After-School &amp; <em>School Year</em></h1>
+    <p class="page-lede">Weekly small-group classes that fit around the school day — academics, special-needs services, arts and sports. Use the category nav and search below to find exactly what you need.</p>
+  </div>
+</div>
+
+<!-- SEARCH HERO + CATEGORY TILES -->
+<div class="as-hero">
+  <div class="as-hero-inner">
+    <div class="as-hero-search">
+      <input type="text" id="as-search" placeholder="Search any activity — piano, chess, dyslexia, soccer, sewing…" autocomplete="off">
+    </div>
+    <div class="as-popular">
+      <span class="pl">Popular:</span>
+      <button class="as-pop-chip" type="button" data-q="chess">♟️ Chess</button>
+      <button class="as-pop-chip" type="button" data-q="piano">🎹 Piano</button>
+      <button class="as-pop-chip" type="button" data-q="dyslexia">📖 Dyslexia</button>
+      <button class="as-pop-chip" type="button" data-q="coding">💻 Coding</button>
+      <button class="as-pop-chip" type="button" data-q="soccer">⚽ Soccer</button>
+      <button class="as-pop-chip" type="button" data-q="swim">🏊 Swim</button>
+    </div>
+    <div class="cat-tiles" id="cat-tiles">
+      <button class="cat-tile" type="button" data-cat="academics"><span class="ct-ic" style="background:var(--g7)">📘</span><span class="ct-tx"><span class="ct-nm">Academics</span><span class="ct-ds">Math · reading · languages · chess</span></span><span class="ct-ct">0</span></button>
+      <button class="cat-tile" type="button" data-cat="maker"><span class="ct-ic" style="background:var(--teal-l)">🛠️</span><span class="ct-tx"><span class="ct-nm">STEM &amp; Maker</span><span class="ct-ds">Coding · robotics · 3D printing</span></span><span class="ct-ct">0</span></button>
+      <button class="cat-tile" type="button" data-cat="arts"><span class="ct-ic" style="background:var(--rose-l)">🎨</span><span class="ct-tx"><span class="ct-nm">Arts &amp; Music</span><span class="ct-ds">Instruments · sewing · writing</span></span><span class="ct-ct">0</span></button>
+      <button class="cat-tile" type="button" data-cat="sports"><span class="ct-ic" style="background:var(--straw-l)">⚽</span><span class="ct-tx"><span class="ct-nm">Sports</span><span class="ct-ds">Teams · dance · martial arts · swim</span></span><span class="ct-ct">0</span></button>
+      <button class="cat-tile" type="button" data-cat="special-needs"><span class="ct-ic" style="background:var(--lav-l)">💙</span><span class="ct-tx"><span class="ct-nm">Special Needs</span><span class="ct-ds">ADHD · dyslexia · ASD · speech · advocacy</span></span><span class="ct-ct">0</span></button>
+    </div>
+    <div class="as-filter-row">
+      <select id="as-town" class="as-sort">
+      <option value="">📍 Any town</option>
+      <optgroup label="MetroWest · West">
+        <option value="wellesley">Wellesley</option>
+        <option value="newton">Newton</option>
+        <option value="needham">Needham</option>
+        <option value="natick">Natick</option>
+        <option value="framingham">Framingham</option>
+        <option value="dover">Dover</option>
+        <option value="sherborn">Sherborn</option>
+        <option value="weston">Weston</option>
+        <option value="wayland">Wayland</option>
+        <option value="sudbury">Sudbury</option>
+        <option value="medfield">Medfield</option>
+        <option value="hopkinton">Hopkinton</option>
+        <option value="holliston">Holliston</option>
+        <option value="ashland">Ashland</option>
+        <option value="westborough">Westborough</option>
+        <option value="marlborough">Marlborough</option>
+      </optgroup>
+      <optgroup label="South of Boston">
+        <option value="dedham">Dedham</option>
+        <option value="westwood">Westwood</option>
+        <option value="norwood">Norwood</option>
+        <option value="walpole">Walpole</option>
+        <option value="canton">Canton</option>
+        <option value="milton">Milton</option>
+        <option value="quincy">Quincy</option>
+        <option value="hingham">Hingham</option>
+        <option value="braintree">Braintree</option>
+      </optgroup>
+      <optgroup label="West / Northwest">
+        <option value="brookline">Brookline</option>
+        <option value="waltham">Waltham</option>
+        <option value="watertown">Watertown</option>
+        <option value="belmont">Belmont</option>
+        <option value="lexington">Lexington</option>
+        <option value="arlington">Arlington</option>
+        <option value="winchester">Winchester</option>
+        <option value="woburn">Woburn</option>
+        <option value="stoneham">Stoneham</option>
+        <option value="bedford">Bedford</option>
+        <option value="concord">Concord</option>
+        <option value="lincoln">Lincoln</option>
+      </optgroup>
+      <optgroup label="Boston · Inner core">
+        <option value="boston">Boston</option>
+        <option value="cambridge">Cambridge</option>
+        <option value="somerville">Somerville</option>
+        <option value="medford">Medford</option>
+        <option value="malden">Malden</option>
+        <option value="brighton">Brighton / Allston</option>
+        <option value="dorchester">Dorchester</option>
+        <option value="jamaica-plain">Jamaica Plain</option>
+        <option value="charlestown">Charlestown</option>
+        <option value="roxbury">Roxbury</option>
+      </optgroup>
+      <optgroup label="North Shore · South Shore">
+        <option value="andover">Andover</option>
+        <option value="north-andover">North Andover</option>
+        <option value="marblehead">Marblehead</option>
+        <option value="lynn">Lynn</option>
+        <option value="peabody">Peabody</option>
+        <option value="danvers">Danvers</option>
+        <option value="foxborough">Foxborough</option>
+        <option value="plymouth">Plymouth</option>
+        <option value="winthrop">Winthrop</option>
+      </optgroup>
+      <optgroup label="Online">
+        <option value="online">💻 Online · in-home</option>
+        <option value="multi">🗺️ Multiple locations</option>
+      </optgroup>
+    </select>
+    <select id="as-radius" class="as-sort">
+      <option value="">📏 Any distance</option>
+      <option value="5">Within 5 miles</option>
+      <option value="10">Within 10 miles</option>
+      <option value="15">Within 15 miles</option>
+      <option value="25">Within 25 miles</option>
+    </select>
+    <select id="as-sort" class="as-sort">
+      <option value="default">Sort: default order</option>
+      <option value="az">A → Z</option>
+      <option value="za">Z → A</option>
+    </select>
+      <span class="as-count" id="as-count">86 subjects</span>
+    </div>
+  </div>
+</div>
+
+<section class="sec bg-cream" style="padding-top:0;">
+  <div class="inner">
+
+    <div class="subj-section" id="academics" data-cat="academics">
+      <div class="subj-eyebrow">📘 Academics</div>
+      <div class="subj-grid">
+        <a class="subj-card" href="programs/english.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">📚</div><div class="subj-name">English Enrichments</div><div class="subj-meta">Reading · Writing · Speech</div></a>
+        <a class="subj-card" href="programs/chess.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">♟️</div><div class="subj-name">Chess</div><div class="subj-meta">Clubs · coaching · tournaments</div></a>
+        <a class="subj-card" href="programs/math.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">🧮</div><div class="subj-name">Math</div><div class="subj-meta">K – 8 · Common Core</div></a>
+        <a class="subj-card" href="programs/science.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">🔬</div><div class="subj-name">Science</div><div class="subj-meta">Labs · STEM · Robotics</div></a>
+        <a class="subj-card" href="programs/russian.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🇷🇺</div><div class="subj-name">Russian</div><div class="subj-meta">Native + 2nd-language</div></a>
+        <a class="subj-card" href="programs/chinese-mandarin.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🇨🇳</div><div class="subj-name">Chinese &amp; Mandarin</div><div class="subj-meta">Weekend schools · immersion · tutors</div></a>
+        <a class="subj-card" href="programs/world-languages.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">🌍</div><div class="subj-name">World Languages</div><div class="subj-meta">Spanish · French · German · more</div></a>
+      </div>
+    </div>
+
+    
+
+    <div class="subj-section" id="maker" data-cat="maker">
+      <div class="subj-eyebrow">🛠️ Maker · Engineering · 3D Printing</div>
+      <div class="subj-grid">
+        <a class="subj-card" target="_blank" rel="noopener" href="https://childrensschoolofscience.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-blue">🔬</div><div class="subj-name">Children's School of Science</div><div class="subj-meta">Woods Hole · since 1913 · summer</div></a>
+        <a class="subj-card" href="programs/coding-robotics.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">💻</div><div class="subj-name">Coding &amp; Robotics</div><div class="subj-meta">Scratch · Python · VEX · camps</div></a>
+        <a class="subj-card" href="programs/3d-printing.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🖨️</div><div class="subj-name">3D Printing &amp; CAD</div><div class="subj-meta">Design · prototype · print · ages 8+</div></a>
+        <a class="subj-card" href="programs/science.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">🤖</div><div class="subj-name">Robotics</div><div class="subj-meta">LEGO · FIRST · NE Sci-Tech</div></a>
+        <a class="subj-card" href="programs/science.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">⚡</div><div class="subj-name">Electronics &amp; Coding</div><div class="subj-meta">Arduino · KTBYTE · iCode</div></a>
+        <a class="subj-card" href="programs/science.html"><span class="subj-arrow">→</span><div class="subj-icon si-orange">🔨</div><div class="subj-name">Makerspaces</div><div class="subj-meta">Robo Hub · Parts &amp; Crafts · Tinkerhaus</div></a>
+        <a class="subj-card" target="_blank" rel="noopener" href="https://www.tkaprogram.org/enrichment-classes-1"><span class="subj-arrow">↗</span><div class="subj-icon si-green">🧱</div><div class="subj-name">LEGO Robotics · TKA</div><div class="subj-meta">Natick · K–G5 · ICROBOT</div></a>
+        <a class="subj-card" target="_blank" rel="noopener" href="https://www.tkaprogram.org/enrichment-classes-1"><span class="subj-arrow">↗</span><div class="subj-icon si-orange">♟️</div><div class="subj-name">Chess · TKA</div><div class="subj-meta">Natick · enrichment</div></a>
+      </div>
+    </div>
+
+    <div class="subj-section" id="arts" data-cat="arts">
+      <div class="subj-eyebrow">🎨 Arts · Music · Sewing</div>
+
+      <h5 style="font-family:var(--serif);font-size:15px;color:var(--g1);font-weight:600;margin:18px 0 10px;display:flex;align-items:center;gap:8px;">✍️ Writing &amp; publishing</h5>
+      <div class="subj-grid sports">
+        <a class="subj-card" target="_blank" rel="noopener" href="https://www.youngauthorlab.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-red">✍️</div><div class="subj-name">Young Author Lab</div><div class="subj-meta">Write · Draw · Publish · Fall Mondays<span class="gz-towns" style="display:none">weston wellesley wayland belmont</span></div></a>
+      </div>
+
+      <h5 style="font-family:var(--serif);font-size:15px;color:var(--g1);font-weight:600;margin:18px 0 10px;display:flex;align-items:center;gap:8px;">🎹 Instruments <span style="font-size:12px;font-weight:500;color:var(--text-muted);font-family:var(--sans);">· private lessons + group classes · all levels</span></h5>
+      <div class="subj-grid sports">
+        <a class="subj-card" href="programs/piano.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">🎹</div><div class="subj-name">Piano</div><div class="subj-meta">Classical &amp; jazz</div></a>
+        <a class="subj-card" href="programs/violin.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🎻</div><div class="subj-name">Violin</div><div class="subj-meta">Suzuki &amp; traditional</div></a>
+        <a class="subj-card" href="programs/viola.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🎻</div><div class="subj-name">Viola</div><div class="subj-meta">Strings ensemble</div></a>
+        <a class="subj-card" href="programs/cello.html"><span class="subj-arrow">→</span><div class="subj-icon si-orange">🎻</div><div class="subj-name">Cello</div><div class="subj-meta">Bowed · strings</div></a>
+        <a class="subj-card" href="programs/double-bass.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🎻</div><div class="subj-name">Double Bass</div><div class="subj-meta">Orchestra &amp; jazz</div></a>
+        <a class="subj-card" href="programs/harp.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🎵</div><div class="subj-name">Harp</div><div class="subj-meta">Celtic + concert</div></a>
+        <a class="subj-card" href="programs/guitar.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">🎸</div><div class="subj-name">Guitar</div><div class="subj-meta">Acoustic &amp; electric</div></a>
+        <a class="subj-card" href="programs/bass-guitar.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">🎸</div><div class="subj-name">Bass Guitar</div><div class="subj-meta">Electric · jazz · rock</div></a>
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🪕</div><div class="subj-name">Ukulele</div><div class="subj-meta">Great starter · ages 5+</div></a>
+        <a class="subj-card" href="programs/flute.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">🪈</div><div class="subj-name">Flute</div><div class="subj-meta">Concert &amp; piccolo</div></a>
+        <a class="subj-card" href="programs/clarinet.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🎶</div><div class="subj-name">Clarinet</div><div class="subj-meta">Woodwind · band</div></a>
+        <a class="subj-card" href="programs/saxophone.html"><span class="subj-arrow">→</span><div class="subj-icon si-orange">🎷</div><div class="subj-name">Saxophone</div><div class="subj-meta">Alto · tenor · jazz</div></a>
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🎶</div><div class="subj-name">Oboe</div><div class="subj-meta">Woodwind · orchestra</div></a>
+        <a class="subj-card" href="programs/trumpet.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🎺</div><div class="subj-name">Trumpet</div><div class="subj-meta">Brass · jazz band</div></a>
+        <a class="subj-card" href="programs/trombone.html"><span class="subj-arrow">→</span><div class="subj-icon si-orange">🎺</div><div class="subj-name">Trombone</div><div class="subj-meta">Brass · slide</div></a>
+        <a class="subj-card" href="programs/french-horn.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🎺</div><div class="subj-name">French Horn</div><div class="subj-meta">Brass · orchestra</div></a>
+        <a class="subj-card" href="programs/drums.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🥁</div><div class="subj-name">Drums</div><div class="subj-meta">Kit · rock · jazz</div></a>
+        <a class="subj-card" href="programs/percussion.html"><span class="subj-arrow">→</span><div class="subj-icon si-orange">🪘</div><div class="subj-name">Percussion</div><div class="subj-meta">Marimba · timpani · world</div></a>
+        <a class="subj-card" href="programs/accordion.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🪗</div><div class="subj-name">Accordion</div><div class="subj-meta">Folk · classical</div></a>
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🎼</div><div class="subj-name">Balalaika</div><div class="subj-meta">Russian folk · strings</div></a>
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">🪈</div><div class="subj-name">Recorder</div><div class="subj-meta">Classroom intro · ages 5+</div></a>
+      </div>
+
+      <h5 style="font-family:var(--serif);font-size:15px;color:var(--g1);font-weight:600;margin:24px 0 10px;display:flex;align-items:center;gap:8px;">🧵 Sewing &amp; Fashion Design <span style="font-size:12px;font-weight:500;color:var(--text-muted);font-family:var(--sans);">· after-school + weekend classes at Hipstitch studios</span></h5>
+      <div class="subj-grid sports">
+        <a class="subj-card" target="_blank" rel="noopener" href="https://www.hipstitchers.com/products/after-school-sewing-classes"><span class="subj-arrow">→</span><div class="subj-icon si-red">🧵</div><div class="subj-name">Hipstitch · Newton</div><div class="subj-meta">1276 Washington St · West Newton</div></a>
+        <a class="subj-card" target="_blank" rel="noopener" href="https://www.hipstitchers.com/products/after-school-in-studio-sewing-classes-wellesley"><span class="subj-arrow">→</span><div class="subj-icon si-red">🧵</div><div class="subj-name">Hipstitch · Wellesley</div><div class="subj-meta">20 Church St · Wellesley</div></a>
+        <a class="subj-card" target="_blank" rel="noopener" href="https://www.hipstitchers.com/products/after-school-clothing-class-brookline"><span class="subj-arrow">→</span><div class="subj-icon si-red">🧵</div><div class="subj-name">Hipstitch · Brookline</div><div class="subj-meta">194 Washington St · Brookline Village</div></a>
+        <a class="subj-card" target="_blank" rel="noopener" href="https://www.hipstitchers.com/products/after-school-classes-arlington"><span class="subj-arrow">→</span><div class="subj-icon si-red">🧵</div><div class="subj-name">Hipstitch · Arlington</div><div class="subj-meta">4 Medford St · Arlington</div></a>
+        <a class="subj-card" target="_blank" rel="noopener" href="https://www.hipstitchers.com/products/junior-fashion-design-newton"><span class="subj-arrow">→</span><div class="subj-icon si-purple">👗</div><div class="subj-name">Junior Fashion Design</div><div class="subj-meta">Hipstitch · ages 7–11</div></a>
+        <a class="subj-card" target="_blank" rel="noopener" href="https://www.hipstitchers.com/products/parent-and-child-class-newton"><span class="subj-arrow">→</span><div class="subj-icon si-orange">👨‍👧</div><div class="subj-name">Parent + Child Sewing</div><div class="subj-meta">Hipstitch · all studios</div></a>
+      </div>
+
+      <h5 style="font-family:var(--serif);font-size:15px;color:var(--g1);font-weight:600;margin:24px 0 10px;display:flex;align-items:center;gap:8px;">🎭 Voice &amp; Performance <span style="font-size:12px;font-weight:500;color:var(--text-muted);font-family:var(--sans);">· stage, singing, movement</span></h5>
+      <div class="subj-grid sports">
+        <a class="subj-card" href="programs/voice.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🎤</div><div class="subj-name">Voice</div><div class="subj-meta">Choir + solo</div></a>
+        <a class="subj-card" href="programs/theatre.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🎭</div><div class="subj-name">Theatre</div><div class="subj-meta">29 programs · A.R.T. to NAPA</div></a>
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🎟️</div><div class="subj-name">Musical Theatre</div><div class="subj-meta">Triple-threat training</div></a>
+        <a class="subj-card" target="_blank" rel="noopener" href="https://wspadancer.com"><span class="subj-arrow">↗</span><div class="subj-icon si-red">💃</div><div class="subj-name">Winthrop School of Performing Arts</div><div class="subj-meta">Dance · Winthrop</div></a>
+        <a class="subj-card" href="programs/dance.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">💃</div><div class="subj-name">Dance</div><div class="subj-meta">Ballet · jazz · hip-hop · tap</div><span class="gz-towns" style="display:none">winthrop lynn</span></a>
+        <a class="subj-card" href="programs/art.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🎨</div><div class="subj-name">Art &amp; Crafts</div><div class="subj-meta">Drawing · painting · pottery</div></a>
+        <a class="subj-card" href="programs/ballroom.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">💃</div><div class="subj-name">Ballroom Dancing</div><div class="subj-meta">Waltz · tango · salsa · swing</div></a>
+      </div>
+
+      <h5 style="font-family:var(--serif);font-size:15px;color:var(--g1);font-weight:600;margin:24px 0 10px;display:flex;align-items:center;gap:8px;">🎓 Music Education &amp; Production <span style="font-size:12px;font-weight:500;color:var(--text-muted);font-family:var(--sans);">· theory, ensembles, studio</span></h5>
+      <div class="subj-grid sports">
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-orange">🎵</div><div class="subj-name">Music Schools</div><div class="subj-meta">47 schools · incl. Rivers, Longy, SSC, NEC</div></a>
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">🎼</div><div class="subj-name">Music Theory</div><div class="subj-meta">Solfège · sight-reading</div></a>
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🎚️</div><div class="subj-name">Music Production</div><div class="subj-meta">Ableton · Logic · DAWs</div></a>
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">🎧</div><div class="subj-name">DJ &amp; Turntablism</div><div class="subj-meta">Decks · mixing · ages 9+</div></a>
+        <a class="subj-card" href="programs/music-classes.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">✍️</div><div class="subj-name">Songwriting</div><div class="subj-meta">Lyrics + composition</div></a>
+        <a class="subj-card" href="enroll.html" style="background:linear-gradient(135deg,var(--g7),var(--g6));border-color:var(--g4);"><span class="subj-arrow">→</span><div class="subj-icon" style="background:var(--white);">➕</div><div class="subj-name">Match me with a teacher</div><div class="subj-meta">Tell us the instrument + level</div></a>
+      </div>
+    </div>
+
+    <div class="subj-section" id="sports" data-cat="sports" style="margin-bottom:48px;">
+      <div class="subj-eyebrow">⚽ Sports · pick the format that fits</div>
+
+      <h5 style="font-family:var(--serif);font-size:15px;color:var(--g1);font-weight:600;margin:18px 0 10px;display:flex;align-items:center;gap:8px;">🏆 Team &amp; Travel <span style="font-size:12px;font-weight:500;color:var(--text-muted);font-family:var(--sans);">· season-long commitment · games + practices</span></h5>
+      <div class="subj-grid sports">
+        <a class="subj-card" href="programs/soccer.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">⚽</div><div class="subj-name">Soccer</div><div class="subj-meta">Year-round · teams + travel</div></a>
+        <a class="subj-card" href="programs/baseball.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">⚾</div><div class="subj-name">Baseball</div><div class="subj-meta">Little League · travel · clinics</div></a>
+        <a class="subj-card" href="programs/baseball.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">⚾</div><div class="subj-name">Baseball</div><div class="subj-meta">Little League + travel</div><span class="gz-towns" style="display:none">winthrop wellesley</span></a>
+        <a class="subj-card" href="programs/horseback-riding.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🐴</div><div class="subj-name">Horseback Riding</div><div class="subj-meta">Lessons · camps · therapeutic</div></a>
+        <a class="subj-card" href="programs/softball.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🥎</div><div class="subj-name">Softball</div><div class="subj-meta">Rec · clinics · fastpitch academies</div></a>
+        <a class="subj-card" href="programs/lacrosse.html"><span class="subj-arrow">→</span><div class="subj-icon si-orange">🥍</div><div class="subj-name">Lacrosse</div><div class="subj-meta">Boys &amp; girls · travel</div></a>
+        <a class="subj-card" href="programs/volleyball.html"><span class="subj-arrow">→</span><div class="subj-icon si-orange">🏐</div><div class="subj-name">Volleyball</div><div class="subj-meta">Co-ed leagues</div></a>
+        <a class="subj-card" href="programs/rowing.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">🚣</div><div class="subj-name">Rowing &amp; Crew</div><div class="subj-meta">Learn-to-row · junior crew · camps</div></a>
+        <a class="subj-card" href="programs/cross-country.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">🏃</div><div class="subj-name">Cross Country</div><div class="subj-meta">Fall season · club teams</div></a>
+        <a class="subj-card" href="programs/gymnastics.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🤸</div><div class="subj-name">Gymnastics</div><div class="subj-meta">Rec · Rhythmic · Comp · Circus</div><span class="gz-towns" style="display:none">winthrop revere</span></a>
+        <a class="subj-card" href="programs/hockey-ice-skating.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">⛸️</div><div class="subj-name">Hockey &amp; Ice Skating</div><div class="subj-meta">Learn to Skate · figure · synchro · hockey</div></a>
+      </div>
+
+      <h5 style="font-family:var(--serif);font-size:15px;color:var(--g1);font-weight:600;margin:24px 0 10px;display:flex;align-items:center;gap:8px;">🎯 In-town Classes <span style="font-size:12px;font-weight:500;color:var(--text-muted);font-family:var(--sans);">· weekly group clinics · drop-in friendly</span></h5>
+      <div class="subj-grid sports">
+        <a class="subj-card" href="programs/town-rec.html" style="background:linear-gradient(135deg,var(--g7),var(--g6));border-color:var(--g4);"><span class="subj-arrow">→</span><div class="subj-icon" style="background:var(--white);">🏛️</div><div class="subj-name">Town Rec Departments</div><div class="subj-meta">10 towns · multi-sport · resident discounts</div></a>
+        <a class="subj-card" href="programs/tennis.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🎾</div><div class="subj-name">Tennis</div><div class="subj-meta">Group clinics · red/orange/green ball</div></a>
+        <a class="subj-card" href="programs/swimming.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">🏊</div><div class="subj-name">Swimming</div><div class="subj-meta">Levels 1 – 6 · pool clinics</div></a>
+        <a class="subj-card" href="programs/martial-arts.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🥋</div><div class="subj-name">Martial Arts</div><div class="subj-meta">Karate &amp; Taekwondo · dojo classes</div><span class="gz-towns" style="display:none">winthrop somerville newton</span></a>
+        <a class="subj-card" href="programs/pickleball.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🏓</div><div class="subj-name">Pickleball</div><div class="subj-meta">Group clinics + drop-in</div></a>
+        <a class="subj-card" href="programs/skateboarding.html"><span class="subj-arrow">→</span><div class="subj-icon si-red">🛹</div><div class="subj-name">Skateboarding</div><div class="subj-meta">Skate park classes</div></a>
+        <a class="subj-card" href="programs/table-tennis.html"><span class="subj-arrow">→</span><div class="subj-icon si-orange">🏓</div><div class="subj-name">Table Tennis</div><div class="subj-meta">Club + clinic play</div></a>
+        <a class="subj-card" href="programs/badminton.html"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🏸</div><div class="subj-name">Badminton</div><div class="subj-meta">Indoor clubs + lessons</div></a>
+        <a class="subj-card" href="programs/fencing.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🤺</div><div class="subj-name">Fencing</div><div class="subj-meta">Foil · épée · sabre</div></a>
+        <a class="subj-card" href="programs/ski.html"><span class="subj-arrow">→</span><div class="subj-icon si-blue">⛷️</div><div class="subj-name">Ski (group lessons)</div><div class="subj-meta">Weekend mountain programs</div></a>
+        <a class="subj-card" href="programs/snowboarding.html"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🏂</div><div class="subj-name">Snowboarding (group)</div><div class="subj-meta">Weekend mountain programs</div></a>
+      </div>
+
+      <h5 style="font-family:var(--serif);font-size:15px;color:var(--g1);font-weight:600;margin:24px 0 10px;display:flex;align-items:center;gap:8px;">🧑‍🏫 Private Trainers <span style="font-size:12px;font-weight:500;color:var(--text-muted);font-family:var(--sans);">· 1:1 or 1:2 personal coaching</span></h5>
+      <div class="subj-grid sports">
+        <a class="subj-card" href="programs/tennis.html#private"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🎾</div><div class="subj-name">Tennis · Private</div><div class="subj-meta">USTA-certified coaches · 1:1</div></a>
+        <a class="subj-card" href="programs/golf.html"><span class="subj-arrow">→</span><div class="subj-icon si-green">⛳</div><div class="subj-name">Golf · Private</div><div class="subj-meta">PGA pros · indoor simulators</div></a>
+        <a class="subj-card" href="programs/swimming.html#private"><span class="subj-arrow">→</span><div class="subj-icon si-blue">🏊</div><div class="subj-name">Swimming · Private</div><div class="subj-meta">1:1 stroke refinement</div></a>
+        <a class="subj-card" href="programs/pickleball.html#private"><span class="subj-arrow">→</span><div class="subj-icon si-yellow">🏓</div><div class="subj-name">Pickleball · Private</div><div class="subj-meta">PPR-certified pros</div></a>
+        <a class="subj-card" href="programs/soccer.html#private"><span class="subj-arrow">→</span><div class="subj-icon si-green">⚽</div><div class="subj-name">Soccer · Private</div><div class="subj-meta">Ex-D1 &amp; club coaches</div></a>
+        <a class="subj-card" href="programs/ski.html#private"><span class="subj-arrow">→</span><div class="subj-icon si-blue">⛷️</div><div class="subj-name">Ski · Private</div><div class="subj-meta">PSIA-cert · race prep</div></a>
+        <a class="subj-card" href="programs/martial-arts.html#private"><span class="subj-arrow">→</span><div class="subj-icon si-purple">🥋</div><div class="subj-name">Martial Arts · Private</div><div class="subj-meta">Senseis · belt advancement</div></a>
+        <a class="subj-card" data-town="waltham" target="_blank" rel="noopener" href="https://flightperformanceandfitness.com/sports-performance-training-in-waltham/"><span class="subj-arrow">↗</span><div class="subj-icon si-red">💪</div><div class="subj-name">Strength &amp; Conditioning</div><div class="subj-meta">Flight Performance · Waltham · youth athletes</div></a>
+        <a class="subj-card" href="enroll.html" style="background:linear-gradient(135deg,var(--g7),var(--g6));border-color:var(--g4);"><span class="subj-arrow">→</span><div class="subj-icon" style="background:var(--white);">➕</div><div class="subj-name">Match me with a trainer</div><div class="subj-meta">Tell us the sport + level</div></a>
+      </div>
+    </div>
+
+    <div class="subj-section" id="special-needs" data-cat="special-needs">
+      <div class="subj-eyebrow">💙 Kids with Special Needs · ADHD · Dyslexia · ASD</div>
+      <div class="sn-filter">
+        <button class="sn-chip active" data-need="all" type="button">All</button>
+        <button class="sn-chip" data-need="dyslexia" type="button">📖 Dyslexia / Reading</button>
+        <button class="sn-chip" data-need="adhd" type="button">🧠 ADHD / Exec function</button>
+        <button class="sn-chip" data-need="asd" type="button">💙 Autism / ASD</button>
+        <button class="sn-chip" data-need="speech" type="button">🗣️ Speech / OT</button>
+        <button class="sn-chip" data-need="eval" type="button">🧪 Evaluation</button>
+        <button class="sn-chip" data-need="advocacy" type="button">⚖️ Advocacy / Legal</button>
+        <button class="sn-chip" data-need="sports" type="button">⚽ Adaptive sports</button>
+        <button class="sn-chip" data-need="school" type="button">🏫 Specialized schools</button>
+        <button class="sn-chip" data-need="free" type="button">🆓 Free resources</button>
+      </div>
+      <div class="subj-grid">
+        <a class="subj-card" data-needs="dyslexia" target="_blank" rel="noopener" href="https://www.commlearn.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-purple">📖</div><div class="subj-name">Dyslexia &amp; Reading</div><div class="subj-meta">Commonwealth Learning Center · Needham</div></a>
+        <a class="subj-card" data-needs="dyslexia free" target="_blank" rel="noopener" href="https://childrensdyslexiacenters.org/centers/massachusetts-greater-boston/"><span class="subj-arrow">↗</span><div class="subj-icon si-blue">🆓</div><div class="subj-name">CDC · Free O-G Tutoring</div><div class="subj-meta">Grades 1–12 · free Orton-Gillingham</div></a>
+        <a class="subj-card" data-needs="dyslexia school" target="_blank" rel="noopener" href="https://www.carrollschool.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-red">🏫</div><div class="subj-name">Carroll School Outreach</div><div class="subj-meta">Dyslexia · Wilson · O-G · Lincoln</div></a>
+        <a class="subj-card" data-needs="dyslexia" target="_blank" rel="noopener" href="https://bostondyslexia.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-blue">📚</div><div class="subj-name">Boston Dyslexia</div><div class="subj-meta">Lindamood-Bell · RAVE-O · north of Boston</div></a>
+        <a class="subj-card" data-needs="dyslexia adhd" target="_blank" rel="noopener" href="https://www.axiomlearning.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-green">🎯</div><div class="subj-name">Axiom Learning</div><div class="subj-meta">1:1 · learning differences · 3 locations</div></a>
+        <a class="subj-card" data-needs="dyslexia" target="_blank" rel="noopener" href="https://lindamoodbell.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-purple">🧩</div><div class="subj-name">Lindamood-Bell · Newton</div><div class="subj-meta">Reading comprehension · K–12</div></a>
+        <a class="subj-card" data-needs="dyslexia school" target="_blank" rel="noopener" href="https://www.landmarkschool.org/outreach"><span class="subj-arrow">↗</span><div class="subj-icon si-blue">🏫</div><div class="subj-name">Landmark School Outreach</div><div class="subj-meta">LD-focused tutoring · Beverly + Manchester</div></a>
+        <a class="subj-card" data-needs="school dyslexia" target="_blank" rel="noopener" href="https://thelearningprep.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-yellow">📘</div><div class="subj-name">Learning Prep School</div><div class="subj-meta">Language-based LD · Newton · Grades 5–12</div></a>
+        <a class="subj-card" data-needs="dyslexia" target="_blank" rel="noopener" href="https://www.dyslexiaida.org/find-a-provider/"><span class="subj-arrow">↗</span><div class="subj-icon si-purple">🔎</div><div class="subj-name">IDA Provider Directory</div><div class="subj-meta">Find certified O-G &amp; structured-literacy tutors</div></a>
+        <a class="subj-card" data-needs="dyslexia" target="_blank" rel="noopener" href="https://www.thelearningclubinc.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-orange">📚</div><div class="subj-name">The Learning Club</div><div class="subj-meta">Newton · Wilson + O-G certified tutors</div></a>
+        <a class="subj-card" data-needs="adhd" target="_blank" rel="noopener" href="https://engagingmindsonline.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-orange">🧠</div><div class="subj-name">ADHD · Exec Function</div><div class="subj-meta">Engaging Minds · Natick</div></a>
+        <a class="subj-card" data-needs="adhd" target="_blank" rel="noopener" href="https://www.preppedandpolished.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-yellow">📋</div><div class="subj-name">Exec Function Coaching</div><div class="subj-meta">Prepped &amp; Polished · 4 locations</div></a>
+        <a class="subj-card" data-needs="adhd asd" target="_blank" rel="noopener" href="https://www.brainbalancecenters.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-orange">🧠</div><div class="subj-name">Brain Balance · Norwell + Westborough</div><div class="subj-meta">ADHD · ASD · LD · drug-free</div></a>
+        <a class="subj-card" data-needs="adhd school" target="_blank" rel="noopener" href="https://www.fusionacademy.com/campuses/boston/"><span class="subj-arrow">↗</span><div class="subj-icon si-purple">🎓</div><div class="subj-name">Fusion Academy · Boston/Newton</div><div class="subj-meta">1:1 private school · ADHD + LD friendly</div></a>
+        <a class="subj-card" data-needs="adhd asd eval" target="_blank" rel="noopener" href="https://childmind.org/our-care/"><span class="subj-arrow">↗</span><div class="subj-icon si-green">👨‍⚕️</div><div class="subj-name">Child Mind Institute</div><div class="subj-meta">Anxiety · ADHD · OCD telehealth eval &amp; therapy</div></a>
+        <a class="subj-card" data-needs="asd" target="_blank" rel="noopener" href="https://www.aane.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-blue">💙</div><div class="subj-name">AANE · Autism / Asperger</div><div class="subj-meta">Social-skills groups · Watertown</div></a>
+        <a class="subj-card" data-needs="asd social" data-town="pepperell" target="_blank" rel="noopener" href="https://www.besuccessfullysocial.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-green">🤝</div><div class="subj-name">Successfully Social</div><div class="subj-meta">Neurodiversity-affirming social groups · ages 3–18 · Pepperell &amp; Leominster</div></a>
+        <a class="subj-card" data-needs="asd" target="_blank" rel="noopener" href="https://www.beaconaba.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-yellow">🤝</div><div class="subj-name">ABA Therapy</div><div class="subj-meta">Beacon ABA · in-home + clinic</div></a>
+        <a class="subj-card" data-needs="asd" target="_blank" rel="noopener" href="https://www.massgeneral.org/children/aspire"><span class="subj-arrow">↗</span><div class="subj-icon si-blue">🌟</div><div class="subj-name">MGH ASPIRE</div><div class="subj-meta">Social skills · ASD · ages 6–adult · Lexington</div></a>
+        <a class="subj-card" data-needs="sports" target="_blank" rel="noopener" href="https://instaswimusa.com/swim-lesson-programs/"><span class="subj-arrow">↗</span><div class="subj-icon si-blue">🏊</div><div class="subj-name">InstaSwim · Adaptive Lessons</div><div class="subj-meta">In-home swim lessons · adaptive for special needs · at your pool</div></a>
+        <a class="subj-card" data-needs="sports" data-town="wellesley" target="_blank" rel="noopener" href="https://ablfitness.org/adaptive-group-classes/"><span class="subj-arrow">↗</span><div class="subj-icon si-orange">🤸</div><div class="subj-name">ABL Fitness · Adaptive Group Classes</div><div class="subj-meta">Adaptive fitness &amp; movement for kids of all abilities · Wellesley</div></a>
+        <a class="subj-card" data-needs="speech" data-town="hudson" target="_blank" rel="noopener" href="https://www.playfulspeechexplorers.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-green">🗣️</div><div class="subj-name">Playful Speech Explorers</div><div class="subj-meta">Pediatric speech therapy · play-based · in-home + virtual · Hudson · free phone consult</div></a>
+        <a class="subj-card" data-needs="speech" target="_blank" rel="noopener" href="https://newtonotma.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-green">✋</div><div class="subj-name">Newton OT Associates</div><div class="subj-meta">Occupational therapy · sensory · handwriting</div></a>
+        <a class="subj-card" data-needs="eval" target="_blank" rel="noopener" href="https://nesca-newton.com/"><span class="subj-arrow">↗</span><div class="subj-icon si-purple">🧪</div><div class="subj-name">NESCA · Neuropsych Eval</div><div class="subj-meta">Newton · ADHD, LD, ASD assessments</div></a>
+        <a class="subj-card" data-needs="advocacy free" target="_blank" rel="noopener" href="https://www.massadvocates.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-orange">📞</div><div class="subj-name">IEP &amp; 504 Advocacy</div><div class="subj-meta">Mass Advocates for Children · free helpline</div></a>
+        <a class="subj-card" data-needs="advocacy free" target="_blank" rel="noopener" href="https://www.fcsn.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-green">👨‍👩‍👧</div><div class="subj-name">Federation for Children w/ Special Needs</div><div class="subj-meta">Free parent training &amp; info statewide</div></a>
+        <a class="subj-card" data-needs="advocacy free" target="_blank" rel="noopener" href="https://disabilityrightsma.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-red">⚖️</div><div class="subj-name">Disability Rights MA</div><div class="subj-meta">🆓 Legal advocacy · IEP / 504 disputes</div></a>
+        <a class="subj-card" data-needs="advocacy free" target="_blank" rel="noopener" href="https://www.fcsn.org/parent-training-information/"><span class="subj-arrow">↗</span><div class="subj-icon si-green">🎓</div><div class="subj-name">FCSN Workshops</div><div class="subj-meta">🆓 Free webinars on IEPs, transitions, advocacy</div></a>
+        <a class="subj-card" data-needs="sports" target="_blank" rel="noopener" href="https://www.bostonmiraclesport.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-green">⚽</div><div class="subj-name">Adaptive Sports</div><div class="subj-meta">Boston Miracle Sport · all abilities</div></a>
+        <a class="subj-card" data-needs="sports" target="_blank" rel="noopener" href="https://www.specialolympicsma.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-red">🏅</div><div class="subj-name">Special Olympics MA</div><div class="subj-meta">Year-round sports · all ages</div></a>
+        <a class="subj-card" data-needs="school" target="_blank" rel="noopener" href="https://www.perkins.org/programs/outreach/"><span class="subj-arrow">↗</span><div class="subj-icon si-yellow">👁️</div><div class="subj-name">Perkins School Outreach</div><div class="subj-meta">Blind/low vision &amp; multiple disability support</div></a>
+        <a class="subj-card" data-needs="free" target="_blank" rel="noopener" href="https://www.understood.org/"><span class="subj-arrow">↗</span><div class="subj-icon si-blue">📖</div><div class="subj-name">Understood.org</div><div class="subj-meta">🆓 Parent guide hub · LD &amp; ADHD</div></a>
+        <a class="subj-card" href="contact.html" style="background:linear-gradient(135deg,var(--g7),var(--g6));border-color:var(--g4);"><span class="subj-arrow">→</span><div class="subj-icon" style="background:var(--white);">➕</div><div class="subj-name">Match me with a specialist</div><div class="subj-meta">Tell us age + diagnosis + needs</div></a>
+      
+    </div>
+    </div>
+
+    <div id="empty-state" style="display:none;padding:32px;background:var(--g7);border-radius:14px;text-align:center;color:var(--text-muted);">
+      <div style="font-size:42px;margin-bottom:8px;">🔍</div>
+      <div style="color:var(--g1);font-weight:700;font-family:var(--serif);font-size:18px;margin-bottom:4px;">No subjects match</div>
+      <div style="font-size:14px;">Try a different keyword, or email <a href="mailto:kate@gokidoz.com" style="color:var(--g2);font-weight:700;">kate@gokidoz.com</a> and we'll help you find it.</div>
+      <button type="button" id="as-clear" style="margin-top:14px;background:var(--g2);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans);">Clear search &amp; filters</button>
+    </div>
+
+  </div>
+</section>
+
+<div class="inner" style="max-width:1100px;margin:0 auto;padding:0 20px;">
+  <div style="max-width:760px;margin:0 auto 8px;padding:18px 22px;background:linear-gradient(135deg,var(--straw-l) 0%,#F5E6C8 100%);border:1px solid rgba(184,116,42,0.25);border-radius:14px;text-align:center;">
+    <div style="font-family:var(--serif);font-size:18px;color:var(--g1);font-weight:600;margin-bottom:4px;">Don't see your program? Get listed — it's free 🎉</div>
+    <div style="font-size:14px;color:var(--text);line-height:1.6;">Run an after-school class, club or program in Greater Boston? Email <a href="mailto:kate@gokidoz.com" style="color:var(--g2);font-weight:700;">kate@gokidoz.com</a> and we'll add you.</div>
+  </div>
+</div>
+
+<div class="cta-band">
+  <h2>Add your listing — free!</h2>
+  <p>Run a class, club, studio or program for kids? Get listed on GOkidOZ at no cost.</p>
+  <div class="cta-row">
+    <a class="btn-primary" href="contact.html">Add your listing →</a>
+  </div>
+</div>
+
+
+<footer>
+  <div class="foot-news" style="width:100%;max-width:560px;margin:0 auto 26px;text-align:center;">
+    <div style="font-family:var(--serif,Georgia,serif);font-size:18px;font-weight:600;color:#fff;margin-bottom:6px;">Get the weekly Boston-kids email 💌</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-bottom:12px;">New classes, camps &amp; fun events — free, unsubscribe anytime.</div>
+    <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" onsubmit="var f=this;event.preventDefault();var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';}).catch(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';});">
+      <input type="hidden" name="form-name" value="newsletter">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <span class="fn-row" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;">
+        <input type="email" name="email" required placeholder="Your email address" aria-label="Your email address" style="flex:1;min-width:200px;max-width:320px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border-mid,#d5dbe2);font-family:inherit;font-size:14px;">
+        <button type="submit" style="background:var(--g2,#1A73E8);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;">Subscribe →</button>
+      </span>
+      <div class="fn-ok" style="display:none;width:100%;padding:11px;background:var(--teal-l,#d8f3ec);color:var(--teal,#0a7d63);border-radius:10px;font-weight:700;font-size:14px;">🎉 You're on the list!</div>
+    </form>
+  </div>
+  <div class="foot-logo">
+    <div class="foot-logo-img"><span class="foot-logo-text">OZ</span></div>
+    <div class="foot-name">GOkid<span>OZ</span></div>
+  </div>
+  <div class="foot-links">
+    <a href="programs.html">Programs</a><a href="fun-events.html">Fun Events</a><a href="tutors.html">Tutors</a><a href="calendar.html">Calendar</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+  <a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+  <a class="foot-social" href="https://www.facebook.com/groups/1365198462166449/" target="_blank" rel="noopener" aria-label="GOkidOZ on Facebook"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
+  <a class="foot-social" href="https://www.instagram.com/gokidoz_boston/" target="_blank" rel="noopener" aria-label="GOkidOZ on Instagram" style="margin-left:8px;"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.52.01-4.76.07-.99.05-1.53.21-1.89.35-.48.18-.81.4-1.17.76-.36.36-.58.69-.76 1.17-.14.36-.3.9-.35 1.89-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05.99.21 1.53.35 1.89.18.48.4.81.76 1.17.36.36.69.58 1.17.76.36.14.9.3 1.89.35 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.99-.05 1.53-.21 1.89-.35.48-.18.81-.4 1.17-.76.36-.36.58-.69.76-1.17.14-.36.3-.9.35-1.89.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-.99-.21-1.53-.35-1.89-.18-.48-.4-.81-.76-1.17-.36-.36-.69-.58-1.17-.76-.36-.14-.9-.3-1.89-.35-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.46 5.46 0 110 10.92 5.46 5.46 0 010-10.92zm0 9a3.54 3.54 0 100-7.08 3.54 3.54 0 000 7.08zm6.95-9.22a1.28 1.28 0 11-2.56 0 1.28 1.28 0 012.56 0z"/></svg></a>
+  <div class="foot-copy">© 2026 GOkidOZ Boston. All rights reserved.</div>
+</footer>
+
+<script>
+(function(){
+  const sections = [...document.querySelectorAll('.subj-section[data-cat]')];
+  const allCards = document.querySelectorAll('.subj-card');
+  const tiles = document.querySelectorAll('.cat-tile');
+  const searchInput = document.getElementById('as-search');
+  const sortSelect = document.getElementById('as-sort');
+  const townSelect = document.getElementById('as-town');
+  const radiusSelect = document.getElementById('as-radius');
+  const countLabel = document.getElementById('as-count');
+  const emptyState = document.getElementById('empty-state');
+
+  // Original order per grid for "default" sort
+  const originalOrder = new Map();
+  document.querySelectorAll('.subj-grid').forEach(g => originalOrder.set(g, [...g.children]));
+
+  // Tag each card: internal "Directory" hub vs external "Visit" provider
+  allCards.forEach(card => {
+    const href = card.getAttribute('href') || '';
+    let kind='', label='';
+    if (/^https?:/i.test(href)) { kind='ext'; label='Visit \u2197'; }
+    else if (/programs\//i.test(href)) { kind='hub'; label='Directory'; }
+    if (kind){ card.dataset.kind=kind; const b=document.createElement('span'); b.className='subj-kind'; b.textContent=label; card.appendChild(b); }
+  });
+
+  // Build accordion headers (count badge + chevron) and wire toggle
+  const secCountEl = new Map();
+  sections.forEach(sec => {
+    const eyebrow = sec.querySelector('.subj-eyebrow');
+    if (!eyebrow) return;
+    const total = sec.querySelectorAll('.subj-card').length;
+    const meta = document.createElement('span');
+    meta.className='acc-meta';
+    meta.innerHTML='<span class="acc-count">'+total+'</span><span class="acc-chev">\u2304</span>';
+    eyebrow.appendChild(meta);
+    secCountEl.set(sec, meta.querySelector('.acc-count'));
+    eyebrow.addEventListener('click', () => {
+      if (searchInput.value.trim()) return;          // accordion auto-managed during search
+      const willOpen = sec.classList.contains('acc-collapsed');
+      sections.forEach(x => x.classList.add('acc-collapsed'));
+      if (willOpen){ sec.classList.remove('acc-collapsed'); setActiveTile(sec.dataset.cat); scrollToSec(sec); }
+      else { setActiveTile(null); }
+    });
+  });
+
+  // Tile counts
+  tiles.forEach(t => {
+    const sec = sections.find(s => s.dataset.cat === t.dataset.cat);
+    if (sec){ const c=t.querySelector('.ct-ct'); if(c) c.textContent = sec.querySelectorAll('.subj-card').length; }
+  });
+
+  // Truncate over-long grids (e.g. 21 instruments) when browsing
+  document.querySelectorAll('#arts .subj-grid').forEach(grid => {
+    const cards = [...grid.querySelectorAll('.subj-card')];
+    if (cards.length > 14){
+      grid.dataset.trunc='1';
+      const btn=document.createElement('button');
+      btn.type='button'; btn.className='gz-more-btn';
+      btn.textContent='+ Show all '+cards.length+' \u2192';
+      btn.addEventListener('click', () => { grid.dataset.expanded = grid.dataset.expanded==='1'?'':'1'; applyFilter(); });
+      grid.parentNode.insertBefore(btn, grid.nextSibling);
+      grid.__moreBtn=btn;
+    }
+  });
+
+  function setActiveTile(cat){ tiles.forEach(t => t.classList.toggle('active', t.dataset.cat===cat)); }
+  function scrollToSec(sec){ const y=sec.getBoundingClientRect().top+window.pageYOffset-16; window.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }
+
+  function applyFilter(){
+    const q=(searchInput.value||'').trim().toLowerCase();
+    const town=townSelect?townSelect.value.toLowerCase():'';
+    const asRadius=radiusSelect?(parseFloat(radiusSelect.value)||0):0;
+    const filtering = !!(q||town);
+    let total=0;
+
+    sections.forEach(sec => {
+      let shown=0;
+      sec.querySelectorAll('.subj-grid .subj-card').forEach(card => {
+        const txt=(card.textContent||'').toLowerCase();
+        const cardTown=(card.dataset.town||'').toLowerCase();
+        const href=card.getAttribute('href')||'';
+        const isDir=href!==''&&!/^https?:/i.test(href);
+        const okQ=!q||txt.includes(q);
+        const okTown=!town||isDir||cardTown===town||(cardTown===''&&txt.includes(town))||(asRadius>0&&cardTown&&window.gzDist&&window.gzDist(town,cardTown)!=null&&window.gzDist(town,cardTown)<=asRadius);
+        const m=okQ&&okTown;
+        card.classList.toggle('hidden', !m);
+        if(m) shown++;
+      });
+
+      // Truncate long grids only while browsing (no active filter)
+      sec.querySelectorAll('.subj-grid[data-trunc]').forEach(grid => {
+        const cards=[...grid.querySelectorAll('.subj-card')];
+        const expanded = grid.dataset.expanded==='1';
+        if (!filtering && !expanded){
+          cards.forEach((c,i)=> c.classList.toggle('trunc-hidden', i>=12));
+          if(grid.__moreBtn){ grid.__moreBtn.style.display=''; grid.__moreBtn.textContent='+ Show all '+cards.length+' \u2192'; }
+        } else {
+          cards.forEach(c=> c.classList.remove('trunc-hidden'));
+          if(grid.__moreBtn){ grid.__moreBtn.style.display = (!filtering && cards.length>14) ? '' : 'none'; if(expanded) grid.__moreBtn.textContent='Show fewer \u2191'; }
+        }
+      });
+
+      // Hide sub-headers whose grid has no visible cards
+      sec.querySelectorAll('h5').forEach(h => {
+        let n=h.nextElementSibling;
+        while(n && !n.classList.contains('subj-grid')) n=n.nextElementSibling;
+        if(n) h.classList.toggle('hidden', n.querySelectorAll('.subj-card:not(.hidden)').length===0);
+      });
+
+      const badge=secCountEl.get(sec);
+      if(badge) badge.textContent = filtering ? shown : sec.querySelectorAll('.subj-card').length;
+      total += shown;
+
+      if (filtering) sec.classList.toggle('acc-collapsed', shown===0);
+    });
+
+    countLabel.textContent = total + (total===1?' result':' results');
+    if(emptyState) emptyState.style.display = (total===0)?'block':'none';
+  }
+
+  function applySort(mode){
+    document.querySelectorAll('.subj-grid').forEach(grid => {
+      let cards=Array.from(grid.children).filter(c=>c.classList.contains('subj-card'));
+      let sorted;
+      if(mode==='az'||mode==='za'){
+        sorted=cards.slice().sort((a,b)=>{
+          const an=(a.querySelector('.subj-name')?.textContent||'').trim().toLowerCase();
+          const bn=(b.querySelector('.subj-name')?.textContent||'').trim().toLowerCase();
+          return mode==='az'?an.localeCompare(bn):bn.localeCompare(an);
+        });
+      } else { sorted=(originalOrder.get(grid)||cards); }
+      sorted.forEach(c=>grid.appendChild(c));
+    });
+    applyFilter();
+  }
+
+  // Default view: open first section only
+  function resetAccordion(){ sections.forEach((s,i)=> s.classList.toggle('acc-collapsed', i!==0)); setActiveTile(sections[0]?sections[0].dataset.cat:null); }
+
+  // Search — spans all sections, auto-opens matches, jumps to first hit
+  function runSearch(val){
+    searchInput.value=val;
+    if(!val.trim()){ resetAccordion(); applyFilter(); return; }
+    applyFilter();
+    const first=document.querySelector('.subj-section:not(.acc-collapsed) .subj-card:not(.hidden):not(.trunc-hidden)');
+    if(first){ const y=first.getBoundingClientRect().top+window.pageYOffset-16; window.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }
+  }
+  searchInput.addEventListener('input', e=>runSearch(e.target.value));
+
+  // Category tiles → open that section
+  tiles.forEach(t => t.addEventListener('click', () => {
+    if(searchInput.value.trim()) searchInput.value='';
+    sections.forEach(s => s.classList.toggle('acc-collapsed', s.dataset.cat!==t.dataset.cat));
+    setActiveTile(t.dataset.cat);
+    applyFilter();
+    const sec=sections.find(s=>s.dataset.cat===t.dataset.cat);
+    if(sec) scrollToSec(sec);
+  }));
+
+  // Popular chips — jump straight to a dedicated page when one exists, else filter
+  var CHIP_PAGE={chess:'programs/chess.html',piano:'programs/piano.html',coding:'programs/coding-robotics.html',soccer:'programs/soccer.html',swim:'programs/swimming.html'};
+  document.querySelectorAll('.as-pop-chip').forEach(chip => chip.addEventListener('click', () => {
+    var pg=CHIP_PAGE[chip.dataset.q];
+    if(pg){ window.location.href=pg; return; }
+    runSearch(chip.dataset.q); searchInput.focus();
+  }));
+
+  // Clear-all from empty state
+  const clearBtn=document.getElementById('as-clear');
+  if(clearBtn) clearBtn.addEventListener('click', () => { if(townSelect)townSelect.value=''; if(radiusSelect)radiusSelect.value=''; runSearch(''); window.scrollTo({top:0,behavior:'smooth'}); });
+
+  if(townSelect) townSelect.addEventListener('change', applyFilter);
+  if(radiusSelect) radiusSelect.addEventListener('change', applyFilter);
+  if(sortSelect) sortSelect.addEventListener('change', e=>applySort(e.target.value));
+
+  // Special-needs sub-filter
+  const snChips=document.querySelectorAll('.sn-chip');
+  const snCards=document.querySelectorAll('#special-needs .subj-card[data-needs]');
+  snChips.forEach(chip => chip.addEventListener('click', () => {
+    snChips.forEach(c=>c.classList.toggle('active', c===chip));
+    const need=chip.dataset.need;
+    snCards.forEach(card => { const needs=(card.dataset.needs||'').split(' '); card.classList.toggle('sn-hidden', need!=='all' && !needs.includes(need)); });
+  }));
+
+  // Init
+  resetAccordion();
+  applyFilter();
+})();
+</script>
+
+<script src="../assets/community-rating.js"></script>
+<script src="../assets/back-to-top.js"></script>
+<script src="../assets/newsletter.js"></script>
+<script src="../assets/share-state.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/site-search.js"></script>
+<script src="../assets/newsletter-popup.js"></script>
+</body>
+</html>

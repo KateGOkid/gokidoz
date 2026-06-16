@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fun Events · GOkidOZ Boston</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* ===== FUN EVENTS — visual category-card layout ===== */
+  .fe-inner{max-width:1100px;margin:0 auto;padding:0 20px;}
+
+  /* Stat strip at top */
+  .fe-stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-40px auto 40px;max-width:1040px;position:relative;z-index:2;}
+  .fe-stat{background:var(--white);border:1px solid var(--border-mid);border-radius:14px;padding:18px 20px;text-align:center;box-shadow:0 6px 18px rgba(11,61,145,0.08);}
+  .fe-stat-num{font-family:var(--serif);font-size:30px;color:var(--g1);font-weight:600;line-height:1;margin-bottom:4px;}
+  .fe-stat-label{font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);}
+  @media(max-width:760px){.fe-stat-strip{grid-template-columns:repeat(2,1fr);margin-top:-30px;}}
+
+  /* Category hero cards — 2x2 visual grid */
+  .fe-cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:48px;}
+  @media(max-width:880px){.fe-cat-grid{grid-template-columns:1fr;}}
+
+  .fe-cat{position:relative;background:var(--white);border:1px solid var(--border-mid);border-radius:22px;padding:0;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s;}
+  .fe-cat:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(11,61,145,0.14);border-color:var(--g4);}
+  .fe-cat:hover .fe-cat-cta{background:var(--g1);}
+  .fe-cat:hover .fe-cat-arrow{transform:translateX(4px);}
+
+  .fe-cat-banner{position:relative;height:140px;display:flex;align-items:center;justify-content:center;font-size:80px;line-height:1;overflow:hidden;}
+  .fe-cat-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.30) 100%);}
+  .fe-cat.cat-yellow .fe-cat-banner{background:linear-gradient(135deg,#FEF7DC 0%,#FBE9A7 100%);}
+  .fe-cat.cat-red    .fe-cat-banner{background:linear-gradient(135deg,#FCE8E6 0%,#F9C3BD 100%);}
+  .fe-cat.cat-blue   .fe-cat-banner{background:linear-gradient(135deg,var(--g7) 0%,#C9DEFB 100%);}
+  .fe-cat.cat-green  .fe-cat-banner{background:linear-gradient(135deg,var(--teal-l) 0%,#B8E2C0 100%);}
+
+  .fe-cat-count{position:absolute;top:14px;right:14px;background:var(--white);color:var(--g1);font-size:12px;font-weight:800;padding:5px 12px;border-radius:20px;letter-spacing:.04em;box-shadow:0 2px 6px rgba(0,0,0,0.08);}
+
+  .fe-cat-body{padding:22px 26px 26px;display:flex;flex-direction:column;gap:12px;flex:1;}
+  .fe-cat-eyebrow{font-size:11px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);}
+  .fe-cat-title{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--g1);letter-spacing:-.3px;line-height:1.1;}
+  .fe-cat-desc{font-size:14px;color:var(--text-muted);line-height:1.6;}
+  .fe-cat-tags{display:flex;flex-wrap:wrap;gap:8px 6px;margin-top:auto;}
+  .fe-cat-tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:14px;background:var(--g7);color:var(--g2);white-space:nowrap;line-height:1.3;}
+  .fe-cat.cat-yellow .fe-cat-tag{background:#FEF7DC;color:#8A6500;}
+  .fe-cat.cat-red    .fe-cat-tag{background:var(--rose-l);color:var(--rose);}
+  .fe-cat.cat-green  .fe-cat-tag{background:var(--teal-l);color:var(--teal);}
+
+  .fe-cat-cta{margin-top:14px;display:inline-flex;align-items:center;justify-content:space-between;gap:8px;background:var(--g2);color:var(--white);font-weight:800;font-size:14px;padding:13px 18px;border-radius:11px;text-decoration:none;box-shadow:0 4px 14px rgba(26,115,232,0.28);transition:background .15s;}
+  .fe-cat-arrow{display:inline-block;transition:transform .15s;}
+
+  /* Mood picker */
+  .fe-mood-h{font-family:var(--serif);font-size:22px;color:var(--g1);font-weight:600;letter-spacing:-.2px;margin:0 0 12px;}
+  .fe-mood-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:40px;}
+  @media(max-width:980px){.fe-mood-row{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:560px){.fe-mood-row{grid-template-columns:repeat(2,1fr);}}
+  .fe-mood{background:var(--white);border:1px solid var(--border-mid);border-radius:14px;padding:18px 12px;text-align:center;text-decoration:none;color:inherit;transition:transform .15s,border-color .15s,box-shadow .15s;}
+  .fe-mood:hover{transform:translateY(-2px);border-color:var(--g4);box-shadow:0 8px 20px rgba(11,61,145,0.08);}
+  .fe-mood-emoji{font-size:32px;line-height:1;margin-bottom:8px;display:block;}
+  .fe-mood-name{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--g1);line-height:1.2;margin-bottom:3px;}
+  .fe-mood-where{font-size:11px;color:var(--text-muted);font-weight:600;}
+
+  /* "What's on" mini timeline */
+  .fe-now-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:48px;}
+  @media(max-width:880px){.fe-now-grid{grid-template-columns:1fr;}}
+  .fe-now-panel{background:var(--white);border:1px solid var(--border-mid);border-radius:18px;padding:24px;}
+  .fe-now-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .fe-now-title{font-family:var(--serif);font-size:20px;color:var(--g1);font-weight:600;letter-spacing:-.2px;}
+  .fe-now-link{font-size:12.5px;font-weight:700;color:var(--g2);text-decoration:none;background:var(--g7);padding:5px 11px;border-radius:14px;border:1px solid var(--border-mid);}
+  .fe-now-link:hover{background:var(--g6);}
+  .fe-now-row{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);}
+  .fe-now-row:last-child{border-bottom:none;}
+  .fe-now-row a.fe-now-date{display:inline-block;font-size:12px;font-weight:800;color:var(--white);background:var(--g2);padding:5px 11px;border-radius:10px;white-space:nowrap;min-width:84px;text-align:center;letter-spacing:.02em;text-decoration:none;transition:background .15s;}
+  .fe-now-row a.fe-now-date:hover{background:var(--g1);}
+  .fe-now-row .fe-now-date{font-size:12px;font-weight:800;color:var(--g2);background:var(--g7);padding:5px 11px;border-radius:10px;white-space:nowrap;min-width:84px;text-align:center;letter-spacing:.02em;}
+  .fe-now-row .fe-now-text{font-size:14px;color:var(--g1);font-weight:600;line-height:1.4;}
+  .fe-now-row .fe-now-text span{display:block;font-weight:500;color:var(--text-muted);font-size:12px;margin-top:1px;}
+  .fe-now-row .fe-now-text a{color:var(--g2);text-decoration:none;font-weight:700;}
+  .fe-now-row .fe-now-text a:hover{text-decoration:underline;}
+
+  /* Full calendar — month grid */
+  .fe-cal-h{font-family:var(--serif);font-size:28px;color:var(--g1);font-weight:600;letter-spacing:-.3px;margin:0 0 8px;}
+  .fe-cal-sub{font-size:15px;color:var(--text-muted);line-height:1.6;max-width:680px;margin:0 0 24px;}
+  .fe-cal{display:flex;flex-direction:column;gap:24px;margin-bottom:48px;}
+  .fe-cal-month{background:var(--white);border:1px solid var(--border-mid);border-radius:18px;overflow:hidden;}
+  .fe-cal-month-head{background:linear-gradient(135deg,var(--g7) 0%,#DAE9F5 100%);padding:14px 22px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border-mid);}
+  .fe-cal-month-name{font-family:var(--serif);font-size:22px;color:var(--g1);font-weight:600;letter-spacing:-.2px;}
+  .fe-cal-month-tag{font-size:11px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:var(--g2);background:var(--white);padding:4px 12px;border-radius:14px;border:1px solid var(--border-mid);}
+  .fe-cal-events{display:flex;flex-direction:column;}
+  .fe-cal-event{display:grid;grid-template-columns:140px 1fr auto;gap:18px;align-items:center;padding:16px 22px;border-bottom:1px solid var(--border);transition:background .15s;}
+  .fe-cal-event:last-child{border-bottom:none;}
+  .fe-cal-event:hover{background:var(--g7);}
+  .fe-cal-event-date{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;background:var(--g2);color:var(--white);border-radius:10px;padding:8px 12px;font-weight:800;text-decoration:none;text-align:center;line-height:1.1;transition:background .15s,transform .15s;}
+  .fe-cal-event-date:hover{background:var(--g1);transform:translateY(-1px);}
+  .fe-cal-event-date.holiday{background:var(--rose);}
+  .fe-cal-event-date.holiday:hover{background:#c5362a;}
+  .fe-cal-event-date.ongoing{background:var(--teal);}
+  .fe-cal-event-date.ongoing:hover{background:#28893f;}
+  .fe-cal-event-date .d-num{font-size:18px;letter-spacing:0;}
+  .fe-cal-event-date .d-rng{font-size:11px;letter-spacing:.02em;margin-top:2px;}
+  .fe-cal-event-info{min-width:0;}
+  .fe-cal-event-title{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--g1);line-height:1.2;letter-spacing:-.1px;margin-bottom:3px;}
+  .fe-cal-event-title a{color:var(--g1);text-decoration:none;}
+  .fe-cal-event-title a:hover{color:var(--g2);text-decoration:underline;}
+  .fe-cal-event-meta{font-size:13px;color:var(--text-muted);line-height:1.45;}
+  .fe-cal-event-meta strong{color:var(--g2);font-weight:700;}
+  .fe-cal-event-cat{flex-shrink:0;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:14px;white-space:nowrap;}
+  .cat-theatre{background:#FCE8E6;color:var(--rose);}
+  .cat-festival{background:#FCE8E6;color:var(--rose);font-weight:800;}
+  .cat-ballet{background:#ECE7FF;color:var(--lav);}
+  .cat-opera{background:var(--straw-l);color:#8A6500;}
+  .cat-magic{background:var(--teal-l);color:var(--teal);}
+  .cat-imax{background:var(--g7);color:var(--g2);}
+  .cat-bso{background:#FCE8E6;color:var(--rose);}
+  .cat-ice{background:#DAEAFD;color:var(--g1);}
+  .cat-ongoing{background:var(--g7);color:var(--g2);}
+  @media(max-width:760px){
+    .fe-cal-event{grid-template-columns:auto 1fr;gap:14px;padding:14px 16px;}
+    .fe-cal-event-cat{grid-column:2;justify-self:start;margin-top:4px;}
+  }
+
+  /* Tip band */
+  .fe-tip{background:linear-gradient(135deg,var(--straw-l) 0%,#F9E9B7 100%);border:1px solid rgba(184,116,42,0.20);border-radius:14px;padding:18px 22px;margin-bottom:48px;display:flex;gap:18px;align-items:flex-start;}
+  .fe-tip-icon{flex-shrink:0;width:42px;height:42px;background:var(--straw);color:#7A5A10;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;}
+  .fe-tip-title{font-family:var(--serif);font-size:18px;color:#7A5A10;font-weight:600;margin-bottom:4px;}
+  .fe-tip-desc{font-size:13.5px;color:#5A4408;line-height:1.55;}
+
+  /* Section title above the category cards */
+  .fe-h2{font-family:var(--serif);font-size:30px;color:var(--g1);font-weight:600;letter-spacing:-.3px;line-height:1.15;margin:0 0 8px;}
+  .fe-sub{font-size:15px;color:var(--text-muted);line-height:1.6;max-width:600px;margin:0 0 22px;}
+</style>
+<meta name="description" content="Family-friendly things to do around Boston — concerts, theatre, festivals, museums and seasonal events for kids, updated weekly.">
+<meta name="theme-color" content="#1A73E8">
+<link rel="canonical" href="https://gokidoz.com/pages/fun-events.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GOkidOZ Boston">
+<meta property="og:title" content="Fun Events · GOkidOZ Boston">
+<meta property="og:description" content="Family-friendly things to do around Boston — concerts, theatre, festivals, museums and seasonal events for kids, updated weekly.">
+<meta property="og:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<meta property="og:url" content="https://gokidoz.com/pages/fun-events.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fun Events · GOkidOZ Boston">
+<meta name="twitter:description" content="Family-friendly things to do around Boston — concerts, theatre, festivals, museums and seasonal events for kids, updated weekly.">
+<meta name="twitter:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Fun Events · GOkidOZ Boston","description":"Concerts, theatre, festivals, story times and seasonal family events across Greater Boston.","url":"https://gokidoz.com/pages/fun-events.html","isPartOf":{"@type":"WebSite","name":"GOkidOZ Boston","url":"https://gokidoz.com/"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://gokidoz.com/"},{"@type":"ListItem","position":2,"name":"Fun Events","item":"https://gokidoz.com/pages/fun-events.html"}]}}
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="../index.html">
+      <div class="logo-mark"><span class="logo-mark-text">OZ</span></div>
+      <div class="logo-text">
+        <div class="logo-name">GOkid<span>OZ</span></div>
+        <div class="logo-slogan">Boston kids <em>discover</em> all year long</div>
+      </div>
+    </a>
+  </div>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav" onclick="var o=this.parentNode.querySelector('.nav-right').classList.toggle('open');this.setAttribute('aria-expanded',o)"><span class="bars"><span></span><span></span><span></span></span></button>
+  <div class="nav-right">
+    <a class="nav-link" href="programs.html">Programs</a>
+    <a class="nav-link" href="tutors.html">Tutors</a>
+    <a class="nav-link nav-link-active" href="fun-events.html">Fun Events</a>
+    <a class="nav-link" href="calendar.html">📅 Calendar</a>
+    <a class="nav-link" href="community.html">💬 Community</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="btn-enroll" href="enroll.html">Sign In</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Fun Events</span>
+    </div>
+    <div class="page-eyebrow">🎟️ Fun Events</div>
+    <h1 class="page-title">Beyond the <em>classroom</em></h1>
+    <p class="page-lede">Concerts, theatre, birthdays, museum days, family outings. The joyful side of growing up in Boston — curated by people who do it with their own kids.</p>
+  </div>
+</div>
+
+<section class="sec bg-cream" style="padding-top:40px;">
+  <div class="fe-inner">
+
+    <!-- STAT STRIP -->
+    <div class="fe-stat-strip">
+      <div class="fe-stat"><div class="fe-stat-num">75+</div><div class="fe-stat-label">Birthday vendors</div></div>
+      <div class="fe-stat"><div class="fe-stat-num">30</div><div class="fe-stat-label">Excursions</div></div>
+      <div class="fe-stat"><div class="fe-stat-num">22</div><div class="fe-stat-label">Family spots</div></div>
+      <div class="fe-stat"><div class="fe-stat-num">∞</div><div class="fe-stat-label">Concerts &amp; theatre</div></div>
+    </div>
+
+    <!-- MOOD PICKER -->
+    <h2 class="fe-mood-h">What are you in the mood for?</h2>
+    <div class="fe-mood-row">
+      <a class="fe-mood" href="family-activities.html?cat=trampoline"><span class="fe-mood-emoji">🤸</span><div class="fe-mood-name">Burn energy</div><div class="fe-mood-where">Trampoline · ninja</div></a>
+      <a class="fe-mood" href="family-activities.html?cat=indoor"><span class="fe-mood-emoji">🌧️</span><div class="fe-mood-name">Rainy day</div><div class="fe-mood-where">Indoor venues</div></a>
+      <a class="fe-mood" href="excursions.html?cat=museum"><span class="fe-mood-emoji">🏛️</span><div class="fe-mood-name">Learn &amp; explore</div><div class="fe-mood-where">Museums · zoo</div></a>
+      <a class="fe-mood" href="excursions.html?cat=trustees"><span class="fe-mood-emoji">🌿</span><div class="fe-mood-name">Outdoor &amp; nature</div><div class="fe-mood-where">Trustees farms</div></a>
+      <a class="fe-mood" href="birthday.html#start"><span class="fe-mood-emoji">🎂</span><div class="fe-mood-name">Throw a party</div><div class="fe-mood-where">75+ vendors</div></a>
+      <a class="fe-mood" href="calendar.html"><span class="fe-mood-emoji">🎵</span><div class="fe-mood-name">Catch a show</div><div class="fe-mood-where">Concerts · ballet</div></a>
+    </div>
+
+    <!-- CATEGORY CARDS — big visual grid -->
+    <h2 class="fe-h2">Explore by category</h2>
+    <p class="fe-sub">Each category is a curated list with filters, real addresses, ratings and direct contact info.</p>
+
+    <div class="fe-cat-grid">
+
+      <a class="fe-cat cat-red" href="birthday.html">
+        <div class="fe-cat-banner">🎂<span class="fe-cat-count">75 vendors</span></div>
+        <div class="fe-cat-body">
+          <div class="fe-cat-eyebrow">Birthdays · parties · events</div>
+          <div class="fe-cat-title">Birthday Planning</div>
+          <p class="fe-cat-desc">Balloon artists, animators, photo booths, custom cakes, venues, tent rentals and active venues — every studio vetted with phone, address and reviews.</p>
+          <div class="fe-cat-tags">
+            <span class="fe-cat-tag">🎈 Balloons</span>
+            <span class="fe-cat-tag">🤹 Animators</span>
+            <span class="fe-cat-tag">📸 Photo booths</span>
+            <span class="fe-cat-tag">🏰 Venues</span>
+            <span class="fe-cat-tag">🐾 Animal parties</span>
+            <span class="fe-cat-tag">🎨 Art studios</span>
+          </div>
+          <div class="fe-cat-cta">Browse 75 birthday vendors <span class="fe-cat-arrow">→</span></div>
+        </div>
+      </a>
+
+      <a class="fe-cat cat-blue" href="excursions.html">
+        <div class="fe-cat-banner">🗺️<span class="fe-cat-count">30 outings</span></div>
+        <div class="fe-cat-body">
+          <div class="fe-cat-eyebrow">Museum &amp; city excursions</div>
+          <div class="fe-cat-title">Museum &amp; City Outings</div>
+          <p class="fe-cat-desc">Hand-picked tours and outings — Trustees of Reservations farms, museums, harbor tours, the zoo, plus seasonal one-offs like whale watching and Plimoth.</p>
+          <div class="fe-cat-tags">
+            <span class="fe-cat-tag">🌿 Trustees · 7 farms</span>
+            <span class="fe-cat-tag">🏛️ Museums</span>
+            <span class="fe-cat-tag">🚤 Harbor tours</span>
+            <span class="fe-cat-tag">🐘 Zoo &amp; aquarium</span>
+            <span class="fe-cat-tag">⚾ Fenway · Swan Boats</span>
+          </div>
+          <div class="fe-cat-cta">Browse all 30 excursions <span class="fe-cat-arrow">→</span></div>
+        </div>
+      </a>
+
+      <a class="fe-cat cat-green" href="family-activities.html">
+        <div class="fe-cat-banner">🎈<span class="fe-cat-count">22 venues</span></div>
+        <div class="fe-cat-body">
+          <div class="fe-cat-eyebrow">Family activities · all seasons</div>
+          <div class="fe-cat-title">Family Activities</div>
+          <p class="fe-cat-desc">Boston spots for free-time fun — trampoline parks, ice rinks, bowling, mini golf, escape rooms, water parks and climbing gyms. Rainy-day proof.</p>
+          <div class="fe-cat-tags">
+            <span class="fe-cat-tag">🤸 Trampoline</span>
+            <span class="fe-cat-tag">⛸️ Ice rinks</span>
+            <span class="fe-cat-tag">🎳 Bowling</span>
+            <span class="fe-cat-tag">⛳ Mini golf</span>
+            <span class="fe-cat-tag">🧩 Escape rooms</span>
+            <span class="fe-cat-tag">🌊 Water parks</span>
+          </div>
+          <div class="fe-cat-cta">Browse all 22 activities <span class="fe-cat-arrow">→</span></div>
+        </div>
+      </a>
+
+      <a class="fe-cat cat-yellow" href="calendar.html">
+        <div class="fe-cat-banner">🎵<span class="fe-cat-count">live</span></div>
+        <div class="fe-cat-body">
+          <div class="fe-cat-eyebrow">Concerts · theatre · ballet</div>
+          <div class="fe-cat-title">Concerts &amp; Theatre</div>
+          <p class="fe-cat-desc">Family concerts, kids ballet, theatre matinées and student showcases — hand-picked Boston-area performances suitable from age 3 up. Group tickets when we can get them.</p>
+          <div class="fe-cat-tags">
+            <span class="fe-cat-tag">🎭 Wheelock</span>
+            <span class="fe-cat-tag">🩰 Boston Ballet</span>
+            <span class="fe-cat-tag">🎼 BSO Family</span>
+            <span class="fe-cat-tag">🎤 Eva Dominiak</span>
+          </div>
+          <div class="fe-cat-cta">See dates &amp; tickets <span class="fe-cat-arrow">→</span></div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- "WHAT'S ON" PANELS -->
+    <div class="fe-now-grid">
+
+      <div class="fe-now-panel">
+        <div class="fe-now-h">
+          <div class="fe-now-title">🎟️ Headliners 2026</div>
+          <a class="fe-now-link" href="#full-calendar">Full calendar ↓</a>
+        </div>
+        <div class="fe-now-row"><a class="fe-now-date" href="https://www.eventbrite.com/e/the-jimmy-fund-scooper-bowl-presented-by-sharkninja-tickets-1917433056889?aff=IGDay" target="_blank" rel="noopener">Jun 2–4</a><div class="fe-now-text"><a href="https://www.eventbrite.com/e/the-jimmy-fund-scooper-bowl-presented-by-sharkninja-tickets-1917433056889?aff=IGDay" target="_blank" rel="noopener">Jimmy Fund Scooper Bowl</a><span>All-you-can-eat ice cream for Dana-Farber · 12–8 PM · Boston</span></div></div>
+        <div class="fe-now-row"><a class="fe-now-date" href="https://www.bochcenter.org/events/detail/bluey" target="_blank" rel="noopener">Jun 13–14</a><div class="fe-now-text"><a href="https://www.bochcenter.org/events/detail/bluey" target="_blank" rel="noopener">Bluey's Big Play</a><span>Boch Center · Wang Theatre · ages 3+</span></div></div>
+        <div class="fe-now-row"><a class="fe-now-date" href="https://www.bostonharborfest.com/" target="_blank" rel="noopener">Jul 2–4</a><div class="fe-now-text"><a href="https://www.bostonharborfest.com/" target="_blank" rel="noopener">Boston Harborfest</a><span>America's largest July 4th festival · 100+ events · all ages · 🆓 free</span></div></div>
+        <div class="fe-now-row"><a class="fe-now-date" href="https://www.bochcenter.org/events/detail/thewiggles" target="_blank" rel="noopener">Aug 24</a><div class="fe-now-text"><a href="https://www.bochcenter.org/events/detail/thewiggles" target="_blank" rel="noopener">The Wiggles · Tree of Wisdom</a><span>Boch Center · Wang Theatre · ages 2+</span></div></div>
+        <div class="fe-now-row"><a class="fe-now-date" href="https://www.wheelockfamilytheatre.org/" target="_blank" rel="noopener">Nov 14 – Dec 13</a><div class="fe-now-text"><a href="https://www.wheelockfamilytheatre.org/" target="_blank" rel="noopener">Disney's Finding Nemo</a><span>Wheelock Family Theatre · ages 4+</span></div></div>
+        <div class="fe-now-row"><a class="fe-now-date holiday" href="https://www.bostonballet.org/performances/the-nutcracker/" target="_blank" rel="noopener">Nov 27 – Dec 31</a><div class="fe-now-text"><a href="https://www.bostonballet.org/performances/the-nutcracker/" target="_blank" rel="noopener">Boston Ballet · The Nutcracker</a><span>Citizens Bank Opera House · live orchestra</span></div></div>
+      </div>
+
+      <div class="fe-now-panel">
+        <div class="fe-now-h">
+          <div class="fe-now-title">📅 Year-round &amp; rainy day</div>
+          <a class="fe-now-link" href="family-activities.html">All venues →</a>
+        </div>
+        <div class="fe-now-row"><span class="fe-now-date">🌧️ Now</span><div class="fe-now-text"><a href="family-activities.html?cat=trampoline" target="_blank" rel="noopener">Sky Zone Watertown</a><span>Trampoline park · ages 4+ · drop-in</span></div></div>
+        <div class="fe-now-row"><span class="fe-now-date">❄️ Winter</span><div class="fe-now-text"><a href="https://bostonfrogpond.com/" target="_blank" rel="noopener">Frog Pond ice skating</a><span>Boston Common · kids under 58" free</span></div></div>
+        <div class="fe-now-row"><span class="fe-now-date">🎬 Anytime</span><div class="fe-now-text"><a href="https://www.mos.org/imax" target="_blank" rel="noopener">Mugar Omni IMAX Dome</a><span>Museum of Science · 180° dome · rotating films</span></div></div>
+        <div class="fe-now-row"><span class="fe-now-date">🐳 Apr–Oct</span><div class="fe-now-text"><a href="https://www.bostonharborcruises.com/whale-watch/" target="_blank" rel="noopener">Whale watching · Long Wharf</a><span>3-hour trip · ages 5+</span></div></div>
+      </div>
+
+    </div>
+
+    <!-- ============ TRAVEL · CAPE COD ============ -->
+    <h2 class="fe-cal-h" id="travel-cape-cod">🏖️ Travel · Cape Cod family escapes</h2>
+    <p class="fe-cal-sub">Worth the drive — bike trails, pirate ships, sharks and splash pads. Click any card for full details &amp; the official link.</p>
+    <div class="center-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:24px;">
+      <div class="center-card" data-town="dennis">
+        <div class="center-head"><div class="center-name"><a href="https://www.mass.gov/locations/cape-cod-rail-trail" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Cape Cod Rail Trail</a></div><div class="center-price" style="background:var(--teal-l);color:var(--teal);">🚲 Free</div></div>
+        <div class="center-specialty">⭐ 25+ mi paved, mostly-flat trail · family sections Brewster→Orleans &amp; Nickerson→Orleans · ice cream, lakes &amp; beaches · separated from traffic</div>
+        <div class="center-meta">
+          <div class="center-meta-label">📍 Parking</div><div class="center-meta-value">460 Station Ave, South Yarmouth · Old Colony Way, Orleans</div>
+          <div class="center-meta-label">🌐 Site</div><div class="center-meta-value"><a class="website-link" target="_blank" rel="noopener" href="https://www.mass.gov/locations/cape-cod-rail-trail">mass.gov ↗</a></div>
+        </div>
+        <a class="center-book" target="_blank" rel="noopener" href="https://www.mass.gov/locations/cape-cod-rail-trail">🚲 Trail info ↗</a>
+      </div>
+      <div class="center-card" data-town="multi">
+        <div class="center-head"><div class="center-name">Shining Sea Bikeway</div><div class="center-price" style="background:var(--teal-l);color:var(--teal);">🚲 Free</div></div>
+        <div class="center-specialty">10.7 mi round-trip · ocean views, salt marshes &amp; Woods Hole harbor · finish at the science museums &amp; ferry watching · mostly flat &amp; paved</div>
+        <div class="center-meta">
+          <div class="center-meta-label">📍 Parking</div><div class="center-meta-value">Depot Ave Parking Area, 1 Depot Ave, Falmouth</div>
+          <div class="center-meta-label">📍 Start</div><div class="center-meta-value">10 County Rd, North Falmouth</div>
+        </div>
+        <a class="center-book" target="_blank" rel="noopener" href="https://www.openstreetmap.org/search?query=Shining%20Sea%20Bikeway%20Falmouth%20MA">📍 Map ↗</a>
+      </div>
+      <div class="center-card" data-town="multi">
+        <div class="center-head"><div class="center-name">Cape Cod Canal Bikeway</div><div class="center-price" style="background:var(--teal-l);color:var(--teal);">🚲 Free</div></div>
+        <div class="center-specialty">⭐ Best for little kids · 14 mi round-trip · wide, completely flat, no road crossings · constant boat &amp; ship watching along the canal</div>
+        <div class="center-meta">
+          <div class="center-meta-label">📍 Parking</div><div class="center-meta-value">Herring Run Rec Area, Bourne · Sandwich Marina, 130 Town Neck Rd, Sandwich · free</div>
+          <div class="center-meta-label">🌐 Site</div><div class="center-meta-value"><a class="website-link" target="_blank" rel="noopener" href="https://www.capecodcanal.us/">capecodcanal.us ↗</a></div>
+        </div>
+        <a class="center-book" target="_blank" rel="noopener" href="https://www.capecodcanal.us/">🚲 Canal info ↗</a>
+      </div>
+      <div class="center-card" data-town="brewster">
+        <div class="center-head"><div class="center-name"><a href="https://www.mass.gov/locations/nickerson-state-park" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Nickerson State Park</a></div><div class="center-price" style="background:var(--lav-l);color:var(--lav);">🌲 Park</div></div>
+        <div class="center-specialty">Easy bike loops · small lakes, forests &amp; swimming beaches · great for ages 4–8 &amp; first-time riders · direct Rail Trail access</div>
+        <div class="center-meta">
+          <div class="center-meta-label">📍 Where</div><div class="center-meta-value">3488 Main St, Brewster (Cape Cod)</div>
+          <div class="center-meta-label">🌐 Site</div><div class="center-meta-value"><a class="website-link" target="_blank" rel="noopener" href="https://www.mass.gov/locations/nickerson-state-park">mass.gov ↗</a></div>
+        </div>
+        <a class="center-book" target="_blank" rel="noopener" href="https://www.mass.gov/locations/nickerson-state-park">🌲 Park info ↗</a>
+      </div>
+      <div class="center-card" data-town="west-yarmouth">
+        <div class="center-head"><div class="center-name"><a href="https://www.discoverpirates.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Whydah Pirate Museum</a></div><div class="center-price" style="background:var(--straw-l);color:#8A6500;">🏴‍☠️ $</div></div>
+        <div class="center-specialty">World's only authenticated pirate shipwreck museum · ages 6+</div>
+        <div class="center-meta">
+          <div class="center-meta-label">📍 Where</div><div class="center-meta-value">West Yarmouth (Cape Cod)</div>
+          <div class="center-meta-label">🌐 Site</div><div class="center-meta-value"><a class="website-link" target="_blank" rel="noopener" href="https://www.discoverpirates.com/">discoverpirates.com ↗</a></div>
+        </div>
+        <a class="center-book" target="_blank" rel="noopener" href="https://www.discoverpirates.com/">🏴‍☠️ Visit website ↗</a>
+      </div>
+      <div class="center-card" data-town="chatham">
+        <div class="center-head"><div class="center-name"><a href="https://www.atlanticwhiteshark.org/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Atlantic White Shark Center</a></div><div class="center-price" style="background:var(--straw-l);color:#8A6500;">🦈 $</div></div>
+        <div class="center-specialty">Interactive shark science &amp; conservation center · ages 7–14</div>
+        <div class="center-meta">
+          <div class="center-meta-label">📍 Where</div><div class="center-meta-value">Chatham (Cape Cod)</div>
+          <div class="center-meta-label">🌐 Site</div><div class="center-meta-value"><a class="website-link" target="_blank" rel="noopener" href="https://www.atlanticwhiteshark.org/">atlanticwhiteshark.org ↗</a></div>
+        </div>
+        <a class="center-book" target="_blank" rel="noopener" href="https://www.atlanticwhiteshark.org/">🦈 Visit website ↗</a>
+      </div>
+      <div class="center-card" data-town="brewster">
+        <div class="center-head"><div class="center-name"><a href="https://www.ccmnh.org/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Cape Cod Museum of Natural History</a></div><div class="center-price" style="background:var(--g7);color:var(--g1);">🦋 $</div></div>
+        <div class="center-specialty">Butterfly house · aquariums · nature trails · marsh boardwalks</div>
+        <div class="center-meta">
+          <div class="center-meta-label">📍 Where</div><div class="center-meta-value">Brewster (Cape Cod)</div>
+          <div class="center-meta-label">🌐 Site</div><div class="center-meta-value"><a class="website-link" target="_blank" rel="noopener" href="https://www.ccmnh.org/">ccmnh.org ↗</a></div>
+        </div>
+        <a class="center-book" target="_blank" rel="noopener" href="https://www.ccmnh.org/">🦋 Visit website ↗</a>
+      </div>
+      <div class="center-card" data-town="mashpee">
+        <div class="center-head"><div class="center-name"><a href="https://www.capecodchildrensmuseum.org/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Cape Cod Children's Museum</a></div><div class="center-price" style="background:var(--g7);color:var(--g1);">🧸 $</div></div>
+        <div class="center-specialty">Hands-on play museum for young kids</div>
+        <div class="center-meta">
+          <div class="center-meta-label">📍 Where</div><div class="center-meta-value">Mashpee (Cape Cod)</div>
+          <div class="center-meta-label">🌐 Site</div><div class="center-meta-value"><a class="website-link" target="_blank" rel="noopener" href="https://www.capecodchildrensmuseum.org/">capecodchildrensmuseum.org ↗</a></div>
+        </div>
+        <a class="center-book" target="_blank" rel="noopener" href="https://www.capecodchildrensmuseum.org/">🧸 Visit website ↗</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin:0 0 32px;"><a href="biking-hiking.html" style="color:var(--g1);font-weight:700;">🚲 See the biking &amp; hiking map (rentals, parking &amp; trails) →</a> &nbsp;·&nbsp; <a href="family-activities.html?cat=travel" style="color:var(--g1);font-weight:700;">All Cape Cod &amp; travel spots →</a></p>
+
+    <!-- ============ FULL EVENT CALENDAR ============ -->
+    <h2 class="fe-cal-h" id="full-calendar">📅 Full 2026 event calendar</h2>
+    <p class="fe-cal-sub">Click any date pill to go straight to that event's ticket / info page. Calendar curated for Boston-area families — theatre, ballet, opera, magic, IMAX, ice and ongoing favorites.</p>
+
+    <div class="fe-tip">
+      <div class="fe-tip-icon">💡</div>
+      <div>
+        <div class="fe-tip-title">Book the headliners early</div>
+        <div class="fe-tip-desc">Boston Ballet's <strong>Nutcracker</strong>, <strong>Bluey's Big Play</strong>, <strong>The Wiggles</strong>, and <strong>Disney on Ice</strong> (when announced) routinely sell out matinées. Wheelock Family Theatre and Puppet Showplace are the most budget-friendly. Watch <a href="https://www.boston.gov/news/free-tickets-arts-events-thanks-boston-family-days" target="_blank" rel="noopener" style="color:#7A5A10;font-weight:700;">Boston Family Days</a> for free-ticket releases at major venues.</div>
+      </div>
+    </div>
+
+    <div class="fe-cal">
+
+      <!-- JUNE -->
+      <div class="fe-cal-month">
+        <div class="fe-cal-month-head"><div class="fe-cal-month-name">🌸 June 2026</div><div class="fe-cal-month-tag">Spring → summer</div></div>
+        <div class="fe-cal-events">
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://lupazoo.org/zoo-news/" target="_blank" rel="noopener"><span class="d-num">20</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://lupazoo.org/zoo-news/" target="_blank" rel="noopener">Lupa Zoo — Community Summer Safety Event</a></div>
+              <div class="fe-cal-event-meta">Lupa Zoo, 62 Nash Hill Rd, Ludlow · <strong>Sat 12–2 PM</strong> · biking, hiking &amp; boating safety with Ludlow Police, Fire, Sheriff, MA Fish &amp; Wildlife &amp; USDA · free with regular zoo admission · adults &amp; kids together</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Free w/ admission</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.gardnermuseum.org/calendar/juneteenth-2026" target="_blank" rel="noopener"><span class="d-num">19</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.gardnermuseum.org/calendar/juneteenth-2026" target="_blank" rel="noopener">Gardner Museum — Juneteenth Celebration</a></div>
+              <div class="fe-cal-event-meta">Isabella Stewart Gardner Museum, Boston · <strong>Fri</strong> · music, art &amp; performances celebrating Juneteenth · family-friendly</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Free</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.mfa.org/event/open-house/juneteenth" target="_blank" rel="noopener"><span class="d-num">19</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.mfa.org/event/open-house/juneteenth" target="_blank" rel="noopener">MFA — Juneteenth Open House</a></div>
+              <div class="fe-cal-event-meta">Museum of Fine Arts, Boston · <strong>Fri</strong> · free community open house · art-making, music, performances &amp; gallery activities · all ages</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Free</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.teamhomeschoolclub.org/4501/events/register?eventid=3810459&private=0" target="_blank" rel="noopener"><span class="d-num">28</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.teamhomeschoolclub.org/4501/events/register?eventid=3810459&private=0" target="_blank" rel="noopener">Holiday Hill Family Day</a></div>
+              <div class="fe-cal-event-meta">Holiday Hill, Prospect, CT · <strong>Sun 9 AM–4 PM</strong> · swimming, mini golf, canoeing, kayaking, rock walls, trampolines, games, food &amp; ice cream — all included · register &amp; pay in advance</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Day Trip</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.facebook.com/NewportHelicopterTours/" target="_blank" rel="noopener"><span class="d-num">28</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.facebook.com/NewportHelicopterTours/" target="_blank" rel="noopener">Newport Airport Day</a></div>
+              <div class="fe-cal-event-meta">Newport State Airport, Middletown RI · <strong>Sun 10 AM–5 PM</strong> · planes, cool cars, helicopter rides, food trucks &amp; ice cream · fun for the whole family</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Free</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.usninjachallenge.com/marlborough-ma" target="_blank" rel="noopener"><span class="d-num">13</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.usninjachallenge.com/marlborough-ma" target="_blank" rel="noopener">Parents' Night Out — USA Ninja Challenge</a></div>
+              <div class="fe-cal-event-meta">Marlborough · <strong>Sat 5:30–8 PM</strong> (also Jun 27, Jul 11 &amp; 25) · drop-off ninja fun, games &amp; Picco pizza · $40 first child / $35 / $30 · register ahead</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Kids' Night</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="mailto:jbenneth@nccfma.org"><span class="d-num">13</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title">LEGOS &amp; EGGOS — Build &amp; Breakfast</div>
+              <div class="fe-cal-event-meta">New Covenant Christian Fellowship, 609 N Main St, Attleboro · <strong>Sat 9 AM–12 PM</strong> · LEGO building + breakfast · builders of all ages · free · jbenneth@nccfma.org</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Free</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.walpolerec.com/" target="_blank" rel="noopener"><span class="d-num">27</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.walpolerec.com/" target="_blank" rel="noopener">Walpole Fire Dept. Foam Party</a></div>
+              <div class="fe-cal-event-meta">Lorusso Athletic Complex, 2400 Main St, Walpole · <strong>Sat 1 PM</strong> · free · bring goggles, towels &amp; sunscreen · hosted by Walpole Recreation</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Free</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://robinhoodsfaire.com/" target="_blank" rel="noopener"><span class="d-num">Jun</span><span class="d-rng">WKNDS</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://robinhoodsfaire.com/" target="_blank" rel="noopener">Robin Hood's Faire</a></div>
+              <div class="fe-cal-event-meta">Camp Nekon, Kingston, MA · <strong>Saturdays &amp; Sundays in June, 10 AM–5 PM</strong> · medieval family faire · jousting, jesters, fairies, archery, crafts &amp; kids' knighting · rain or shine</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://walthamriverbeat.com/" target="_blank" rel="noopener"><span class="d-num">Jun</span><span class="d-rng">WALTHAM</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://walthamriverbeat.com/" target="_blank" rel="noopener">Waltham Riverbeat Music Festival</a></div>
+              <div class="fe-cal-event-meta">Charles River Landing, Waltham · free outdoor music &amp; arts festival · live bands, food trucks &amp; family fun · check site for 2026 date</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.centermakor.org/event/limmud-family-festival/" target="_blank" rel="noopener"><span class="d-num">Jun</span><span class="d-rng">BRIGHTON</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.centermakor.org/event/limmud-family-festival/" target="_blank" rel="noopener">Limmud Family Festival</a></div>
+              <div class="fe-cal-event-meta">Center Makor, 1845 Commonwealth Ave, Brighton · day of family learning, arts, music &amp; culture for all ages · check site for 2026 date</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.facebook.com/RevereBeachPartnership/" target="_blank" rel="noopener"><span class="d-num">14</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.facebook.com/RevereBeachPartnership/" target="_blank" rel="noopener">Revere Beach Kite Festival</a></div>
+              <div class="fe-cal-event-meta">Revere Beach near Markey Memorial Bridge · <strong>Sun 11 AM – 2 PM</strong> · free family kite-flying tradition · America's first public beach</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.bochcenter.org/events/detail/bluey" target="_blank" rel="noopener"><span class="d-num">13–14</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.bochcenter.org/events/detail/bluey" target="_blank" rel="noopener">Bluey's Big Play</a></div>
+              <div class="fe-cal-event-meta">Boch Center · <strong>Wang Theatre</strong> · ages 3+ · puppetry &amp; original story · great first theatre</div>
+            </div>
+            <span class="fe-cal-event-cat cat-theatre">Theatre</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <!-- JULY -->
+      <div class="fe-cal-month">
+        <div class="fe-cal-month-head"><div class="fe-cal-month-name">🌞 July 2026</div><div class="fe-cal-month-tag">Tanglewood season</div></div>
+        <div class="fe-cal-events">
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://shopwellesleysquare.com/july-jubilation-sidewalk-sale-2026/" target="_blank" rel="noopener"><span class="d-num">Jul</span><span class="d-rng">WELLESLEY</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://shopwellesleysquare.com/july-jubilation-sidewalk-sale-2026/" target="_blank" rel="noopener">July Jubilation Sidewalk Sale</a></div>
+              <div class="fe-cal-event-meta">Wellesley Square · sidewalk sales, family activities &amp; summer fun downtown · free · check site for 2026 date</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Free</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.natickcenter.org/nicknights" target="_blank" rel="noopener"><span class="d-num">16</span><span class="d-rng">JUL</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.natickcenter.org/nicknights" target="_blank" rel="noopener">Natick Nights!</a></div>
+              <div class="fe-cal-event-meta">Natick Common, 1 Park St, Natick · <strong>Thu 5–8 PM</strong> · music, food &amp; activities · hosted by Natick Center Cultural District · free · all ages</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Free</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.usninjachallenge.com/marlborough-ma" target="_blank" rel="noopener"><span class="d-num">11</span><span class="d-rng">JUL</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.usninjachallenge.com/marlborough-ma" target="_blank" rel="noopener">Parents' Night Out — USA Ninja Challenge</a></div>
+              <div class="fe-cal-event-meta">Marlborough · <strong>Sat 5:30–8 PM</strong> (also Jul 25) · drop-off ninja fun, games &amp; Picco pizza · $40 first child / $35 / $30 · register ahead</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Kids' Night</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.eventbrite.com/e/the-jimmy-fund-scooper-bowl-presented-by-sharkninja-tickets-1917433056889?aff=IGDay" target="_blank" rel="noopener"><span class="d-num">2–4</span><span class="d-rng">JUN</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.eventbrite.com/e/the-jimmy-fund-scooper-bowl-presented-by-sharkninja-tickets-1917433056889?aff=IGDay" target="_blank" rel="noopener">Jimmy Fund Scooper Bowl</a></div>
+              <div class="fe-cal-event-meta">All-you-can-eat ice cream festival (presented by SharkNinja) benefiting Dana-Farber · <strong>12–8 PM daily</strong> · family-friendly · Boston</div>
+            </div>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date holiday" href="https://www.bostonharborfest.com/" target="_blank" rel="noopener"><span class="d-num">2–4</span><span class="d-rng">JUL</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.bostonharborfest.com/" target="_blank" rel="noopener">Boston Harborfest</a></div>
+              <div class="fe-cal-event-meta">America's largest 4th of July festival · <strong>100+ free events</strong> across waterfront · parades · fireworks · concerts · all ages</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.bso.org/events/twd-bso-family-concert-july-2026" target="_blank" rel="noopener"><span class="d-num">19</span><span class="d-rng">JUL</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.bso.org/events/twd-bso-family-concert-july-2026" target="_blank" rel="noopener">BSO · Tanglewood Family Concert</a></div>
+              <div class="fe-cal-event-meta">Koussevitzky Music Shed · Lenox/Stockbridge · <strong>Sun 10:30 AM</strong> · Thomas Wilkins, conductor · perfect Berkshires day trip</div>
+            </div>
+            <span class="fe-cal-event-cat cat-bso">BSO Family</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUGUST -->
+      <div class="fe-cal-month">
+        <div class="fe-cal-month-head"><div class="fe-cal-month-name">☀️ August 2026</div><div class="fe-cal-month-tag">Late summer</div></div>
+        <div class="fe-cal-events">
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.eventbrite.com/e/1st-asian-food-festival-2026-tickets-1982132699261" target="_blank" rel="noopener"><span class="d-num">Aug</span><span class="d-rng">2026</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.eventbrite.com/e/1st-asian-food-festival-2026-tickets-1982132699261" target="_blank" rel="noopener">1st Asian Food Festival 2026</a></div>
+              <div class="fe-cal-event-meta">Asian food, culture &amp; family fun · check the Eventbrite page for date, time &amp; venue</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.bochcenter.org/events/detail/thewiggles" target="_blank" rel="noopener"><span class="d-num">24</span><span class="d-rng">AUG</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.bochcenter.org/events/detail/thewiggles" target="_blank" rel="noopener">The Wiggles · Tree of Wisdom Spectacular!</a></div>
+              <div class="fe-cal-event-meta">Boch Center · <strong>Wang Theatre</strong> · ages 2–8 · sing-along</div>
+            </div>
+            <span class="fe-cal-event-cat cat-theatre">Concert</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEPTEMBER -->
+      <div class="fe-cal-month">
+        <div class="fe-cal-month-head"><div class="fe-cal-month-name">🍂 September 2026</div><div class="fe-cal-month-tag">Renaissance faire season</div></div>
+        <div class="fe-cal-events">
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.kingrichardsfaire.net" target="_blank" rel="noopener"><span class="d-num">Sep 5</span><span class="d-rng">→ OCT 25</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.kingrichardsfaire.net" target="_blank" rel="noopener">King Richard's Faire</a></div>
+              <div class="fe-cal-event-meta">Carver, MA · <strong>weekends Sep 5 – Oct 25</strong> + Labor Day &amp; Columbus Day · New England's largest &amp; longest-running Renaissance faire · jousting, aerialists, acrobats, artisans &amp; feasting · ~1 hr south of Boston</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.ctfaire.com" target="_blank" rel="noopener"><span class="d-num">Aug 29</span><span class="d-rng">→ OCT 25</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.ctfaire.com" target="_blank" rel="noopener">Connecticut Renaissance Faire</a></div>
+              <div class="fe-cal-event-meta">Lebanon, CT · <strong>weekends Aug 29 – Oct 25</strong> + Labor Day &amp; Columbus Day · 13 stages · full-contact jousting, comedy &amp; stage combat · 9 themed weekends · $18 / youth $10 / kids free</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- OCTOBER -->
+      <div class="fe-cal-month">
+        <div class="fe-cal-month-head"><div class="fe-cal-month-name">🎃 October 2026</div><div class="fe-cal-month-tag">Halloween season</div></div>
+        <div class="fe-cal-events">
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://autumnknightsfaire.com" target="_blank" rel="noopener"><span class="d-num">Oct</span><span class="d-rng">WKNDS</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://autumnknightsfaire.com" target="_blank" rel="noopener">Autumn Knights Renaissance Faire</a></div>
+              <div class="fe-cal-event-meta">Charlton, MA · <strong>two October weekends</strong> · artisans, armored combat, live entertainment &amp; food · Halloween-weekend trick-or-treating + haunted trail</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://massrenfaire.com" target="_blank" rel="noopener"><span class="d-num">Fall</span><span class="d-rng">FAIRE</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://massrenfaire.com" target="_blank" rel="noopener">Massachusetts Renaissance Faire</a></div>
+              <div class="fe-cal-event-meta">Fae &amp; fantasy-themed family faire · jousting &amp; interactive storylines · check site for 2026 dates</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="#"><span class="d-num">Fall</span><span class="d-rng">W. MA</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title">Ventforth Hall Medieval Faire</div>
+              <div class="fe-cal-event-meta">Lenox, western MA · highly-rated medieval faire (4.6/5) · check local listings for 2026 dates</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Festival</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://www.greaterbostonstage.org/young-audiences" target="_blank" rel="noopener"><span class="d-num">Oct</span><span class="d-rng">→ MAY</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.greaterbostonstage.org/young-audiences" target="_blank" rel="noopener">Greater Boston Stage · Theatre for Young Audiences</a></div>
+              <div class="fe-cal-event-meta">Stoneham · touring TheaterWorks USA shows · <em>Cat Kid Comic Club: The Musical</em>, <em>Click, Clack, Moo</em></div>
+            </div>
+            <span class="fe-cal-event-cat cat-theatre">Theatre</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOVEMBER -->
+      <div class="fe-cal-month">
+        <div class="fe-cal-month-head"><div class="fe-cal-month-name">🦃 November 2026</div><div class="fe-cal-month-tag">Holiday lead-up</div></div>
+        <div class="fe-cal-events">
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.wheelockfamilytheatre.org/" target="_blank" rel="noopener"><span class="d-num">14</span><span class="d-rng">NOV</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.wheelockfamilytheatre.org/" target="_blank" rel="noopener">Disney's Finding Nemo opens</a></div>
+              <div class="fe-cal-event-meta">Wheelock Family Theatre · ages 4+ · runs through Dec 13 · imaginative staging &amp; puppetry · budget-friendly</div>
+            </div>
+            <span class="fe-cal-event-cat cat-theatre">Musical</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date holiday" href="https://www.bostonballet.org/performances/the-nutcracker/" target="_blank" rel="noopener"><span class="d-num">27</span><span class="d-rng">NOV</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.bostonballet.org/performances/the-nutcracker/" target="_blank" rel="noopener">Boston Ballet · The Nutcracker opens</a></div>
+              <div class="fe-cal-event-meta">Citizens Bank Opera House · live Boston Ballet Orchestra · runs through Dec 31 · <strong>Sensory-Friendly performance</strong> available</div>
+            </div>
+            <span class="fe-cal-event-cat cat-ballet">Ballet</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DECEMBER -->
+      <div class="fe-cal-month">
+        <div class="fe-cal-month-head"><div class="fe-cal-month-name">🎄 December 2026</div><div class="fe-cal-month-tag">Holidays · book early</div></div>
+        <div class="fe-cal-events">
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date holiday" href="https://www.bostonballet.org/performances/the-nutcracker/" target="_blank" rel="noopener"><span class="d-num">Through</span><span class="d-rng">DEC 31</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.bostonballet.org/performances/the-nutcracker/" target="_blank" rel="noopener">Boston Ballet · The Nutcracker</a></div>
+              <div class="fe-cal-event-meta">Citizens Bank Opera House · matinées sell out — book by mid-November</div>
+            </div>
+            <span class="fe-cal-event-cat cat-ballet">Ballet</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.wheelockfamilytheatre.org/" target="_blank" rel="noopener"><span class="d-num">Through</span><span class="d-rng">DEC 13</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.wheelockfamilytheatre.org/" target="_blank" rel="noopener">Disney's Finding Nemo (final weeks)</a></div>
+              <div class="fe-cal-event-meta">Wheelock Family Theatre · Boston</div>
+            </div>
+            <span class="fe-cal-event-cat cat-theatre">Musical</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date holiday" href="https://nsmt.org/events/" target="_blank" rel="noopener"><span class="d-num">Dec</span><span class="d-rng">2026</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://nsmt.org/events/" target="_blank" rel="noopener">North Shore Music Theatre · A Christmas Carol</a></div>
+              <div class="fe-cal-event-meta">Beverly · long-running holiday tradition · ages 6+</div>
+            </div>
+            <span class="fe-cal-event-cat cat-theatre">Holiday</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date" href="https://www.tdgarden.com/events/all" target="_blank" rel="noopener"><span class="d-num">Dec</span><span class="d-rng">TBA</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.tdgarden.com/events/all" target="_blank" rel="noopener">Disney on Ice (when announced)</a></div>
+              <div class="fe-cal-event-meta">TD Garden · check tdgarden.com — typically returns Dec + Feb</div>
+            </div>
+            <span class="fe-cal-event-cat cat-ice">Ice show</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- YEAR-ROUND / ONGOING -->
+      <div class="fe-cal-month">
+        <div class="fe-cal-month-head"><div class="fe-cal-month-name">♾️ Year-round &amp; ongoing</div><div class="fe-cal-month-tag">Always open</div></div>
+        <div class="fe-cal-events">
+
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://bostonchildrensmuseum.org/winnie/" target="_blank" rel="noopener"><span class="d-num">Now</span><span class="d-rng">EXHIBIT</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://bostonchildrensmuseum.org/winnie/" target="_blank" rel="noopener">Winnie-the-Pooh: Exploring a Classic</a></div>
+              <div class="fe-cal-event-meta">Boston Children's Museum · step into the Hundred Acre Wood · hands-on exhibit for young kids · included with admission</div>
+            </div>
+            <span class="fe-cal-event-cat cat-museum">Exhibit</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://www.bostonseaport.xyz/places/the-rocks-at-harbor-way" target="_blank" rel="noopener"><span class="d-num">Sun</span><span class="d-rng">+ DAILY</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.bostonseaport.xyz/places/the-rocks-at-harbor-way" target="_blank" rel="noopener">The Rocks at Harbor Way</a></div>
+              <div class="fe-cal-event-meta">Harbor Way, Boston Seaport · free climbable boulder sculptures &amp; play space · open daily · great for active kids</div>
+            </div>
+            <span class="fe-cal-event-cat cat-ongoing">Free</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://www.brickconvention.com/salem" target="_blank" rel="noopener"><span class="d-num">Salem</span><span class="d-rng">LEGO</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.brickconvention.com/salem" target="_blank" rel="noopener">Brick Convention · Salem</a></div>
+              <div class="fe-cal-event-meta">Touring LEGO fan convention · life-size builds, vendors, kids' activities &amp; building zones · check site for 2026 Salem date &amp; tickets</div>
+            </div>
+            <span class="fe-cal-event-cat cat-ongoing">LEGO</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="#"><span class="d-num">Tue</span><span class="d-rng">NIGHTS</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title">Family Game Night at the Library</div>
+              <div class="fe-cal-event-meta">Youth Services Dept · <strong>Tuesdays 5:30–8:30 PM</strong> · ages 3–13 (+ parents) &amp; 14–16 · board, card, word &amp; giant games — Giant Candy Land to Sushi Go · free drop-in</div>
+            </div>
+            <span class="fe-cal-event-cat cat-festival">Free</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://www.bso.org/family-concert-series" target="_blank" rel="noopener"><span class="d-num">Series</span><span class="d-rng">SYM HALL</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.bso.org/family-concert-series" target="_blank" rel="noopener">BSO Family Concert Series</a></div>
+              <div class="fe-cal-event-meta">Symphony Hall, Boston · the BSO's dedicated family series · check site for current dates &amp; programs</div>
+            </div>
+            <span class="fe-cal-event-cat cat-bso">BSO Family</span>
+          </div>
+                    <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://www.mariothemakermagician.com/" target="_blank" rel="noopener"><span class="d-num">Tour</span><span class="d-rng">DATES</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.mariothemakermagician.com/" target="_blank" rel="noopener">Mario the Maker Magician</a></div>
+              <div class="fe-cal-event-meta">Cary Memorial Hall, Lexington (when touring) · magic + robots + "punk rock"</div>
+            </div>
+            <span class="fe-cal-event-cat cat-magic">Magic</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://www.mos.org/imax" target="_blank" rel="noopener"><span class="d-num">Daily</span><span class="d-rng">IMAX</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.mos.org/imax" target="_blank" rel="noopener">Mugar Omni IMAX Dome</a></div>
+              <div class="fe-cal-event-meta">Museum of Science · New England's only 180° dome · rotating nature/space documentaries</div>
+            </div>
+            <span class="fe-cal-event-cat cat-imax">IMAX</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://www.neaq.org/visit/simons-imax-theatre/" target="_blank" rel="noopener"><span class="d-num">Daily</span><span class="d-rng">IMAX</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.neaq.org/visit/simons-imax-theatre/" target="_blank" rel="noopener">Simons IMAX · New England Aquarium</a></div>
+              <div class="fe-cal-event-meta">Ocean &amp; science films · pair with an aquarium visit</div>
+            </div>
+            <span class="fe-cal-event-cat cat-imax">IMAX</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://coolidge.org/" target="_blank" rel="noopener"><span class="d-num">Sat</span><span class="d-rng">AM</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://coolidge.org/" target="_blank" rel="noopener">Coolidge Corner Theatre · Family Series</a></div>
+              <div class="fe-cal-event-meta">Brookline · Saturday morning cartoons + classic films · check calendar for dates</div>
+            </div>
+            <span class="fe-cal-event-cat cat-imax">Cinema</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://www.puppetshowplace.org/" target="_blank" rel="noopener"><span class="d-num">Wk</span><span class="d-rng">SHOWS</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://www.puppetshowplace.org/" target="_blank" rel="noopener">Puppet Showplace Theater</a></div>
+              <div class="fe-cal-event-meta">Brookline · ages 3–9 · rotating professional puppet shows weekly · budget-friendly</div>
+            </div>
+            <span class="fe-cal-event-cat cat-theatre">Puppetry</span>
+          </div>
+          <div class="fe-cal-event">
+            <a class="fe-cal-event-date ongoing" href="https://swanboats.com/" target="_blank" rel="noopener"><span class="d-num">Apr</span><span class="d-rng">→ SEP 7</span></a>
+            <div class="fe-cal-event-info">
+              <div class="fe-cal-event-title"><a href="https://swanboats.com/" target="_blank" rel="noopener">Boston Swan Boats</a></div>
+              <div class="fe-cal-event-meta">Public Garden · open daily through Sept 7, 2026</div>
+            </div>
+            <span class="fe-cal-event-cat cat-ongoing">Seasonal</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>Want us to plan something specific?</h2>
+  <p>Tell us the date, the age, and what kind of fun. We'll send back a 3-option plan within a day.</p>
+  <div class="cta-row">
+    <a class="btn-primary" href="contact.html">Send the brief →</a>
+    <a class="btn-secondary" href="calendar.html" style="color:var(--g1);background:var(--white);border-color:var(--border-mid);">Browse the calendar</a>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-news" style="width:100%;max-width:560px;margin:0 auto 26px;text-align:center;">
+    <div style="font-family:var(--serif,Georgia,serif);font-size:18px;font-weight:600;color:#fff;margin-bottom:6px;">Get the weekly Boston-kids email 💌</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-bottom:12px;">New classes, camps &amp; fun events — free, unsubscribe anytime.</div>
+    <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" onsubmit="var f=this;event.preventDefault();var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';}).catch(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';});">
+      <input type="hidden" name="form-name" value="newsletter">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <span class="fn-row" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;">
+        <input type="email" name="email" required placeholder="Your email address" aria-label="Your email address" style="flex:1;min-width:200px;max-width:320px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border-mid,#d5dbe2);font-family:inherit;font-size:14px;">
+        <button type="submit" style="background:var(--g2,#1A73E8);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;">Subscribe →</button>
+      </span>
+      <div class="fn-ok" style="display:none;width:100%;padding:11px;background:var(--teal-l,#d8f3ec);color:var(--teal,#0a7d63);border-radius:10px;font-weight:700;font-size:14px;">🎉 You're on the list!</div>
+    </form>
+  </div>
+  <div class="foot-logo">
+    <div class="foot-logo-img"><span class="foot-logo-text">OZ</span></div>
+    <div class="foot-name">GOkid<span>OZ</span></div>
+  </div>
+  <div class="foot-links">
+    <a href="programs.html">Programs</a><a href="fun-events.html">Fun Events</a><a href="tutors.html">Tutors</a><a href="calendar.html">Calendar</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+  <a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+  <a class="foot-social" href="https://www.facebook.com/groups/1365198462166449/" target="_blank" rel="noopener" aria-label="GOkidOZ on Facebook"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
+  <a class="foot-social" href="https://www.instagram.com/gokidoz_boston/" target="_blank" rel="noopener" aria-label="GOkidOZ on Instagram" style="margin-left:8px;"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.52.01-4.76.07-.99.05-1.53.21-1.89.35-.48.18-.81.4-1.17.76-.36.36-.58.69-.76 1.17-.14.36-.3.9-.35 1.89-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05.99.21 1.53.35 1.89.18.48.4.81.76 1.17.36.36.69.58 1.17.76.36.14.9.3 1.89.35 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.99-.05 1.53-.21 1.89-.35.48-.18.81-.4 1.17-.76.36-.36.58-.69.76-1.17.14-.36.3-.9.35-1.89.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-.99-.21-1.53-.35-1.89-.18-.48-.4-.81-.76-1.17-.36-.36-.69-.58-1.17-.76-.36-.14-.9-.3-1.89-.35-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.46 5.46 0 110 10.92 5.46 5.46 0 010-10.92zm0 9a3.54 3.54 0 100-7.08 3.54 3.54 0 000 7.08zm6.95-9.22a1.28 1.28 0 11-2.56 0 1.28 1.28 0 012.56 0z"/></svg></a>
+  <div class="foot-copy">© 2026 GOkidOZ Boston. All rights reserved.</div>
+</footer>
+
+<script>
+/* Auto-renew: hide month blocks entirely in the past so the headliner calendar stays current each month. */
+(function(){
+  var MN={january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
+  var now=new Date(), cutoff=now.getFullYear()*12+now.getMonth();
+  document.querySelectorAll('.fe-cal-month').forEach(function(block){
+    var nameEl=block.querySelector('.fe-cal-month-name');
+    if(!nameEl) return;
+    var txt=(nameEl.textContent||'').toLowerCase();
+    var mm=txt.match(/(january|february|march|april|may|june|july|august|september|october|november|december)\s+(20\d\d)/);
+    if(!mm) return; // year-round / ongoing block — always keep
+    var idx=parseInt(mm[2],10)*12+MN[mm[1]];
+    if(idx<cutoff) block.style.display='none';
+  });
+})();
+</script>
+<script src="../assets/back-to-top.js"></script>
+<script src="../assets/newsletter.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/site-search.js"></script>
+<script src="../assets/listing-detail.js"></script>
+<script src="../assets/newsletter-popup.js"></script>
+</body>
+</html>

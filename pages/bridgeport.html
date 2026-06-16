@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridgeport Kids' Activities · GOkidOZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<meta name="description" content="Vetted kids' classes, museums, birthday venues and family activities in Bridgeport, Connecticut — by category, with map.">
+<meta name="theme-color" content="#1A73E8">
+<link rel="canonical" href="https://gokidoz.com/pages/bridgeport.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GOkidOZ">
+<meta property="og:title" content="Bridgeport Kids' Activities · GOkidOZ">
+<meta property="og:description" content="Vetted kids' activities and family fun in Bridgeport, Connecticut.">
+<meta property="og:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  .pv-wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+  .pv-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px;}
+  .pv-tab{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:1.5px solid var(--border-mid);color:var(--g1);font-family:var(--sans);font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:24px;cursor:pointer;transition:all .15s;}
+  .pv-tab:hover{background:var(--g7);}
+  .pv-tab.active{background:var(--g2);color:var(--white);border-color:var(--g2);}
+  .pv-search-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 18px;}
+  .pv-search{flex:1;min-width:240px;}
+  .pv-search input{width:100%;padding:11px 14px;border-radius:11px;border:1.5px solid var(--border-mid);font-family:var(--sans);font-size:14px;outline:none;}
+  .pv-count{font-size:13px;color:var(--text-muted);font-weight:700;}
+  .pv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:28px;}
+  .pv-sec-h{font-family:var(--serif);font-size:22px;color:var(--g1);font-weight:600;letter-spacing:-.2px;margin:28px 0 6px;}
+  .pv-sec-sub{font-size:14px;color:var(--text-muted);line-height:1.6;margin:0 0 16px;max-width:760px;}
+</style>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="../index.html">
+      <div class="logo-mark"><span class="logo-mark-text">OZ</span></div>
+      <div class="logo-text">
+        <div class="logo-name">GOkid<span>OZ</span></div>
+        <div class="logo-slogan">Bridgeport kids <em>discover</em> all year</div>
+      </div>
+    </a>
+  </div>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav" onclick="var o=this.parentNode.querySelector('.nav-right').classList.toggle('open');this.setAttribute('aria-expanded',o)"><span class="bars"><span></span><span></span><span></span></span></button>
+  <div class="nav-right">
+    <a class="nav-link" href="cities.html">🇺🇸 Cities</a>
+    <a class="nav-link" href="../index.html">Boston</a>
+    <a class="nav-link" href="contact.html">Add a listing</a>
+    <a class="nav-link" href="about.html">About</a>
+  </div>
+</nav>
+
+<div class="subj-hero">
+  <div class="subj-hero-inner">
+    <div class="subj-hero-icon sh-blue">🦓</div>
+    <div>
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a><span class="breadcrumb-sep">›</span>
+        <a href="cities.html">Cities</a><span class="breadcrumb-sep">›</span>
+        <a href="state.html?s=CT">Connecticut</a><span class="breadcrumb-sep">›</span>
+        <span>Bridgeport</span>
+      </div>
+      <div class="page-eyebrow" style="margin-bottom:10px;">🇺🇸 Now in Connecticut</div>
+      <h1>Bridgeport <em>for kids</em></h1>
+      <p>Vetted museums, classes, birthday venues and family adventures in Bridgeport & Fairfield County. Filter by category — every listing links straight to the source. This is our launch set; we're adding more every week.</p>
+    </div>
+  </div>
+</div>
+
+<section class="sec bg-cream" style="padding-top:32px;">
+  <div class="pv-wrap">
+
+    <div class="pv-tabs" id="pv-tabs">
+      <button class="pv-tab active" data-sub="all" type="button">🏷️ All</button>
+      <button class="pv-tab" data-sub="museum" type="button">🏛️ Museums &amp; learning</button>
+      <button class="pv-tab" data-sub="outdoor" type="button">🌳 Outdoor &amp; animals</button>
+      <button class="pv-tab" data-sub="active" type="button">🤸 Active &amp; indoor fun</button>
+      <button class="pv-tab" data-sub="arts" type="button">🎨 Classes &amp; arts</button>
+      <button class="pv-tab" data-sub="birthday" type="button">🎂 Birthday venues</button>
+    </div>
+    <div class="pv-search-row">
+      <div class="pv-search"><input type="text" id="pv-search" placeholder="Search a place or town…" autocomplete="off"></div>
+      <span class="pv-count" id="pv-count"></span>
+    </div>
+
+    <div id="gz-map-here"></div>
+
+    <h3 class="pv-sec-h">🏛️ Museums &amp; learning</h3>
+    <p class="pv-sec-sub">Hands-on museums, science and discovery for curious Bridgeport kids.</p>
+    <div class="pv-grid"></div>
+
+    <h3 class="pv-sec-h">🌳 Outdoor &amp; animals</h3>
+    <p class="pv-sec-sub">Zoos, parks and nature — fresh air the whole family.</p>
+    <div class="pv-grid"></div>
+
+    <h3 class="pv-sec-h">🤸 Active &amp; indoor fun</h3>
+    <p class="pv-sec-sub">Trampolines, climbing, play spaces and rainy-day energy-burners.</p>
+    <div class="pv-grid"></div>
+
+    <h3 class="pv-sec-h">🎨 Classes &amp; arts</h3>
+    <p class="pv-sec-sub">Art, music, dance and enrichment programs across Bridgeport.</p>
+    <div class="pv-grid"></div>
+
+    <h3 class="pv-sec-h">🎂 Birthday venues</h3>
+    <p class="pv-sec-sub">Places that host a stress-free Bridgeport kids' party.</p>
+    <div class="pv-grid"></div>
+
+    <div id="pv-empty" style="display:none;padding:24px;background:var(--g7);border-radius:14px;text-align:center;color:var(--text-muted);">
+      <div style="font-size:36px;margin-bottom:8px;">🔍</div>
+      <div style="color:var(--g1);font-weight:700;font-family:var(--serif);font-size:18px;">No places match</div>
+    </div>
+
+    <div style="max-width:760px;margin:24px auto 0;padding:18px 22px;background:linear-gradient(135deg,var(--straw-l) 0%,#F5E6C8 100%);border:1px solid rgba(184,116,42,0.25);border-radius:14px;text-align:center;">
+      <div style="font-family:var(--serif);font-size:18px;color:var(--g1);font-weight:600;margin-bottom:4px;">Run a kids' program in Bridgeport? Get listed — it's free 🎉</div>
+      <div style="font-size:14px;color:var(--text);line-height:1.6;">Email <a href="mailto:kate@gokidoz.com" style="color:var(--g2);font-weight:700;">kate@gokidoz.com</a> and we'll add you to the Bridgeport directory.</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>Know a great Bridgeport spot?</h2>
+  <p>This is our launch set — help us grow it. Send us your favorite Bridgeport kids' places.</p>
+  <div class="cta-row"><a class="btn-primary" href="contact.html">Suggest a place →</a></div>
+</div>
+
+<footer>
+  <div class="foot-news" style="width:100%;max-width:560px;margin:0 auto 26px;text-align:center;">
+    <div style="font-family:var(--serif,Georgia,serif);font-size:18px;font-weight:600;color:#fff;margin-bottom:6px;">Get the weekly Boston-kids email 💌</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-bottom:12px;">New classes, camps &amp; fun events — free, unsubscribe anytime.</div>
+    <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" onsubmit="var f=this;event.preventDefault();var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';}).catch(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';});">
+      <input type="hidden" name="form-name" value="newsletter">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <span class="fn-row" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;">
+        <input type="email" name="email" required placeholder="Your email address" aria-label="Your email address" style="flex:1;min-width:200px;max-width:320px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border-mid,#d5dbe2);font-family:inherit;font-size:14px;">
+        <button type="submit" style="background:var(--g2,#1A73E8);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;">Subscribe →</button>
+      </span>
+      <div class="fn-ok" style="display:none;width:100%;padding:11px;background:var(--teal-l,#d8f3ec);color:var(--teal,#0a7d63);border-radius:10px;font-weight:700;font-size:14px;">🎉 You're on the list!</div>
+    </form>
+  </div>
+  <div class="foot-logo"><div class="foot-logo-img"><span class="foot-logo-text">OZ</span></div><div class="foot-name">GOkid<span>OZ</span></div></div>
+  <div class="foot-links"><a href="cities.html">Cities</a><a href="../index.html">Boston</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+  <div class="foot-copy">© 2026 GOkidOZ. All rights reserved.</div>
+</footer>
+
+<script>
+(function(){
+  var DATA={"museum":[{"n":"The Discovery Museum & Planetarium","t":"bridgeport","b":"⭐ Science","s":"Hands-on science · planetarium · ages all","w":"https://www.discoverymuseum.org","where":"4450 Park Ave, Bridgeport"},{"n":"Barnum Museum","t":"bridgeport","b":"History","s":"P.T. Barnum & circus history · quirky exhibits","w":"https://barnum-museum.org","where":"820 Main St, Bridgeport"},{"n":"Bridgeport Public Library","t":"bridgeport","b":"🆓 Free","s":"Story times · kids programs","w":"https://bportlibrary.org","where":"925 Broad St, Bridgeport"}],"outdoor":[{"n":"Connecticut's Beardsley Zoo","t":"bridgeport","b":"⭐ CT's only zoo","s":"Carousel · rainforest · farmyard · ages all","w":"https://www.beardsleyzoo.org","where":"1875 Noble Ave, Bridgeport"},{"n":"Captain's Cove Seaport","t":"bridgeport","b":"Waterfront","s":"Boardwalk · shops · waterfront family fun","w":"https://captainscoveseaport.com","where":"1 Bostwick Ave, Bridgeport"},{"n":"Seaside Park","t":"bridgeport","b":"🆓 Free beach","s":"Beach · playgrounds · 325 acres on the Sound","w":"https://www.bridgeportct.gov","where":"1 Barnum Dyke, Bridgeport"}],"active":[{"n":"SportsCenter of Connecticut","t":"bridgeport","b":"Indoor","s":"Double-decker ice · mini golf · arcade · batting","w":"https://www.sportscenterofct.com","where":"784 River Rd, Shelton"}],"arts":[{"n":"Bijou Theatre","t":"bridgeport","b":"Performing arts","s":"Family films & live shows · historic theatre","w":"https://thebijoutheatre.com","where":"275 Fairfield Ave, Bridgeport"},{"n":"Neighborhood Studios","t":"bridgeport","b":"Arts","s":"Youth arts programs · music · visual arts","w":"https://workspaceeducation.org","where":"Bridgeport area"}],"birthday":[{"n":"Beardsley Zoo · Parties","t":"bridgeport","b":"🎂 Zoo","s":"Animal-themed birthday parties","w":"https://www.beardsleyzoo.org","where":"Bridgeport"},{"n":"Discovery Museum · Parties","t":"bridgeport","b":"🎂 Science","s":"Science party + planetarium","w":"https://www.discoverymuseum.org","where":"Bridgeport"}]};
+  var keys=['museum','outdoor','active','arts','birthday'];
+  var grids=document.querySelectorAll('.pv-grid');
+  function card(o){
+    var d=document.createElement('div');
+    d.className='center-card'; d.dataset.town=o.t; d.dataset.name=o.n.toLowerCase();
+    var site=o.w.replace(/^https?:\/\/(www\.)?/,'').replace(/\/.*$/,'');
+    d.innerHTML='<div class="center-head"><div class="center-name"><a href="'+o.w+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">'+o.n+'</a></div><div class="center-price" style="background:var(--teal-l);color:var(--teal);">'+o.b+'</div></div>'
+      +'<div class="center-specialty">'+o.s+'</div>'
+      +'<div class="center-meta"><div class="center-meta-label">📍 Where</div><div class="center-meta-value">'+o.where+'</div>'
+      +'<div class="center-meta-label">🌐 Site</div><div class="center-meta-value"><a class="website-link" target="_blank" rel="noopener" href="'+o.w+'">'+site+'</a></div></div>'
+      +'<a class="center-book" target="_blank" rel="noopener" href="'+o.w+'">🌐 Visit website ↗</a>';
+    return d;
+  }
+  keys.forEach(function(k,i){ (DATA[k]||[]).forEach(function(o){ grids[i].appendChild(card(o)); }); });
+  var tabs=document.querySelectorAll('.pv-tab'), search=document.getElementById('pv-search'), count=document.getElementById('pv-count'), empty=document.getElementById('pv-empty');
+  var cur='all', q='';
+  function apply(){
+    var shown=0, qq=q.trim().toLowerCase();
+    grids.forEach(function(g,i){
+      var secOk=cur==='all'||cur===keys[i], anyV=0;
+      g.querySelectorAll('.center-card').forEach(function(c){
+        var ok=secOk&&(!qq||(c.textContent||'').toLowerCase().indexOf(qq)>-1);
+        c.style.display=ok?'':'none'; if(ok){anyV++;shown++;}
+      });
+      g.style.display=anyV?'':'none';
+      var sub=g.previousElementSibling; if(sub&&sub.classList.contains('pv-sec-sub')){ sub.style.display=anyV?'':'none'; var hh=sub.previousElementSibling; if(hh&&hh.classList.contains('pv-sec-h')) hh.style.display=anyV?'':'none'; }
+    });
+    count.textContent=shown+' places';
+    empty.style.display=shown===0?'block':'none';
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(x){x.classList.toggle('active',x===t);});cur=t.dataset.sub;apply();});});
+  search.addEventListener('input',function(e){q=e.target.value;apply();});
+  apply();
+})();
+</script>
+<script src="../assets/back-to-top.js"></script>
+<script src="../assets/directory-map.js"></script>
+<script src="../assets/newsletter.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/site-search.js"></script>
+<script src="../assets/listing-detail.js"></script>
+<script src="../assets/newsletter-popup.js"></script>
+</body>
+</html>

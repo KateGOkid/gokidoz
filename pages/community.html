@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community · GOkidOZ Boston</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .com-wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+
+  /* Tabs */
+  .com-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px;}
+  .com-tab{background:var(--white);border:1.5px solid var(--border-mid);color:var(--g2);font-family:var(--sans);font-weight:700;font-size:14px;padding:10px 18px;border-radius:24px;cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
+  .com-tab:hover{background:var(--g7);}
+  .com-tab.active{background:var(--g2);color:var(--white);border-color:var(--g2);}
+  .com-tab .count{background:rgba(0,0,0,0.06);color:inherit;font-size:11px;font-weight:800;padding:2px 8px;border-radius:10px;margin-left:6px;}
+  .com-tab.active .count{background:rgba(255,255,255,0.18);}
+
+  /* Compose box */
+  .com-compose{background:var(--white);border:1px solid var(--border-mid);border-radius:18px;padding:22px;margin-bottom:24px;}
+  .com-compose-h{font-family:var(--serif);font-size:20px;color:var(--g1);font-weight:600;margin:0 0 4px;letter-spacing:-.2px;}
+  .com-compose-sub{font-size:13px;color:var(--text-muted);margin:0 0 14px;line-height:1.5;}
+  .com-compose-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;}
+  @media(max-width:680px){.com-compose-row{grid-template-columns:1fr;}}
+  .com-compose input[type=text], .com-compose select, .com-compose textarea{
+    width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border-mid);background:var(--white);color:var(--text);font-family:var(--sans);font-size:14px;outline:none;transition:border-color .15s;
+  }
+  .com-compose input:focus, .com-compose select:focus, .com-compose textarea:focus{border-color:var(--g3);}
+  .com-compose textarea{min-height:90px;resize:vertical;line-height:1.5;}
+  .com-compose-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .com-compose-toolbar .left{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .com-tag-pill{display:inline-flex;align-items:center;gap:6px;background:var(--g7);color:var(--g2);font-size:12px;font-weight:700;padding:6px 12px;border-radius:14px;border:1px solid var(--border-mid);}
+  .com-post-btn{background:var(--g2);color:var(--white);font-weight:800;font-size:14px;padding:11px 22px;border-radius:11px;border:none;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 14px rgba(26,115,232,0.28);transition:background .15s;}
+  .com-post-btn:hover{background:var(--g1);}
+
+  /* Thread list */
+  .com-thread{background:var(--white);border:1px solid var(--border-mid);border-radius:16px;padding:20px 22px;margin-bottom:14px;transition:box-shadow .15s,transform .15s,border-color .15s;}
+  .com-thread:hover{box-shadow:0 8px 22px rgba(11,61,145,0.08);transform:translateY(-1px);border-color:var(--g4);}
+  .com-thread-h{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:6px;}
+  .com-thread-title{font-family:var(--serif);font-size:18px;color:var(--g1);font-weight:600;letter-spacing:-.1px;line-height:1.25;flex:1;}
+  .com-thread-cat{flex-shrink:0;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:14px;white-space:nowrap;}
+  .cat-q{background:var(--g7);color:var(--g2);}
+  .cat-tip{background:var(--teal-l);color:var(--teal);}
+  .cat-recommend{background:var(--straw-l);color:#7A5A10;}
+  .cat-event{background:var(--rose-l);color:var(--rose);}
+  .cat-buysell{background:var(--lav-l);color:var(--lav);}
+  .cat-promo{background:#FFE6DA;color:var(--clay);}
+
+  .com-thread-meta{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text-muted);flex-wrap:wrap;margin-bottom:10px;}
+  .com-avatar{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--g7);color:var(--g2);font-weight:800;font-size:12px;border:1.5px solid var(--g4);}
+  .com-author{color:var(--g1);font-weight:700;}
+  .com-author.educator{color:var(--teal);}
+  .com-author.educator::after{content:'✓ Educator';margin-left:6px;font-size:10px;font-weight:800;background:var(--teal-l);color:var(--teal);padding:2px 7px;border-radius:8px;letter-spacing:.04em;}
+  .com-thread-body{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:10px;}
+  .com-thread-foot{display:flex;gap:18px;align-items:center;font-size:13px;color:var(--text-muted);}
+  .com-thread-foot button{background:none;border:none;color:var(--text-muted);font-weight:700;font-size:13px;cursor:pointer;padding:4px 0;display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);}
+  .com-thread-foot button:hover{color:var(--g2);}
+  .com-thread-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+  .com-thread-tag{font-size:11px;font-weight:700;background:var(--g7);color:var(--g2);padding:3px 9px;border-radius:12px;}
+
+  /* Educator promo cards */
+  .com-promo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+  .com-promo{background:var(--white);border:1px solid var(--border-mid);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;}
+  .com-promo-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .com-promo-name{font-family:var(--serif);font-size:17px;color:var(--g1);font-weight:600;letter-spacing:-.1px;line-height:1.2;}
+  .com-promo-role{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:12px;background:var(--teal-l);color:var(--teal);white-space:nowrap;}
+  .com-promo-desc{font-size:13px;color:var(--text-muted);line-height:1.55;}
+  .com-promo-meta{display:flex;gap:10px;font-size:12px;color:var(--text-muted);flex-wrap:wrap;}
+  .com-promo-meta strong{color:var(--g1);font-weight:700;}
+  .com-promo-cta{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--g7);color:var(--g2);font-weight:700;font-size:13px;padding:9px 14px;border-radius:10px;text-decoration:none;border:1px solid var(--border-mid);}
+  .com-promo-cta:hover{background:var(--g6);}
+
+  /* Sidebar */
+  .com-layout{display:grid;grid-template-columns:1fr 280px;gap:22px;}
+  @media(max-width:880px){.com-layout{grid-template-columns:1fr;}}
+  .com-side{display:flex;flex-direction:column;gap:14px;}
+  .com-side-card{background:var(--white);border:1px solid var(--border-mid);border-radius:14px;padding:18px 20px;}
+  .com-side-h{font-family:var(--serif);font-size:15px;color:var(--g1);font-weight:600;margin-bottom:10px;letter-spacing:-.1px;}
+  .com-rule{font-size:13px;color:var(--text);line-height:1.55;padding:4px 0;display:flex;gap:8px;}
+  .com-rule strong{color:var(--g1);}
+  .com-stat{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid var(--border);}
+  .com-stat:last-child{border-bottom:none;}
+  .com-stat strong{color:var(--g1);}
+
+  /* Hidden tab content */
+  .com-tab-content{display:none;}
+  .com-tab-content.active{display:block;}
+</style>
+<meta name="description" content="The GOkidOZ community — Boston-area parents share questions, reviews and recommendations on kids' classes, camps and tutors.">
+<meta name="theme-color" content="#1A73E8">
+<link rel="canonical" href="https://gokidoz.com/pages/community.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GOkidOZ Boston">
+<meta property="og:title" content="Community · GOkidOZ Boston">
+<meta property="og:description" content="The GOkidOZ community — Boston-area parents share questions, reviews and recommendations on kids' classes, camps and tutors.">
+<meta property="og:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<meta property="og:url" content="https://gokidoz.com/pages/community.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Community · GOkidOZ Boston">
+<meta name="twitter:description" content="The GOkidOZ community — Boston-area parents share questions, reviews and recommendations on kids' classes, camps and tutors.">
+<meta name="twitter:image" content="https://gokidoz.com/assets/gokidoz-hero.jpg">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="../index.html">
+      <div class="logo-mark"><span class="logo-mark-text">OZ</span></div>
+      <div class="logo-text">
+        <div class="logo-name">GOkid<span>OZ</span></div>
+        <div class="logo-slogan">Boston kids <em>discover</em> all year long</div>
+      </div>
+    </a>
+  </div>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav" onclick="var o=this.parentNode.querySelector('.nav-right').classList.toggle('open');this.setAttribute('aria-expanded',o)"><span class="bars"><span></span><span></span><span></span></span></button>
+  <div class="nav-right">
+    <a class="nav-link" href="programs.html">Programs</a>
+    <a class="nav-link" href="tutors.html">Tutors</a>
+    <a class="nav-link" href="fun-events.html">Fun Events</a>
+    <a class="nav-link" href="calendar.html">📅 Calendar</a>
+    <a class="nav-link nav-link-active" href="community.html">💬 Community</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="btn-enroll" href="enroll.html">Sign In</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Community</span>
+    </div>
+    <div class="page-eyebrow">💬 Community space</div>
+    <h1 class="page-title">Boston families &amp; <em>educators</em>, in one room</h1>
+    <p class="page-lede">Ask questions, swap recommendations, post events, sell gently-used kit. Educators verified by GOkidOZ can introduce themselves and share what they teach. Be kind, be specific, be local.</p>
+  </div>
+</div>
+
+<section class="sec bg-cream">
+  <div class="com-wrap">
+
+    <!-- Tabs -->
+    <div class="com-tabs" id="com-tabs">
+      <button class="com-tab active" data-tab="parents">🧑‍🤝‍🧑 Parent Chat<span class="count" id="cnt-parents">6</span></button>
+      <button class="com-tab" data-tab="educators">👩‍🏫 Educators<span class="count" id="cnt-educators">5</span></button>
+      <button class="com-tab" data-tab="events">📅 Local Posts<span class="count" id="cnt-events">3</span></button>
+      <button class="com-tab" data-tab="marketplace">🪙 Marketplace<span class="count" id="cnt-marketplace">3</span></button>
+    </div>
+
+    <div class="com-layout">
+
+      <div>
+
+        <!-- PARENT CHAT TAB -->
+        <div class="com-tab-content active" data-tab="parents">
+
+          <div class="com-compose" style="text-align:center;">
+            <div class="com-compose-h">💬 The community is launching soon</div>
+            <p class="com-compose-sub" style="margin:0 auto 14px;max-width:520px;">Soon you'll be able to ask questions, share tips and swap recommendations with other Boston-area parents right here. Want to be first in? Join the email list and we'll let you know the moment it opens.</p>
+            <a class="com-post-btn" href="enroll.html" style="display:inline-block;text-decoration:none;">Notify me →</a>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">Best swim teacher for a 5-year-old who's afraid of putting her face in the water?</div>
+              <span class="com-thread-cat cat-recommend">⭐ Recommend</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">MK</span>
+              <span class="com-author">Maria K.</span> · <span>Wellesley</span> · <span>2 hours ago</span>
+            </div>
+            <div class="com-thread-body">My daughter (just turned 5) loved Snip-Its last summer but she's terrified of dunking. Looking for someone patient who specializes in nervous kids. Tried Charles River Aquatics — instructor was great with technique but a little too brisk on the fear piece. Anyone had Goldfish Swim School or a private teacher who's been gentle?</div>
+            <div class="com-thread-tags">
+              <span class="com-thread-tag">🏊 Swimming</span><span class="com-thread-tag">👶 Ages 4–5</span><span class="com-thread-tag">📍 Wellesley</span>
+            </div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 8 replies</button>
+              <button>👍 12</button>
+              <button>🔖 Save</button>
+            </div>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">Russian Saturday school — Znayka vs Alma Mater for a 6yo native speaker?</div>
+              <span class="com-thread-cat cat-q">❓ Question</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">DV</span>
+              <span class="com-author">Dasha V.</span> · <span>Newton</span> · <span>Yesterday</span>
+            </div>
+            <div class="com-thread-body">Both look great on paper. We're heritage speakers, Russian is the home language. Anyone done either? I care more about literacy + reading than conversation (she already speaks). The drive to Lexington is 25 min for us, Waltham is 12.</div>
+            <div class="com-thread-tags">
+              <span class="com-thread-tag">🇷🇺 Russian</span><span class="com-thread-tag">📚 Heritage</span><span class="com-thread-tag">👶 Age 6</span>
+            </div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 14 replies</button>
+              <button>👍 22</button>
+              <button>🔖 Save</button>
+            </div>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">💡 Hack: Wellesley Rec opens registration at exactly 7 AM — have CommunityPass logged in</div>
+              <span class="com-thread-cat cat-tip">💡 Tip</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">JT</span>
+              <span class="com-author">Jen T.</span> · <span>Wellesley</span> · <span>2 days ago</span>
+            </div>
+            <div class="com-thread-body">Kindercamp filled in 9 minutes last year. Open the page 6:58, hit refresh at :59. Have your child's profile pre-saved. Hot tip from a 4-year veteran of this dance.</div>
+            <div class="com-thread-tags">
+              <span class="com-thread-tag">☀️ Summer</span><span class="com-thread-tag">📍 Wellesley</span><span class="com-thread-tag">🏛️ Town Rec</span>
+            </div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 31 replies</button>
+              <button>👍 87</button>
+              <button>🔖 Save</button>
+            </div>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">Pickle ball lessons for an 8yo — anyone tried the Linden Square instructor?</div>
+              <span class="com-thread-cat cat-q">❓ Question</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">AB</span>
+              <span class="com-author">Anna B.</span> · <span>Wellesley</span> · <span>3 days ago</span>
+            </div>
+            <div class="com-thread-body">Saw a flyer at the Linden Square pop-up. Anyone done a private with him? My son loves tennis but the year-long commitment isn't realistic — pickle ball seems more flexible.</div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 4 replies</button>
+              <button>👍 6</button>
+              <button>🔖 Save</button>
+            </div>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">Sensory-Friendly Nutcracker — has anyone been? Worth it for a kid on the spectrum?</div>
+              <span class="com-thread-cat cat-q">❓ Question</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">LP</span>
+              <span class="com-author">Lara P.</span> · <span>Newton</span> · <span>4 days ago</span>
+            </div>
+            <div class="com-thread-body">My son is 7, loves music, struggles with loud venues. Boston Ballet has a Sensory-Friendly Nutcracker. Wondering if anyone took their kid and what it was actually like in practice — lights, sound, breaks.</div>
+            <div class="com-thread-tags">
+              <span class="com-thread-tag">🩰 Ballet</span><span class="com-thread-tag">💙 Sensory-friendly</span>
+            </div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 11 replies</button>
+              <button>👍 19</button>
+              <button>🔖 Save</button>
+            </div>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">⭐ Loved: Hipstitch Wellesley birthday party for a 9yo crew</div>
+              <span class="com-thread-cat cat-tip">💡 Tip</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">SP</span>
+              <span class="com-author">Sophie P.</span> · <span>Wellesley</span> · <span>1 week ago</span>
+            </div>
+            <div class="com-thread-body">Did a sewing party for our 9yo + 6 friends on Sunday. They each made a tote bag. Kids were locked in — not a single phone the whole time. Staff was patient with the two who'd never threaded a needle. Highly recommend for a creative party.</div>
+            <div class="com-thread-tags">
+              <span class="com-thread-tag">🎂 Birthday</span><span class="com-thread-tag">🧵 Sewing</span><span class="com-thread-tag">📍 Wellesley</span>
+            </div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 5 replies</button>
+              <button>👍 41</button>
+              <button>🔖 Save</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- EDUCATORS TAB -->
+        <div class="com-tab-content" data-tab="educators">
+
+          <div class="com-compose" style="text-align:center;">
+            <div class="com-compose-h">🎓 Are you an educator?</div>
+            <p class="com-compose-sub" style="margin:0 auto 14px;max-width:520px;">We'd love to list you. Email a short intro — what you teach, ages, where you work, and a link or contact — and we'll add you to the right directory. Educator profiles posting directly here is launching soon.</p>
+            <a class="com-post-btn" href="mailto:kate@gokidoz.com?subject=Educator%20listing%20%E2%80%94%20GOkidOZ" style="display:inline-block;text-decoration:none;">Email us to get listed →</a>
+          </div>
+
+          <div class="com-promo-grid">
+
+            <div class="com-promo">
+              <div class="com-promo-head">
+                <div>
+                  <div class="com-promo-name">Olena Ishchuk</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px;">Coach · Lumen Academy</div>
+                </div>
+                <span class="com-promo-role">✓ Verified</span>
+              </div>
+              <div class="com-promo-desc">Rhythmic gymnastics + Latin dance for girls 5–16. Small groups, Friday parent showcases. Summer camps in Waltham.</div>
+              <div class="com-promo-meta"><strong>Waltham</strong> · ages 5–16 · in-person</div>
+              <a class="com-promo-cta" target="_blank" rel="noopener" href="https://lumen.school/academics/camps/">🌐 Visit Lumen ↗</a>
+            </div>
+
+            <div class="com-promo">
+              <div class="com-promo-head">
+                <div>
+                  <div class="com-promo-name">Kate · Russian Studies</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px;">Director · Alma Mater Studio</div>
+                </div>
+                <span class="com-promo-role">✓ Verified</span>
+              </div>
+              <div class="com-promo-desc">Russian taught through drama, storytelling and creative play — not textbooks. Heritage + foreign-language tracks, plus NEWL AP Russian prep (only Boston program).</div>
+              <div class="com-promo-meta"><strong>Lexington</strong> · ages 2–17 · in-person + online</div>
+              <a class="com-promo-cta" target="_blank" rel="noopener" href="https://almamaterstudio.org/">🌐 Visit Alma Mater ↗</a>
+            </div>
+
+            <div class="com-promo">
+              <div class="com-promo-head">
+                <div>
+                  <div class="com-promo-name">Robotfun Academy team</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px;">VEX + LEGO Robotics</div>
+                </div>
+                <span class="com-promo-role">✓ Verified</span>
+              </div>
+              <div class="com-promo-desc">VEX World Championship qualifiers 3 years running. Full STEM stack — VEX, LEGO, DASH, TinkerCAD, C++, 3D printing, public speaking. Grades 1–12.</div>
+              <div class="com-promo-meta"><strong>Wellesley</strong> · ages 6–16 · in-person</div>
+              <a class="com-promo-cta" target="_blank" rel="noopener" href="https://www.robotfunacademy.com/">🌐 Visit Robotfun ↗</a>
+            </div>
+
+            <div class="com-promo">
+              <div class="com-promo-head">
+                <div>
+                  <div class="com-promo-name">Hipstitch Sewing Studios</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px;">4 Greater Boston locations</div>
+                </div>
+                <span class="com-promo-role">✓ Verified</span>
+              </div>
+              <div class="com-promo-desc">After-school sewing + fashion design + birthday parties. Newton, Wellesley, Brookline, Arlington. Themed weekly camps in summer.</div>
+              <div class="com-promo-meta"><strong>4 studios</strong> · ages 6–16 · in-person</div>
+              <a class="com-promo-cta" target="_blank" rel="noopener" href="https://www.hipstitchers.com/">🌐 Visit Hipstitch ↗</a>
+            </div>
+
+            <div class="com-promo">
+              <div class="com-promo-head">
+                <div>
+                  <div class="com-promo-name">Coach Noone</div>
+                  <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px;">Baseball · Babson College fields</div>
+                </div>
+                <span class="com-promo-role">✓ Verified</span>
+              </div>
+              <div class="com-promo-desc">Wellesley-area baseball instruction at Babson. Group sessions + private lessons. Skill clinics by age, hitting + fielding fundamentals.</div>
+              <div class="com-promo-meta"><strong>Wellesley</strong> · ages 6–18 · in-person</div>
+              <a class="com-promo-cta" target="_blank" rel="noopener" href="https://www.noonebaseball.com/">🌐 Visit Noone Baseball ↗</a>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- LOCAL POSTS / EVENTS TAB -->
+        <div class="com-tab-content" data-tab="events">
+
+          <div class="com-compose" style="text-align:center;">
+            <div class="com-compose-h">📅 Hosting a local kid-friendly event?</div>
+            <p class="com-compose-sub" style="margin:0 auto 14px;max-width:520px;">Block parties, school open houses, fundraisers, neighborhood pop-ups — email us the details and we'll help spread the word. Posting events directly here is launching soon.</p>
+            <a class="com-post-btn" href="mailto:kate@gokidoz.com?subject=Local%20event%20%E2%80%94%20GOkidOZ" style="display:inline-block;text-decoration:none;">Email us your event →</a>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">Wellesley Hills Block Party · Sat Jun 6 · 4–7 PM</div>
+              <span class="com-thread-cat cat-event">📅 Event</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">WH</span>
+              <span class="com-author">Wellesley Hills Neighborhood Assn.</span> · <span>2 days ago</span>
+            </div>
+            <div class="com-thread-body">Annual block party — bouncy castle, face painting, ice cream truck. Bring a dish, bring kids. Streets close 3–8 PM. Free.</div>
+            <div class="com-thread-tags">
+              <span class="com-thread-tag">📍 Wellesley</span><span class="com-thread-tag">🆓 Free</span><span class="com-thread-tag">👶 All ages</span>
+            </div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 3 replies</button>
+              <button>👍 24</button>
+              <button>📅 Add to calendar</button>
+            </div>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">Newton PTO Spring Fair · Sat May 30 · 11 AM</div>
+              <span class="com-thread-cat cat-event">📅 Event</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">NB</span>
+              <span class="com-author">Newton Bowen PTO</span> · <span>4 days ago</span>
+            </div>
+            <div class="com-thread-body">Local school fair — games, bake sale, raffle, 5K family fun run. Proceeds support Bowen Elementary. Volunteers welcome.</div>
+            <div class="com-thread-tags">
+              <span class="com-thread-tag">📍 Newton</span><span class="com-thread-tag">🏫 School</span>
+            </div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 2 replies</button>
+              <button>👍 18</button>
+              <button>📅 Add to calendar</button>
+            </div>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">Brookline Library — Free Family STEAM Saturday · Jun 13</div>
+              <span class="com-thread-cat cat-event">📅 Event</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">BL</span>
+              <span class="com-author">Brookline Public Library</span> · <span>1 week ago</span>
+            </div>
+            <div class="com-thread-body">Make-and-take crafts, 3D printing demo, story time, robotics challenge. 10 AM–1 PM. All ages. Coolidge Corner branch.</div>
+            <div class="com-thread-tags">
+              <span class="com-thread-tag">📍 Brookline</span><span class="com-thread-tag">🆓 Free</span><span class="com-thread-tag">🔬 STEAM</span>
+            </div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 6 replies</button>
+              <button>👍 35</button>
+              <button>📅 Add to calendar</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- MARKETPLACE TAB -->
+        <div class="com-tab-content" data-tab="marketplace">
+
+          <div class="com-compose" style="text-align:center;">
+            <div class="com-compose-h">🪙 Buy · Sell · Give Away</div>
+            <p class="com-compose-sub" style="margin:0 auto 14px;max-width:520px;">A marketplace for outgrown kid gear — bikes, sports equipment, music gear, art supplies — is launching soon. Join the list to be notified when it opens.</p>
+            <a class="com-post-btn" href="enroll.html" style="display:inline-block;text-decoration:none;">Notify me →</a>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">🚴 Specialized Riprock 16″ — great condition, $120</div>
+              <span class="com-thread-cat cat-buysell">🪙 For sale</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">RT</span>
+              <span class="com-author">Ryan T.</span> · <span>Wellesley</span> · <span>5 days ago</span>
+            </div>
+            <div class="com-thread-body">Outgrown by our 5yo, ready for a 4–6yo. New tires last fall, brakes recently serviced. Original $400 retail. Pickup in Wellesley Hills.</div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 8 inquiries</button>
+              <button>👍 11</button>
+            </div>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">🎻 1/4 violin + bow + case — taken to a few lessons, $80</div>
+              <span class="com-thread-cat cat-buysell">🪙 For sale</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">MM</span>
+              <span class="com-author">Meredith M.</span> · <span>Newton</span> · <span>1 week ago</span>
+            </div>
+            <div class="com-thread-body">Kid lost interest after 6 weeks. Like new. Comes with rosin and a music stand if you want it. Suits ages ~5–7.</div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 3 inquiries</button>
+              <button>👍 4</button>
+            </div>
+          </div>
+
+          <div class="com-thread">
+            <div class="com-thread-h">
+              <div class="com-thread-title">🆓 Free — boxes of Magna-Tiles, LEGO Duplo, wooden puzzles</div>
+              <span class="com-thread-cat cat-buysell">🆓 Free</span>
+            </div>
+            <div class="com-thread-meta">
+              <span class="com-avatar">PJ</span>
+              <span class="com-author">Pavla J.</span> · <span>Brookline</span> · <span>2 weeks ago</span>
+            </div>
+            <div class="com-thread-body">Family aging out of preschool toys. Two big bins. First come, first served. Porch pickup in Coolidge Corner. Bring your own bag.</div>
+            <div class="com-thread-foot" style="margin-top:10px;">
+              <button>💬 9 inquiries</button>
+              <button>👍 28</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="com-side">
+
+        <div class="com-side-card">
+          <div class="com-side-h">📋 Community guidelines</div>
+          <div class="com-rule"><strong>1.</strong> Be local — Greater Boston only.</div>
+          <div class="com-rule"><strong>2.</strong> Be kind — disagreement OK, snark not.</div>
+          <div class="com-rule"><strong>3.</strong> Be specific — "ages, neighborhood, budget" beats "anyone done X?".</div>
+          <div class="com-rule"><strong>4.</strong> Educators introduce themselves in the Educators tab, not by replying to parent threads with promos.</div>
+          <div class="com-rule"><strong>5.</strong> No medical advice. Phones &amp; doctors for that.</div>
+        </div>
+
+        <div class="com-side-card">
+          <div class="com-side-h">📊 This week</div>
+          <div class="com-stat"><span>New threads</span><strong>23</strong></div>
+          <div class="com-stat"><span>Replies posted</span><strong>187</strong></div>
+          <div class="com-stat"><span>Active families</span><strong>412</strong></div>
+          <div class="com-stat"><span>Verified educators</span><strong>34</strong></div>
+        </div>
+
+        <div class="com-side-card" style="background:linear-gradient(135deg,var(--g7) 0%,#DAE9F5 100%);border-color:var(--g4);">
+          <div class="com-side-h">👋 New here?</div>
+          <p style="font-size:13px;color:var(--text);line-height:1.55;margin-bottom:10px;">Watch first, post second. Most active conversations: <strong>summer camps</strong>, <strong>tutors</strong>, <strong>birthdays</strong>, <strong>Wellesley Rec hacks</strong>.</p>
+          <a href="enroll.html" style="display:inline-flex;align-items:center;justify-content:center;background:var(--g2);color:var(--white);font-weight:800;font-size:13px;padding:10px 16px;border-radius:10px;text-decoration:none;font-family:var(--sans);">Join the community →</a>
+        </div>
+
+        <div class="com-side-card">
+          <div class="com-side-h">🔔 Trending</div>
+          <div style="font-size:13px;line-height:1.7;">
+            <div>🏫 Wellesley summer camps that still have spots</div>
+            <div>🩰 Sensory-friendly Nutcracker tips</div>
+            <div>🌧️ Best rainy-day spots in MetroWest</div>
+            <div>🇷🇺 Heritage Russian schools comparison</div>
+            <div>🚴 Used kids bike thread (huge)</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div style="padding:14px 18px;background:var(--g7);border:1px solid var(--border-mid);border-radius:10px;margin:30px 0 0;font-size:13px;color:var(--text-muted);">
+      ℹ️ <strong>Preview layout.</strong> This page is a working layout for the GOkidOZ community space. Threads, replies and reactions shown are representative. Sign in to start posting once we launch.
+    </div>
+
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>Be part of the GOkidOZ community</h2>
+  <p>A trusted space for Boston parents and the educators who teach our kids. Sign up to post, reply, and connect.</p>
+  <div class="cta-row">
+    <a class="btn-primary" href="enroll.html">Join now →</a>
+    <a class="btn-secondary" href="contact.html" style="color:var(--g1);background:var(--white);border-color:var(--border-mid);">Suggest a feature</a>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-news" style="width:100%;max-width:560px;margin:0 auto 26px;text-align:center;">
+    <div style="font-family:var(--serif,Georgia,serif);font-size:18px;font-weight:600;color:#fff;margin-bottom:6px;">Get the weekly Boston-kids email 💌</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-bottom:12px;">New classes, camps &amp; fun events — free, unsubscribe anytime.</div>
+    <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" onsubmit="var f=this;event.preventDefault();var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';}).catch(function(){f.querySelector('.fn-row').style.display='none';f.querySelector('.fn-ok').style.display='block';});">
+      <input type="hidden" name="form-name" value="newsletter">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <span class="fn-row" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;">
+        <input type="email" name="email" required placeholder="Your email address" aria-label="Your email address" style="flex:1;min-width:200px;max-width:320px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border-mid,#d5dbe2);font-family:inherit;font-size:14px;">
+        <button type="submit" style="background:var(--g2,#1A73E8);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;">Subscribe →</button>
+      </span>
+      <div class="fn-ok" style="display:none;width:100%;padding:11px;background:var(--teal-l,#d8f3ec);color:var(--teal,#0a7d63);border-radius:10px;font-weight:700;font-size:14px;">🎉 You're on the list!</div>
+    </form>
+  </div>
+  <div class="foot-logo">
+    <div class="foot-logo-img"><span class="foot-logo-text">OZ</span></div>
+    <div class="foot-name">GOkid<span>OZ</span></div>
+  </div>
+  <div class="foot-links">
+    <a href="programs.html">Programs</a><a href="tutors.html">Tutors</a><a href="fun-events.html">Fun Events</a><a href="calendar.html">Calendar</a><a href="community.html">Community</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+  <a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+  <a class="foot-social" href="https://www.facebook.com/groups/1365198462166449/" target="_blank" rel="noopener" aria-label="GOkidOZ on Facebook"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
+  <a class="foot-social" href="https://www.instagram.com/gokidoz_boston/" target="_blank" rel="noopener" aria-label="GOkidOZ on Instagram" style="margin-left:8px;"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.52.01-4.76.07-.99.05-1.53.21-1.89.35-.48.18-.81.4-1.17.76-.36.36-.58.69-.76 1.17-.14.36-.3.9-.35 1.89-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05.99.21 1.53.35 1.89.18.48.4.81.76 1.17.36.36.69.58 1.17.76.36.14.9.3 1.89.35 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.99-.05 1.53-.21 1.89-.35.48-.18.81-.4 1.17-.76.36-.36.58-.69.76-1.17.14-.36.3-.9.35-1.89.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-.99-.21-1.53-.35-1.89-.18-.48-.4-.81-.76-1.17-.36-.36-.69-.58-1.17-.76-.36-.14-.9-.3-1.89-.35-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.46 5.46 0 110 10.92 5.46 5.46 0 010-10.92zm0 9a3.54 3.54 0 100-7.08 3.54 3.54 0 000 7.08zm6.95-9.22a1.28 1.28 0 11-2.56 0 1.28 1.28 0 012.56 0z"/></svg></a>
+  <div class="foot-copy">© 2026 GOkidOZ Boston. All rights reserved.</div>
+</footer>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('#com-tabs .com-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      const id = t.dataset.tab;
+      document.querySelectorAll('#com-tabs .com-tab').forEach(x => x.classList.toggle('active', x === t));
+      document.querySelectorAll('.com-tab-content').forEach(c => c.classList.toggle('active', c.dataset.tab === id));
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+  });
+</script>
+
+<script src="../assets/back-to-top.js"></script>
+<script src="../assets/newsletter.js"></script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/site-search.js"></script>
+<script src="../assets/newsletter-popup.js"></script>
+</body>
+</html>

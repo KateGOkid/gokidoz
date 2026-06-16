@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar (Print) · GOkidOZ Boston</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  body{background:var(--white);}
+  .print-header{max-width:1000px;margin:0 auto;padding:24px 24px 8px;}
+  .print-header .page-eyebrow{color:var(--g2);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;}
+  .print-header h1{font-family:var(--serif);font-size:34px;color:var(--g1);margin:6px 0 6px;}
+  .print-header p{color:var(--text-muted);font-size:14px;max-width:680px;line-height:1.5;}
+
+  .pm-legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 4px;font-size:12px;font-weight:700;}
+  .pm-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .lg-music{color:#7A5A10;} .lg-theatre{color:var(--rose);} .lg-ballet{color:#C2185B;} .lg-museum{color:var(--teal);} .lg-festival{color:var(--rose);}
+
+  .pm-month{max-width:1000px;margin:0 auto;padding:18px 24px 28px;break-inside:avoid;}
+  .pm-month h2{font-family:var(--serif);font-size:24px;color:var(--g1);margin:0 0 12px;border-bottom:2px solid var(--g2);padding-bottom:6px;}
+
+  .pm-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+  .pm-h{text-align:center;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:4px 0;}
+  .pm-cell{border:1px solid var(--border);border-radius:6px;min-height:74px;padding:4px 5px;background:var(--white);overflow:hidden;}
+  .pm-cell.out{background:#FAFAFA;opacity:.5;}
+  .pm-num{font-size:11px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:2px;}
+  .pm-evt{font-size:8.5px;font-weight:700;line-height:1.2;padding:2px 3px;border-radius:3px;margin-bottom:2px;display:block;white-space:normal;word-break:break-word;}
+  .evt-yellow{background:var(--straw-l);color:#7A5A10;}
+  .evt-red{background:var(--rose-l);color:var(--rose);}
+  .evt-pink{background:#FCE8F0;color:#C2185B;}
+  .evt-green{background:var(--teal-l);color:var(--teal);}
+
+  /* Event detail list per month */
+  .pm-list{max-width:1000px;margin:10px auto 0;padding:0 24px;}
+  .pm-li{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--border);break-inside:avoid;}
+  .pm-li-date{flex-shrink:0;min-width:58px;font-family:var(--serif);font-weight:700;font-size:13px;color:var(--g1);}
+  .pm-li-body{flex:1;}
+  .pm-li-cat{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);}
+  .pm-li-title{font-size:13px;font-weight:700;color:var(--g1);line-height:1.3;}
+  .pm-li-desc{font-size:11.5px;color:var(--text-muted);line-height:1.4;margin-top:2px;}
+
+  @media print {
+    @page { size: landscape; margin: 0.5cm; }
+    html,body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    nav,footer,.nav-toggle{ display:none !important; }
+    .pm-month{ break-before: page; padding-top:6px; }
+    .pm-month:first-of-type{ break-before: auto; }
+    .pm-list{ break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-header">
+  <div class="page-eyebrow">📅 GOkidOZ Calendar</div>
+  <h1>What's on, when</h1>
+  <p>Concerts, theatre, ballet, museum excursions and festivals — May 2026 through March 2027.</p>
+  <div class="pm-legend">
+    <span class="lg-music">🎵 Music Concert</span>
+    <span class="lg-theatre">🎭 Theatre</span>
+    <span class="lg-ballet">🩰 Ballet</span>
+    <span class="lg-museum">🏛️ Museum Excursion</span>
+    <span class="lg-festival">🎆 Festival</span>
+  </div>
+</div>
+
+<div id="print-root"></div>
+
+<script>
+(function(){
+  const TYPES = {
+    music:   {label:'Music Concert', icon:'🎵', evtClass:'evt-yellow'},
+    theatre: {label:'Theatre',       icon:'🎭', evtClass:'evt-red'},
+    ballet:  {label:'Ballet',        icon:'🩰', evtClass:'evt-pink'},
+    museum:  {label:'Museum',        icon:'🏛️', evtClass:'evt-green'},
+    festival:{label:'Festival',      icon:'🎆', evtClass:'evt-red'},
+  };
+
+  const EVENTS = [
+    {y:2026,m:4,d:28,type:'museum',title:'MFA — Drawing in the Galleries',desc:'Thursday Open Studios · 6–8 pm · drop in to sketch with an MFA artist-mentor'},
+    {y:2026,m:4,d:31,type:'museum',title:'MFA — Drop-In Art Making (Sun)',desc:'Mini Garden Totes · 10 am – 4 pm'},
+    {y:2026,m:4,d:30,type:'museum',title:'MFA — Drop-In Art Making (Sat)',desc:'Mosaic Bookmarks · 10 am – 4 pm'},
+    {y:2026,m:4,d:30,type:'theatre',title:'Beauty and the Beast (final weekend)',desc:'Broadway in Boston · Citizens Bank Opera House'},
+    {y:2026,m:4,d:28,type:'ballet',title:'Boston Ballet — Sleeping Beauty (opening)',desc:'Petipa / Tchaikovsky · 7:30 pm · Citizens Bank Opera House'},
+    {y:2026,m:4,d:30,type:'ballet',title:'Boston Ballet — Sleeping Beauty (Sat matinée)',desc:'1:30 pm + 7:30 pm · ages 6+'},
+    {y:2026,m:4,d:31,type:'ballet',title:'Boston Ballet — Sleeping Beauty (Sun matinée)',desc:'1:30 pm + 7:30 pm · best for younger kids'},
+    {y:2026,m:5,d:20,type:'museum',title:"Boston Children's Museum — daily programs",desc:'Fort Point · ages 0–10 · drop-in art making, climbing maze'},
+    {y:2026,m:5,d:27,type:'museum',title:'⛵ Sail Boston — Tall Ships',desc:'Boston Seaport · public deck tours, parades · all ages'},
+    {y:2026,m:5,d:28,type:'museum',title:'Museum of Science — Mugar Omni IMAX',desc:'180° dome IMAX · rotating documentaries'},
+    {y:2026,m:5,d:13,type:'theatre',title:'Puppet Showplace Theater',desc:'Brookline · ages 3–9 · 10:30 am + 1 pm'},
+    {y:2026,m:5,d:25,type:'museum',title:'MFA — Drawing in the Galleries',desc:'Thursday Open Studios · 6–8 pm'},
+    {y:2026,m:5,d:18,type:'museum',title:'MFA — Drawing in the Galleries',desc:'Thursday Open Studios · 6–8 pm'},
+    {y:2026,m:5,d:11,type:'museum',title:'MFA — Drawing in the Galleries',desc:'Thursday Open Studios · 6–8 pm · free with admission'},
+    {y:2026,m:5,d:14,type:'museum',title:'MFA — UNIQLO Story Hour',desc:'11 am · interactive story time · ages 3–8'},
+    {y:2026,m:5,d:3,type:'ballet',title:'Boston Ballet — Sleeping Beauty (Wed eve)',desc:'7:30 pm · Boston Ballet Orchestra'},
+    {y:2026,m:5,d:6,type:'ballet',title:'Boston Ballet — Sleeping Beauty (Sat matinée)',desc:'1:30 pm + 7:30 pm · pre-show family talks'},
+    {y:2026,m:5,d:7,type:'ballet',title:'Boston Ballet — Sleeping Beauty (closing)',desc:'1:30 pm · final performance'},
+    {y:2026,m:5,d:13,type:'theatre',title:"Bluey's Big Play",desc:'Boch Center · Wang Theatre · ages 3+'},
+    {y:2026,m:5,d:14,type:'theatre',title:"Bluey's Big Play (Sun)",desc:'Final shows · 11am + 2pm'},
+    {y:2026,m:5,d:9,type:'theatre',title:'Les Misérables — opens',desc:'Broadway in Boston · Citizens Bank Opera House'},
+    {y:2026,m:5,d:13,type:'theatre',title:'Wellesley Theatre Project — Youth Production',desc:'Wellesley nonprofit youth theatre · K–12 cast'},
+    {y:2026,m:5,d:21,type:'theatre',title:'Les Misérables — family matinée',desc:'Saturday 2 pm · ages 10+'},
+    {y:2026,m:5,d:30,type:'music',title:'Tanglewood — Jerry Garcia Symphonic',desc:'Lenox MA · outdoor lawn · family-friendly'},
+    {y:2026,m:6,d:2,type:'festival',title:'⚓ Boston Harborfest · Day 1',desc:"America's largest July 4th festival · 100+ free events"},
+    {y:2026,m:6,d:3,type:'festival',title:'⚓ Boston Harborfest · Day 2',desc:'Free waterfront events · parades · concerts'},
+    {y:2026,m:6,d:4,type:'festival',title:'🎆 Boston Harborfest · July 4th finale',desc:'Fireworks over the harbor · parades · free'},
+    {y:2026,m:6,d:18,type:'museum',title:'MoS — Charles Hayden Planetarium',desc:'Daily shows under the dome · ages 4+'},
+    {y:2026,m:6,d:25,type:'theatre',title:'Coolidge Corner Family Series',desc:'Brookline · family films · 10 am · ages 3+'},
+    {y:2026,m:6,d:9,type:'museum',title:'New England Aquarium — Simons IMAX',desc:'Ocean + science films · multiple shows daily'},
+    {y:2026,m:6,d:26,type:'music',title:'BSO TLI for Families — Peter and the Wolf',desc:'Linde Center, Lenox · 10:30 am · sold out / waitlist'},
+    {y:2026,m:6,d:19,type:'music',title:'BSO Tanglewood Family Concert',desc:'Koussevitzky Music Shed, Lenox · 10:30 am'},
+    {y:2026,m:6,d:5,type:'music',title:'BSO TLI for Families — Music Moves, Stories Groove',desc:'Linde Center, Lenox · 10:30 am'},
+    {y:2026,m:6,d:10,type:'music',title:'BSO @ Tanglewood — Seong-Jin Cho',desc:'Tchaikovsky Piano Concerto No. 1 + Swan Lake'},
+    {y:2026,m:6,d:11,type:'music',title:'BSO @ Tanglewood — Mahler Symphony No. 4',desc:'Mozart Piano Concerto No. 25 (Emanuel Ax)'},
+    {y:2026,m:6,d:18,type:'theatre',title:'The Great Gatsby — Broadway in Boston',desc:'Citizens Bank Opera House'},
+    {y:2026,m:6,d:28,type:'theatre',title:'Moulin Rouge! The Musical — opens',desc:'Jul 28 – Aug 2 · Citizens Bank Opera House'},
+    {y:2026,m:7,d:20,type:'museum',title:'MFA — Drawing in the Galleries',desc:'Thursday Open Studios · 6–8 pm'},
+    {y:2026,m:7,d:6,type:'museum',title:'MFA — Drawing in the Galleries',desc:'Thursday Open Studios · 6–8 pm'},
+    {y:2026,m:7,d:2,type:'music',title:'BSO TLI for Families — Listening to the Land',desc:'Linde Center, Lenox · 10:30 am'},
+    {y:2026,m:7,d:1,type:'theatre',title:'Moulin Rouge! — weekend run',desc:'Family matinées · ages 10+'},
+    {y:2026,m:7,d:15,type:'music',title:'Maestro of the Movies — John Williams tribute',desc:'Tanglewood · family lawn pricing'},
+    {y:2026,m:7,d:24,type:'music',title:'The Wiggles — Tree of Wisdom Spectacular!',desc:'Boch Center · Wang Theatre · 6pm · ages 2–8'},
+    {y:2026,m:8,d:7,type:'museum',title:'Boston Swan Boats — final day of season',desc:'Public Garden lagoon · 15-min ride'},
+    {y:2026,m:8,d:19,type:'theatre',title:'Puppet Showplace — back-to-school season',desc:'Brookline · ages 3–9'},
+    {y:2026,m:8,d:6,type:'museum',title:'MFA — Maverick Kings: Pharaohs of Egypt opens',desc:'Runs through Dec 6 · ages 7+'},
+    {y:2026,m:8,d:18,type:'music',title:'BSO — Season Opener: Mozart + Berlioz',desc:'Emanuel Ax · cond. Nelsons'},
+    {y:2026,m:8,d:23,type:'theatre',title:'Hamilton — opens at Opera House',desc:'Broadway in Boston · ages 8+'},
+    {y:2026,m:8,d:30,type:'ballet',title:'Boston Ballet — Fall Experience (opens)',desc:'Contemporary repertory · Citizens Bank Opera House'},
+    {y:2026,m:9,d:24,type:'theatre',title:'Greater Boston Stage — Cat Kid Comic Club',desc:'Stoneham · ages 5+ · Saturday matinée'},
+    {y:2026,m:9,d:13,type:'theatre',title:'Operation Mincemeat — opens',desc:'Emerson Colonial · ages 10+'},
+    {y:2026,m:9,d:22,type:'music',title:'BSO — Technology & Music series',desc:'Oct 22–24 · Symphony Hall'},
+    {y:2026,m:9,d:28,type:'museum',title:'MFA — Maverick Kings (special tour)',desc:'Kid-led docent tour · 10:30 am · ages 7+'},
+    {y:2026,m:10,d:5,type:'music',title:"BSO — Haydn's The Creation (opens)",desc:'Symphony Hall · Nov 5–7'},
+    {y:2026,m:10,d:14,type:'museum',title:'MFA — Maverick Kings family Saturday',desc:'Crafts + tour · free for kids'},
+    {y:2026,m:10,d:27,type:'ballet',title:'Boston Ballet — The Nutcracker (opens)',desc:"Mikko Nissinen's tradition · runs through Dec 31 · ages 4+"},
+    {y:2026,m:10,d:14,type:'theatre',title:"Wheelock — Disney's Finding Nemo (opens)",desc:'Family musical · runs Nov 14 – Dec 13 · ages 4+'},
+    {y:2026,m:11,d:3,type:'ballet',title:'Boston Ballet — Nutcracker (family matinée)',desc:'2 pm · 83 Boston Ballet School students'},
+    {y:2026,m:11,d:6,type:'ballet',title:'Boston Ballet — Nutcracker (Sensory-Friendly)',desc:'Adjusted lights, sound, quiet rooms'},
+    {y:2026,m:11,d:12,type:'ballet',title:'Boston Ballet — Nutcracker (evening)',desc:'7 pm · Boston Ballet Orchestra · ages 6+'},
+    {y:2026,m:11,d:13,type:'ballet',title:'Boston Ballet — Nutcracker (weekend matinée)',desc:'1 pm · pre-show story-time · ages 4+'},
+    {y:2026,m:11,d:5,type:'theatre',title:'Wheelock — Finding Nemo (mid-run)',desc:'Weekend matinées · ages 4+'},
+    {y:2026,m:11,d:11,type:'theatre',title:'NSMT — A Christmas Carol (opens)',desc:'Beverly · in-the-round · ages 6+'},
+    {y:2026,m:11,d:20,type:'ballet',title:'Boston Ballet — Nutcracker (holiday weekend)',desc:'2 pm · most popular matinée'},
+    {y:2026,m:11,d:27,type:'ballet',title:'Boston Ballet — Nutcracker (closing weekend)',desc:'Final weekend through Dec 31'},
+    {y:2027,m:0,d:10,type:'music',title:'BSO — Tchaikovsky Sym. No. 1 & 2',desc:'Symphony Hall · cond. Andris Nelsons'},
+    {y:2027,m:0,d:14,type:'ballet',title:'Boston Ballet — Coppélia (opens)',desc:"Delibes' comic ballet · runs through Jan 25 · ages 5+"},
+    {y:2027,m:0,d:21,type:'ballet',title:'Boston Ballet — Coppélia (family matinée)',desc:'2 pm · family pricing · pre-show storytime'},
+    {y:2027,m:2,d:27,type:'music',title:'BSO Family Concert — Sat Mar 27',desc:'Symphony Hall · 1 pm · dedicated family series · ages 5+'},
+  ];
+
+  const MONTHS = [
+    {y:2026,m:4},{y:2026,m:5},{y:2026,m:6},{y:2026,m:7},{y:2026,m:8},
+    {y:2026,m:9},{y:2026,m:10},{y:2026,m:11},{y:2027,m:0},{y:2027,m:2}
+  ];
+  const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const root = document.getElementById('print-root');
+
+  MONTHS.forEach(({y,m}) => {
+    const monthEvents = EVENTS.filter(e => e.y===y && e.m===m).sort((a,b)=>a.d-b.d);
+    if(!monthEvents.length) return;
+    const byDay = {};
+    monthEvents.forEach(e => { (byDay[e.d] = byDay[e.d] || []).push(e); });
+
+    const wrap = document.createElement('div');
+    wrap.className = 'pm-month';
+    let html = `<h2>${MN[m]} ${y}</h2><div class="pm-grid">`;
+    ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => html += `<div class="pm-h">${d}</div>`);
+
+    const firstDay = new Date(y,m,1).getDay();
+    const daysInMonth = new Date(y,m+1,0).getDate();
+    const prevDays = new Date(y,m,0).getDate();
+    for(let i=firstDay-1;i>=0;i--) html += `<div class="pm-cell out"><span class="pm-num">${prevDays-i}</span></div>`;
+    for(let d=1;d<=daysInMonth;d++){
+      const evts = byDay[d] || [];
+      let inner = `<span class="pm-num">${d}</span>`;
+      evts.forEach(e => {
+        const lbl = e.title.split(' — ')[0].split(' · ')[0].slice(0,22);
+        inner += `<span class="pm-evt ${TYPES[e.type].evtClass}">${TYPES[e.type].icon} ${lbl}</span>`;
+      });
+      html += `<div class="pm-cell">${inner}</div>`;
+    }
+    const total = 7+firstDay+daysInMonth;
+    const trail = (7-(total%7))%7;
+    for(let i=1;i<=trail;i++) html += `<div class="pm-cell out"><span class="pm-num">${i}</span></div>`;
+    html += `</div>`;
+
+    // detail list
+    html += `<div class="pm-list">`;
+    monthEvents.forEach(e => {
+      const t = TYPES[e.type];
+      html += `<div class="pm-li"><div class="pm-li-date">${MN[m].slice(0,3)} ${e.d}</div><div class="pm-li-body"><div class="pm-li-cat">${t.icon} ${t.label}</div><div class="pm-li-title">${e.title}</div><div class="pm-li-desc">${e.desc}</div></div></div>`;
+    });
+    html += `</div>`;
+
+    wrap.innerHTML = html;
+    root.appendChild(wrap);
+  });
+
+  // Auto-print once fonts + layout are ready
+  function triggerPrint(){ setTimeout(() => window.print(), 500); }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(triggerPrint);
+  } else {
+    window.addEventListener('load', triggerPrint);
+  }
+})();
+</script>
+
+</body>
+</html>
