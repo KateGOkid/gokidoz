@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listing · GOkidOZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<meta name="theme-color" content="#1A73E8">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<style>
+  .ld-wrap{max-width:760px;margin:0 auto;padding:28px 20px 60px;}
+  .ld-back{display:inline-flex;align-items:center;gap:6px;background:var(--white);border:1.5px solid var(--border-mid);color:var(--g1);font-weight:700;font-size:13.5px;padding:9px 16px;border-radius:22px;text-decoration:none;margin-bottom:22px;cursor:pointer;}
+  .ld-back:hover{background:var(--g7);}
+  .ld-card{background:var(--white);border:1px solid var(--border-mid);border-radius:20px;padding:32px 30px;box-shadow:0 10px 30px rgba(26,115,232,0.08);}
+  .ld-badges{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+  .ld-badge{background:var(--g7);color:var(--g1);font-size:12px;font-weight:800;padding:5px 12px;border-radius:14px;}
+  .ld-name{font-family:var(--serif,Georgia,serif);font-size:30px;font-weight:700;color:var(--g1);letter-spacing:-.4px;line-height:1.12;margin:0 0 10px;}
+  .ld-desc{font-size:16px;color:var(--text);line-height:1.6;margin:0 0 24px;}
+  .ld-meta{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0 0 26px;}
+  .ld-meta-l{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding-top:2px;}
+  .ld-meta-v{font-size:15px;color:var(--text);line-height:1.5;}
+  .ld-meta-v a{color:var(--g2);font-weight:700;text-decoration:none;}
+  .ld-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;}
+  .ld-visit{display:inline-flex;align-items:center;gap:9px;background:var(--g2,#1A73E8);color:#fff;font-size:16px;font-weight:800;padding:15px 28px;border-radius:14px;text-decoration:none;box-shadow:0 6px 18px rgba(26,115,232,0.28);}
+  .ld-visit:hover{filter:brightness(1.06);}
+  .ld-call{display:inline-flex;align-items:center;gap:9px;background:var(--white);color:var(--g1);border:1.5px solid var(--border-mid);font-size:16px;font-weight:800;padding:15px 26px;border-radius:14px;text-decoration:none;}
+  .ld-note{font-size:12.5px;color:var(--text-muted);margin-top:16px;}
+  .ld-empty{text-align:center;padding:60px 24px;color:var(--text-muted);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="index.html">
+      <div class="logo-mark"><span class="logo-mark-text">OZ</span></div>
+      <div class="logo-text">
+        <div class="logo-name">GOkid<span>OZ</span></div>
+        <div class="logo-slogan">Discover, learn &amp; grow</div>
+      </div>
+    </a>
+  </div>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" onclick="this.parentNode.querySelector('.nav-right').classList.toggle('open')"><span class="bars"><span></span><span></span><span></span></span></button>
+  <div class="nav-right">
+    <a class="nav-link" href="pages/programs.html">Programs</a>
+    <a class="nav-link" href="pages/tutors.html">Tutors</a>
+    <a class="nav-link" href="pages/fun-events.html">Fun Events</a>
+    <a class="nav-link" href="pages/calendar.html">📅 Calendar</a>
+    <a class="nav-link" href="pages/about.html">About</a>
+  </div>
+</nav>
+
+<div class="ld-wrap">
+  <a class="ld-back" onclick="if(history.length>1){history.back();return false;}" href="index.html">← Back to results</a>
+  <div id="ld-panel"></div>
+</div>
+
+<footer>
+  <div class="foot-logo"><div class="foot-logo-img"><span class="foot-logo-text">OZ</span></div><div class="foot-name">GOkid<span>OZ</span></div></div>
+  <div class="foot-copy">© 2026 GOkidOZ. All rights reserved.</div>
+</footer>
+
+<script>
+(function(){
+  var panel=document.getElementById('ld-panel');
+  var data=null;
+  try{ data=JSON.parse(decodeURIComponent((location.hash||'').slice(1))); }catch(e){}
+  if(!data||!data.name){
+    panel.innerHTML='<div class="ld-empty"><div style="font-size:44px;margin-bottom:10px;">🔍</div><div style="font-family:var(--serif,Georgia,serif);font-size:22px;color:var(--g1);">Listing not found</div><p style="margin-top:8px;">Head back and pick a listing to see its full details.</p></div>';
+    document.title='Listing · GOkidOZ';
+    return;
+  }
+  function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  document.title=data.name+' · GOkidOZ';
+  var badges=(data.badges||[]).map(function(b){return '<span class="ld-badge">'+esc(b)+'</span>';}).join('');
+  var meta=(data.meta||[]).map(function(m){
+    var v=m.vurl?'<a href="'+esc(m.vurl)+'" target="_blank" rel="noopener">'+esc(m.v)+'</a>':esc(m.v);
+    return '<div class="ld-meta-l">'+esc(m.l)+'</div><div class="ld-meta-v">'+v+'</div>';
+  }).join('');
+  var cta='';
+  if(data.url) cta+='<a class="ld-visit" href="'+esc(data.url)+'" target="_blank" rel="noopener">🌐 Visit official website ↗</a>';
+  if(data.phone) cta+='<a class="ld-call" href="tel:'+data.phone.replace(/[^0-9]/g,'')+'">📞 '+esc(data.phone)+'</a>';
+  panel.innerHTML='<div class="ld-card center-card">'
+    +(badges?'<div class="ld-badges">'+badges+'</div>':'')
+    +'<h1 class="ld-name center-name">'+esc(data.name)+'</h1>'
+    +(data.desc?'<p class="ld-desc">'+esc(data.desc)+'</p>':'')
+    +(meta?'<div class="ld-meta">'+meta+'</div>':'')
+    +(cta?'<div class="ld-cta">'+cta+'</div>':'')
+    +'<div class="ld-note">Listing details are provided by GOkidOZ. Always confirm current schedule, ages and pricing on the provider\u2019s official site.</div>'
+    +'</div>';
+})();
+</script>
+<script src="assets/back-to-top.js"></script>
+<script src="assets/community-rating.js"></script>
+</body>
+</html>

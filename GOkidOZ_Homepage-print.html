@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOkidOZ Boston — Print</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* Make the page look like the screen design even for screen viewing */
+  body{background:var(--cream,#fff);}
+
+  /* PRINT STYLES */
+  @media print {
+    @page { size: letter portrait; margin: 0.4in; }
+
+    html, body {
+      background: #fff !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+    *,*::before,*::after{
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+      transition:none !important;
+      animation:none !important;
+    }
+
+    /* Sticky nav becomes static so it doesn't repeat on every page */
+    nav{
+      position: static !important;
+      box-shadow:none !important;
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    /* Hero — preserve gradient + image */
+    .hero{
+      padding-bottom: 24px !important;
+    }
+    .hero-banner img{ max-width: 100% !important; height: auto !important; }
+
+    /* Try to keep major cards from splitting mid-page */
+    .pc, .fe-pillar, .stat, .detail-block, .subj-card, .tutor-card, .teacher-card, .value-card{
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Sections — let them flow naturally; keep section starts clean */
+    section.sec, .fun-events-sec, .stats-band, .cta-band, .season-strip{
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Footer at end */
+    footer{
+      page-break-before: avoid;
+      break-before: avoid;
+      padding-top: 18px !important;
+      padding-bottom: 18px !important;
+    }
+
+    /* Hide interactive-only chrome */
+    .nav-right .btn-enroll, .nav-right{ /* keep visible */ }
+    button{ cursor: default !important; }
+    a{ text-decoration: none !important; }
+
+    /* Trim section padding so things fit nicely on letter */
+    .sec{ padding: 28px 28px !important; }
+    .fun-events-inner{ padding: 28px 28px !important; }
+    .stats-band{ padding: 22px 28px !important; }
+    .cta-band{ padding: 28px 28px !important; }
+    nav{ padding: 0 24px !important; }
+
+    /* Email input in CTA — render as plain input visual */
+    .cta-input{ background: #fff !important; }
+
+    /* Backgrounds that need to print */
+    .hero, .page-header, .subj-hero{
+      background: #1A73E8 !important;
+      background-image: linear-gradient(180deg, #1A73E8 0%, #0D5BBE 100%) !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a class="logo" href="index.html">
+      <div class="logo-mark"><span class="logo-mark-text">OZ</span></div>
+      <div class="logo-text">
+        <div class="logo-name">GOkid<span>OZ</span></div>
+        <div class="logo-slogan">Boston kids <em>discover</em> all year long</div>
+      </div>
+    </a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-link" href="pages/programs.html">Programs</a>
+    <a class="nav-link" href="pages/tutors.html">Tutors</a>
+    <a class="nav-link" href="pages/fun-events.html">Fun Events</a>
+    <a class="nav-link" href="pages/calendar.html">📅 Calendar</a>
+    <a class="nav-link" href="pages/about.html">About</a>
+    <a class="btn-enroll" href="pages/enroll.html">Sign In</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-banner">
+      <img src="assets/gokidoz-hero.png" alt="GOkidOZ — Discover, Learn, Inspire">
+    </div>
+    <div class="hero-cta">
+      <p class="hero-sub">Academics, Sports, Arts and exploring — hand-picked experiences for curious Boston kids.</p>
+      <div class="hero-btns">
+        <a class="btn-primary" href="pages/programs.html">Browse programs</a>
+        <a class="btn-secondary" href="pages/fun-events.html">Fun Events →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEASON STRIP -->
+<div class="season-strip">
+  <a class="s-tab on" href="pages/after-school.html"><span class="s-icon">📚</span><div class="s-name">After-school</div></a>
+  <a class="s-tab" href="pages/vacation-camps.html"><span class="s-icon">🍂</span><div class="s-name">Oct break</div></a>
+  <a class="s-tab" href="pages/vacation-camps.html"><span class="s-icon">❄️</span><div class="s-name">Feb break</div></a>
+  <a class="s-tab" href="pages/vacation-camps.html"><span class="s-icon">🌸</span><div class="s-name">Apr break</div></a>
+  <a class="s-tab" href="pages/summer.html"><span class="s-icon">☀️</span><div class="s-name">Summer</div></a>
+</div>
+
+<!-- PROGRAMS -->
+<section class="sec bg-cream">
+  <div class="inner">
+    <div class="eyebrow">Programs</div>
+    <h2>A program for every season</h2>
+    <p class="sec-sub">No more last-minute scrambles. GOkidOZ has your family covered from September through August.</p>
+    <div class="prog-grid">
+      <a class="pc pc-green" href="pages/after-school.html"><div class="pc-dot"></div><div class="pc-icon">📚</div><div class="pc-title">After-School & School Year</div><p class="pc-desc">Weekly classes and tutoring that fit around the school day. Build skills steadily all year long.</p><div class="tag-row"><span class="tag">Math</span><span class="tag">Science</span><span class="tag">Russian</span><span class="tag">English</span><span class="tag">Sports</span></div></a>
+      <a class="pc pc-teal" href="pages/vacation-camps.html"><div class="pc-dot"></div><div class="pc-icon">🗓️</div><div class="pc-title">Vacation Camps</div><p class="pc-desc">Full-day and half-day programs during October, February, and April breaks. Learning doesn't stop.</p><div class="tag-row"><span class="tag">Oct break</span><span class="tag">Feb break</span><span class="tag">Apr break</span></div></a>
+      <a class="pc pc-straw" href="pages/summer.html"><div class="pc-dot"></div><div class="pc-icon">☀️</div><div class="pc-title">Summer Programs</div><p class="pc-desc">Multi-week enrichment camps through June, July, and August. Academic + creative + fun.</p><div class="tag-row"><span class="tag">June–Aug</span><span class="tag">All ages</span><span class="tag">Enrichment</span></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- FUN EVENTS -->
+<div class="fun-events-sec">
+  <div class="fun-events-inner">
+    <div class="fe-header">
+      <div>
+        <div class="fe-eyebrow">🎟️ Fun Events</div>
+        <div class="fe-title">Beyond the classroom</div>
+        <div class="fe-sub">Concerts, theatre, excursions and birthday planning — the joyful side of growing up in Boston.</div>
+      </div>
+      <a class="fe-all-btn" href="pages/fun-events.html">See all events →</a>
+    </div>
+    <div class="fe-pillars">
+      <a class="fe-pillar fp-events" href="pages/fun-events.html#concerts">
+        <span class="fp-icon">🎵</span>
+        <div class="fp-title">Concerts & Theatre</div>
+        <div class="fp-desc">Family concerts by Eva Dominiak, Boston Ballet, Wheelock Family Theatre and MJA student performances.</div>
+        <div class="fp-items"><span class="fp-item">Family concerts</span><span class="fp-item">Ballet</span><span class="fp-item">Kids theatre</span></div>
+        <div class="fp-link">Browse concerts →</div>
+      </a>
+      <a class="fe-pillar fp-birthday" href="pages/fun-events.html#birthday">
+        <span class="fp-icon">🎂</span>
+        <div class="fp-title">Birthday Planning</div>
+        <div class="fp-desc">Animators, decorators, catering and full planning guide. Everything for an unforgettable party.</div>
+        <div class="fp-items"><span class="fp-item">Magicians</span><span class="fp-item">Face painters</span><span class="fp-item">Catering</span></div>
+        <div class="fp-link">Plan a party →</div>
+      </a>
+      <a class="fe-pillar fp-excursion" href="pages/fun-events.html#excursions">
+        <span class="fp-icon">🗺️</span>
+        <div class="fp-title">Excursions</div>
+        <div class="fp-desc">Small-group guided outings to Boston's best — Museum of Science, Aquarium, Harvard and more.</div>
+        <div class="fp-items"><span class="fp-item">Museums</span><span class="fp-item">Zoo</span><span class="fp-item">Harvard</span></div>
+        <div class="fp-link">Browse excursions →</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-num">3<span>+</span></div><div class="stat-label">Seasons covered</div></div>
+    <div class="stat"><div class="stat-num">2</div><div class="stat-label">Languages of instruction</div></div>
+    <div class="stat"><div class="stat-num">50<span>+</span></div><div class="stat-label">Vetted tutors</div></div>
+    <div class="stat"><div class="stat-num">5<span>★</span></div><div class="stat-label">Average parent rating</div></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2>Ready to find the right program?</h2>
+  <p>Join Boston-area families already enrolled. Takes two minutes to get started.</p>
+  <div class="cta-row">
+    <input class="cta-input" type="email" placeholder="Your email address">
+    <a class="btn-primary" href="pages/enroll.html">Get started →</a>
+  </div>
+  <p style="font-size:12px;color:var(--text-muted);margin-top:14px;">No spam. Just program updates and event alerts.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">
+    <div class="foot-logo-img"><span class="foot-logo-text">OZ</span></div>
+    <div class="foot-name">GOkid<span>OZ</span></div>
+  </div>
+  <div class="foot-links">
+    <a href="pages/programs.html">Programs</a><a href="pages/fun-events.html">Fun Events</a><a href="pages/tutors.html">Tutors</a><a href="pages/calendar.html">Calendar</a><a href="pages/about.html">About</a><a href="pages/contact.html">Contact</a>
+  </div>
+  <div class="foot-copy">© 2026 GOkidOZ Boston</div>
+</footer>
+
+<script>
+  // Wait for fonts + a beat of layout settling, then trigger the print dialog.
+  (async function autoPrint(){
+    try{
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
+      // Wait for hero image to load
+      const heroImg = document.querySelector('.hero-banner img');
+      if (heroImg && !heroImg.complete) {
+        await new Promise(r => { heroImg.onload = r; heroImg.onerror = r; });
+      }
+      // Belt-and-braces delay
+      await new Promise(r => setTimeout(r, 500));
+      window.print();
+    } catch(e) {
+      console.warn('autoPrint failed:', e);
+      window.print();
+    }
+  })();
+</script>
+
+</body>
+</html>
